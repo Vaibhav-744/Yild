@@ -20,7 +20,7 @@
   {%- if section.blocks.size > 0 -%}
     <div class="footer__content-top{% if section.settings.show_footer_top_bg_img %} footer__content-bg{% endif %}{% if block_newsletter.settings.enable_top and position_social == 7 %} enable_newsletter_social{% endif %}{% if section.settings.show_border_item %} enable_border_column{% endif %}">
       <div class="container container-{{ section.settings.container }}">
-        <div class="halo-row column-{{column}}">
+        <div class="halo-row custom-footer column-{{column}}">
           {%- for block in section.blocks -%}
             {%- if forloop.first and block.type == 'text' -%}
               {%- assign block__text_first = 'block__text_first' -%}

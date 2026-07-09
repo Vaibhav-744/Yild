@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+
 /* Base */
 *,
 *::before,
@@ -2944,7 +2946,7 @@ summary::-webkit-details-marker {
     }
 
     .header-mobile__item {
-        min-width: 46px;
+        min-width: 35px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -5543,38 +5545,38 @@ summary::-webkit-details-marker {
 @media (max-width: 551px){
     /* START: Container */
         .container{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1770{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1570{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1470{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1370{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1320 {
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .container-1170{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .halo-row{
@@ -6114,7 +6116,7 @@ summary::-webkit-details-marker {
         }
 
         .container-1470{
-            max-width: 1500px;
+            max-width: 1190px;
             padding-left: 15px;
             padding-right: 15px;
             margin-left: auto;
@@ -7063,7 +7065,20 @@ summary::-webkit-details-marker {
         }
     /* END: Block */
 }
-
+.header-mobile--transparent .header-mobile__wrapper .logo--transparent,
+.header-plain--transparent .logo--transparent{
+    filter: brightness(0) invert(1);
+}
+.header-mobile--transparent{
+    backdrop-filter: blur(14px);
+    box-shadow: rgba(31, 61, 43, 0.08) 0px 1px 0px;
+}
+.header__icon .icon,
+.header-mobile--icon .icon,
+.mobileMenu-toggle {
+    height: 17px !important;
+    width: 17px !important;
+}
 @media (prefers-reduced-motion){
     .motion-reduce {
         transition: none !important;

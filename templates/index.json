@@ -211,6 +211,19 @@
         "row2_speed": 30
       }
     },
+    "yild_shop_picks_4Fh4UD": {
+      "type": "yild-shop-picks",
+      "name": "Shop Picks Slider",
+      "settings": {
+        "eyebrow": "Explore our store · fresh this week",
+        "heading": "Real food from real farms, this week",
+        "cta_text": "Start shopping",
+        "collection": "home-our-store",
+        "limit": 8,
+        "enable_top_tag": true,
+        "bg_color": "#f7f5ed"
+      }
+    },
     "yild_how_works_XYZ": {
       "type": "yild-how-works",
       "blocks": {
@@ -650,6 +663,7 @@
     "yild_scroll_journey_fgUXMw",
     "yild_stats_story_X4tP6P",
     "yild_marquee_mUnCHm",
+    "yild_shop_picks_4Fh4UD",
     "yild_how_works_XYZ",
     "yild_seasons_Gw69eW",
     "yild_health_scale_XYZ",

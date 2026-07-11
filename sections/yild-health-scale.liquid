@@ -108,10 +108,24 @@
     margin: 0;
   }
   #yild-scale-{{ section.id }} .scale-dots {
-    display: none;
+    display: flex;
     justify-content: center;
-    gap: 9px;
     margin-top: 26px;
+  }
+  #yild-scale-{{ section.id }} .scale-dots button {
+    height: 9px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 100px;
+    background: var(--yild-dots-inactive);
+    margin: 0 4px;
+    width: 9px;
+    transition: width .3s cubic-bezier(.16,1,.3,1), background .3s;
+  }
+  #yild-scale-{{ section.id }} .scale-dots button.active {
+    width: 26px;
+    background: var(--yild-green-dark);
   }
 
   @media (min-width: 720px) {
@@ -188,38 +202,47 @@
       const viewport = document.getElementById("scaleViewport-{{ section.id }}");
       const dotsContainer = document.getElementById("scaleDots-{{ section.id }}");
       if (viewport && dotsContainer) {
-        const isMobile = () => !window.matchMedia('(min-width:720px)').matches;
-        
+        const getPerView = () => {
+          const firstCard = cards[0];
+          if (!firstCard) return 1;
+          const cardWidth = firstCard.getBoundingClientRect().width;
+          const viewportWidth = viewport.getBoundingClientRect().width;
+          return Math.max(1, Math.round(viewportWidth / cardWidth));
+        };
+
         const renderDots = () => {
-          const mobile = isMobile();
-          if (!mobile) {
+          const pv = getPerView();
+          const pages = Math.ceil(cards.length / pv);
+          
+          if (pages <= 1) {
             dotsContainer.style.display = 'none';
             dotsContainer.innerHTML = '';
             return;
           }
+          
           dotsContainer.style.display = 'flex';
           dotsContainer.innerHTML = '';
-          const cardCount = cards.length;
-          const pages = Math.ceil(cardCount / 2); // 2 cards per page on mobile
           
-          let activeIndex = Math.round(viewport.scrollLeft / viewport.clientWidth);
+          let activeIndex;
+          const scrollLeft = viewport.scrollLeft;
+          const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+          if (maxScroll <= 0) {
+            activeIndex = 0;
+          } else if (scrollLeft >= maxScroll - 15) {
+            activeIndex = pages - 1;
+          } else {
+            activeIndex = Math.round(scrollLeft / viewport.clientWidth);
+          }
           if (activeIndex >= pages) activeIndex = pages - 1;
 
           for (let i = 0; i < pages; i++) {
             const dot = document.createElement('button');
             dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-            dot.style.height = '9px';
-            dot.style.border = 'none';
-            dot.style.padding = '0';
-            dot.style.cursor = 'pointer';
-            dot.style.borderRadius = '100px';
-            dot.style.transition = 'width .3s ease, background .3s ease';
-            dot.style.width = (i === activeIndex ? '26px' : '9px');
-            dot.style.background = (i === activeIndex ? '{{ section.settings.title_color }}' : '#c7d2c5');
+            if (i === activeIndex) dot.classList.add('active');
             
             dot.addEventListener('click', () => {
-              const targetCardIndex = i * 2;
-              const targetCard = cards[targetCardIndex];
+              const targetCardIndex = i * pv;
+              const targetCard = cards[Math.min(targetCardIndex, cards.length - 1)];
               if (targetCard) {
                 viewport.scrollTo({
                   left: targetCard.offsetLeft,
@@ -232,14 +255,33 @@
         };
 
         const updateActiveDot = () => {
-          const pages = Math.ceil(cards.length / 2);
-          let activeIndex = Math.round(viewport.scrollLeft / (viewport.clientWidth || 1));
-          if (activeIndex >= pages) activeIndex = pages - 1;
-          const dots = dotsContainer.children;
-          for (let i = 0; i < dots.length; i++) {
-            dots[i].style.width = (i === activeIndex ? '26px' : '9px');
-            dots[i].style.background = (i === activeIndex ? '{{ section.settings.title_color }}' : '#c7d2c5');
+          const pv = getPerView();
+          const pages = Math.ceil(cards.length / pv);
+          
+          let activeIndex;
+          const scrollLeft = viewport.scrollLeft;
+          const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+          if (maxScroll <= 0) {
+            activeIndex = 0;
+          } else if (scrollLeft >= maxScroll - 15) {
+            activeIndex = pages - 1;
+          } else {
+            activeIndex = Math.round(scrollLeft / viewport.clientWidth);
           }
+          if (activeIndex >= pages) activeIndex = pages - 1;
+
+          const dots = [...dotsContainer.children];
+          if (dots.length !== pages) {
+            renderDots();
+            return;
+          }
+          dots.forEach((dot, i) => {
+            if (i === activeIndex) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
         };
 
         let scrollTimeout = null;

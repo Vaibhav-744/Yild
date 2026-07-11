@@ -516,7 +516,7 @@
         for (let i = 0; i < state.pages; i++) {
           const d = document.createElement('button');
           d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-          d.style.cssText = 'height:9px;border:none;padding:0;cursor:pointer;border-radius:100px;transition:width .3s ease,background .3s ease;width:' + (i === state.page ? '26px' : '9px') + ';background:' + (i === state.page ? '#1f3d2b' : '#c7d2c5') + ';margin:0 4px;';
+          d.style.cssText = 'height:9px;border:none;padding:0;cursor:pointer;border-radius:100px;transition:width .3s ease,background .3s ease;width:' + (i === state.page ? '26px' : '9px') + ';background:' + (i === state.page ? 'var(--yild-green-dark)' : 'var(--yild-dots-inactive)') + ';margin:0 4px;';
           d.addEventListener('click', () => { go(i, true); restartTimer(); });
           dots.appendChild(d);
         }
@@ -526,7 +526,7 @@
         if (!dots) return;
         [...dots.children].forEach((d, i) => {
           d.style.width = i === state.page ? '26px' : '9px';
-          d.style.background = i === state.page ? '#1f3d2b' : '#c7d2c5';
+          d.style.background = i === state.page ? 'var(--yild-green-dark)' : 'var(--yild-dots-inactive)';
         });
       };
 

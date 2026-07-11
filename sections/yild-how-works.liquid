@@ -52,21 +52,22 @@
   }
   #yild-how-works-{{ section.id }} .how-subtitle {
     display: inline-block;
-    font-size: 1.216rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: {{ section.settings.subtitle_color }};
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
     margin-bottom: 12px;
   }
   #yild-how-works-{{ section.id }} .how-title {
-    font-family: var(--title-font);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
-    color: {{ section.settings.title_color }};
-    line-height: 1.05;
-    margin: 0 0 22px 0;
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem) !important;
+    color: {{ section.settings.title_color }} !important;
+    line-height: 1.05 !important;
+    margin: 0 0 22px 0 !important;
   }
   #yild-how-works-{{ section.id }} .how-list {
     list-style: none;
@@ -80,9 +81,10 @@
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    font-size: 1.632rem;
-    line-height: 1.5;
-    color: {{ section.settings.list_txt_color }};
+    font-family: var(--font-family-1) !important;
+    font-size: 1.632rem !important;
+    line-height: 1.5 !important;
+    color: {{ section.settings.list_txt_color }} !important;
   }
   #yild-how-works-{{ section.id }} .how-bullet {
     flex: 0 0 auto;
@@ -98,18 +100,27 @@
     font-weight: 700;
   }
   #yild-how-works-{{ section.id }} .how-cta-button {
-    display: inline-block;
-    font-weight: 600;
-    padding: 14px 30px;
-    border-radius: 100px;
-    background: {{ section.settings.btn_bg_color }};
-    color: {{ section.settings.btn_txt_color }};
-    text-decoration: none;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
-    will-change: transform;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important;
+    padding: 14px 30px !important;
+    border-radius: 100px !important;
+    background: {{ section.settings.btn_bg_color }} !important;
+    color: {{ section.settings.btn_txt_color }} !important;
+    text-decoration: none !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    border: none !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s !important;
+    will-change: transform !important;
   }
   #yild-how-works-{{ section.id }} .how-cta-button:hover {
-    background-color: {{ section.settings.btn_bg_hover }};
+    background-color: {{ section.settings.btn_bg_hover }} !important;
   }
 
   @media (max-width: 760px) {

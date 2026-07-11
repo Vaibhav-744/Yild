@@ -7,11 +7,11 @@
     padding: clamp(80px, 11vw, 160px) clamp(20px, 5vw, 54px);
   }
   #yild-seasons-{{ section.id }} .seasons-grid {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(32px, 5vw, 76px);
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(32px, 6vw, 84px);
     align-items: center;
   }
   @media (max-width: 980px) {
@@ -35,35 +35,53 @@
   }
   #yild-seasons-{{ section.id }} .seasons-subtitle {
     display: inline-block;
-    color: {{ section.settings.subtitle_color }};
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
     margin-bottom: 18px;
   }
   #yild-seasons-{{ section.id }} .seasons-title {
-    font-family: var(--title-font);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(3.36rem, 4.2vw, 5.6rem);
-    line-height: 1.06;
-    margin: 0 0 20px 0;
-    color: {{ section.settings.text_color }};
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.36rem, 4.2vw, 5.6rem) !important;
+    line-height: 1.06 !important;
+    margin: 0 0 20px 0 !important;
+    color: {{ section.settings.text_color }} !important;
   }
   #yild-seasons-{{ section.id }} .seasons-desc {
-    font-size: 1.76rem;
-    line-height: 1.65;
-    color: {{ section.settings.text_color_muted }};
-    max-width: 46ch;
-    margin: 0 0 14px 0;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.76rem !important;
+    line-height: 1.65 !important;
+    color: {{ section.settings.text_color_muted }} !important;
+    max-width: 46ch !important;
+    margin: 0 0 14px 0 !important;
   }
   #yild-seasons-{{ section.id }} .seasons-desc:last-of-type {
-    margin-bottom: 28px;
+    margin-bottom: 28px !important;
   }
   #yild-seasons-{{ section.id }} .seasons-cta {
-    display: inline-block;
-    background: {{ section.settings.btn_bg_color }};
-    color: {{ section.settings.btn_txt_color }};
-    text-decoration: none;
-    transition: transform 0.25s cubic-bezier(.16,1,.3,1);
-    will-change: transform;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important;
+    padding: 14px 30px !important;
+    border-radius: 100px !important;
+    background: {{ section.settings.btn_bg_color }} !important;
+    color: {{ section.settings.btn_txt_color }} !important;
+    text-decoration: none !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    border: none !important;
+    transition: transform 0.25s cubic-bezier(.16,1,.3,1), background-color 0.25s !important;
+    will-change: transform !important;
   }
   #yild-seasons-{{ section.id }} .seasons-media {
     position: relative;
@@ -126,7 +144,7 @@
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-family: 'Newsreader', serif;
+    font-family: var(--font-family-2);
     font-style: italic;
     font-weight: 500;
     font-size: 1.68rem;
@@ -138,12 +156,14 @@
     line-height: 1.2;
   }
   #yild-seasons-{{ section.id }} .score-badge-title {
-    font-weight: 700;
-    font-size: 1.52rem;
+    font-family: var(--font-family-1) !important;
+    font-weight: 700 !important;
+    font-size: 1.52rem !important;
   }
   #yild-seasons-{{ section.id }} .score-badge-desc {
-    font-size: 1.248rem;
-    color: {{ section.settings.badge_desc_color }};
+    font-family: var(--font-family-1) !important;
+    font-size: 1.248rem !important;
+    color: {{ section.settings.badge_desc_color }} !important;
   }
 {%- endstyle -%}
 

@@ -14,6 +14,7 @@
     display: grid;
     grid-template-columns: 1.15fr 1fr;
     align-items: stretch;
+    box-shadow: 0 20px 50px rgba(12, 26, 15, 0.28) !important;
     opacity: 0;
     transform: translateY(34px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -27,68 +28,91 @@
     padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 68px);
   }
   #yild-newsletter-{{ section.id }} .newsletter-subtitle {
-    display: inline-block;
-    font-size: 1.216rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: {{ section.settings.subtitle_color }};
-    margin-bottom: 14px;
+    display: inline-block !important;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin-bottom: 14px !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-title {
-    font-family: var(--title-font);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(3.36rem, 4.4vw, 5.44rem);
-    line-height: 1.04;
-    margin: 0 0 14px 0;
-    color: {{ section.settings.card_txt_color }};
+    font-family: var(--font-family-2) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.36rem, 4.4vw, 5.44rem) !important;
+    line-height: 1.04 !important;
+    margin: 0 0 14px 0 !important;
+    color: {{ section.settings.card_txt_color }} !important;
+    text-transform: none !important;
+  }
+  #yild-newsletter-{{ section.id }} .code-highlight {
+    font-family: var(--font-family-1) !important;
+    text-transform: uppercase !important;
+    display: inline-block !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-desc {
-    color: {{ section.settings.card_txt_muted }};
-    font-size: 1.728rem;
-    line-height: 1.55;
-    margin: 0 0 28px 0;
-    max-width: 48ch;
+    font-family: var(--font-family-1) !important;
+    color: {{ section.settings.card_txt_muted }} !important;
+    font-size: 1.728rem !important;
+    line-height: 1.55 !important;
+    margin: 0 0 28px 0 !important;
+    max-width: 48ch !important;
+    padding:0;
   }
   #yild-newsletter-{{ section.id }} .newsletter-form-row {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    max-width: 520px;
+    width:100%;
   }
   #yild-newsletter-{{ section.id }} .newsletter-input {
-    flex: 1;
-    min-width: 220px;
-    padding: 15px 20px;
-    border-radius: 100px;
-    border: 1.5px solid {{ section.settings.input_border }};
-    background: {{ section.settings.input_bg }};
-    color: {{ section.settings.card_txt_color }};
-    font-family: inherit;
-    font-size: 1.6rem;
-    outline: none;
-    transition: border-color 0.25s;
+    flex: 1 !important;
+    min-width: 220px !important;
+    padding: 15px 20px !important;
+    border-radius: 100px !important;
+    border: 1.5px solid {{ section.settings.input_border }} !important;
+    background: {{ section.settings.input_bg }} !important;
+    color: {{ section.settings.card_txt_color }} !important;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.6rem !important;
+    outline: none !important;
+    transition: border-color 0.25s !important;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-input::placeholder {
+    color: rgba(241, 239, 227, 0.65) !important;
+    opacity: 1 !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-input:focus {
-    border-color: #ffffff;
+    border-color: #ffffff !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-btn {
-    font-weight: 600;
-    padding: 15px 30px;
-    border-radius: 100px;
-    background: {{ section.settings.btn_bg }};
-    color: {{ section.settings.btn_txt }};
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.25s, transform 0.15s;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 15px 30px !important;
+    border-radius: 100px !important;
+    background: {{ section.settings.btn_bg }} !important;
+    color: {{ section.settings.btn_txt }} !important;
+    border: none !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    cursor: pointer !important;
+    transition: background-color 0.25s, transform 0.15s !important;
+    will-change: transform !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-btn:hover {
-    background-color: #ffffff;
-    opacity: 0.95;
+    background-color: #ffffff !important;
+    opacity: 0.95 !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-btn:active {
-    transform: scale(0.97);
+    transform: scale(0.97) !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-success {
     flex-basis: 100%;
@@ -98,7 +122,8 @@
     font-size: 1.52rem;
   }
   #yild-newsletter-{{ section.id }} .newsletter-disclaimer {
-    margin-top: 18px;
+    font-family: var(--font-family-1) !important;
+    margin: 28px 0 0;
     font-size: 1.248rem;
     color: {{ section.settings.disclaimer_color }};
     line-height: 1.4;
@@ -113,12 +138,18 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 1 !important;
   }
   #yild-newsletter-{{ section.id }} .newsletter-image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, {{ section.settings.card_bg }} 0%, rgba(31,61,43,0) 45%);
-    pointer-events: none;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 2 !important;
+    background: linear-gradient(90deg, {{ section.settings.card_bg }} 0%, rgba(31,61,43,0) 45%) !important;
+    pointer-events: none !important;
+    display:block;
   }
 
   @media (max-width: 760px) {
@@ -145,7 +176,17 @@
         <span class="newsletter-subtitle">{{ section.settings.subtitle }}</span>
       {%- endif -%}
       {%- if section.settings.title != blank -%}
-        <h2 class="newsletter-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.title contains 'YILDFRESH' -%}
+          {%- assign title_html = section.settings.title | replace: 'YILDFRESH', '<span class="code-highlight">YILDFRESH</span>' -%}
+        {%- elsif section.settings.title contains 'code ' -%}
+          {%- assign parts = section.settings.title | split: 'code ' -%}
+          {%- assign code_word = parts[1] | strip -%}
+          {%- capture replacement -%}code <span class="code-highlight">{{ code_word }}</span>{%- endcapture -%}
+          {%- assign title_html = section.settings.title | replace: 'code ', 'code ' | replace: code_word, replacement -%}
+        {%- else -%}
+          {%- assign title_html = section.settings.title -%}
+        {%- endif -%}
+        <h2 class="newsletter-title">{{ title_html }}</h2>
       {%- endif -%}
       {%- if section.settings.desc != blank -%}
         <p class="newsletter-desc">{{ section.settings.desc }}</p>

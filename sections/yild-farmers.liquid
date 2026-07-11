@@ -24,17 +24,30 @@
   }
   #yild-farmers-{{ section.id }} .header-subtitle {
     display: inline-block;
-    color: {{ section.settings.subtitle_color }};
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
     margin-bottom: 12px;
   }
   #yild-farmers-{{ section.id }} .header-title {
-    font-family: var(--title-font);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
-    line-height: 1.05;
-    color: {{ section.settings.title_color }};
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem) !important;
+    line-height: 1.05 !important;
+    color: {{ section.settings.title_color }} !important;
     margin: 0;
+  }
+  #yild-farmers-{{ section.id }} .header-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.728rem !important; /* Scaled 1.08rem * 1.6 */
+    color: #5d6b60 !important;
+    line-height: 1.6 !important;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
   }
   #yild-farmers-{{ section.id }} .farmers-hero-banner {
     position: relative;
@@ -54,11 +67,18 @@
     position: absolute;
     inset: 0;
     object-fit: cover;
+    z-index: 1 !important;
   }
   #yild-farmers-{{ section.id }} .farmers-hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(12, 26, 15, 0.7) 0%, rgba(12, 26, 15, 0.25) 45%, rgba(12, 26, 15, 0) 70%);
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    display: block !important;
+    background: linear-gradient(90deg, rgba(12, 26, 15, 0.7) 0%, rgba(12, 26, 15, 0.25) 45%, rgba(12, 26, 15, 0) 70%) !important;
   }
   #yild-farmers-{{ section.id }} .farmers-hero-content {
     position: relative;
@@ -69,6 +89,7 @@
     flex-direction: column;
     justify-content: flex-end;
     min-height: clamp(280px, 42vw, 440px);
+    z-index: 3 !important;
   }
   #yild-farmers-{{ section.id }} .hero-badge {
     display: inline-block;
@@ -78,7 +99,7 @@
     padding: 6px 13px;
     border-radius: 100px;
     margin-bottom: 16px;
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: 1.152rem !important; /* Scaled 0.72rem * 1.6 */
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
@@ -221,7 +242,7 @@
     background: {{ section.settings.cta_btn_bg }} !important;
     color: {{ section.settings.cta_btn_txt }} !important;
     text-decoration: none !important;
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-weight: 600 !important;
     font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
     padding: 14px 28px !important;
@@ -296,6 +317,9 @@
       {%- endif -%}
       {%- if section.settings.title != blank -%}
         <h2 class="header-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <p class="header-desc">{{ section.settings.description }}</p>
       {%- endif -%}
     </div>
 
@@ -649,6 +673,12 @@
       "id": "title",
       "label": "Main Title",
       "default": "Meet the people who grow your food"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Main Description",
+      "default": "Every box is rooted in real local farms, fields, flocks and the people who tend them — not a warehouse."
     },
     {
       "type": "header",

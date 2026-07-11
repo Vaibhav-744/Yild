@@ -47,7 +47,6 @@
   .header-navigation-wrapper.scrolled-past-journey .dropdown-label svg,
   .header-mobile.scrolled-past-journey a,
   .header-mobile.scrolled-past-journey button,
-  .header-mobile.scrolled-past-journey span,
   .header-mobile.scrolled-past-journey svg,
   .header-navigation-wrapper.scrolled-past-journey .stroke-icon svg,
   .header-mobile.scrolled-past-journey .stroke-icon svg {
@@ -104,7 +103,8 @@
     stroke: #ffffff !important;
   }
   .header-navigation-wrapper.on-journey-section .cart-count-bubble,
-  .header-mobile.on-journey-section .cart-count-bubble {
+  .header-mobile.on-journey-section .cart-count-bubble,
+  .header-mobile__item .header__icon--cart .cart-count-bubble {
     background-color: #9fce0f !important; /* Yild green accent */
     color: #16301f !important; /* Dark text */
   }
@@ -172,7 +172,7 @@
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 12px !important;
     text-align: right;
   }
   #yild-journey-{{ section.id }} .rail-item {
@@ -220,7 +220,7 @@
   }
   #yild-journey-{{ section.id }} .caption-tag {
     display: inline-block;
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
     font-weight: 600 !important;
     letter-spacing: 0.18em !important;
@@ -252,7 +252,7 @@
     color: #ffffff !important;
   }
   #yild-journey-{{ section.id }} .caption-box.hero-caption .caption-desc {
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: clamp(1.568rem, 1.2vw, 1.84rem) !important; /* Scaled clamp(0.98rem, 1.2vw, 1.15rem) by 1.6 */
     line-height: 1.6 !important;
     max-width: 34ch !important;
@@ -260,7 +260,7 @@
     margin: 0 0 26px 0 !important;
   }
   #yild-journey-{{ section.id }} .caption-box.sub-caption .caption-desc {
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: clamp(1.6rem, 1.4vw, 1.92rem) !important; /* Scaled clamp(1rem, 1.4vw, 1.2rem) by 1.6 */
     line-height: 1.55 !important;
     color: rgba(255, 255, 255, 0.88) !important;
@@ -278,7 +278,7 @@
     align-items: center !important;
     justify-content: center !important;
     text-decoration: none !important;
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-weight: 600 !important;
     font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
     padding: 15px 30px !important;
@@ -297,7 +297,7 @@
     align-items: center !important;
     justify-content: center !important;
     text-decoration: none !important;
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-weight: 600 !important;
     font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
     padding: 15px 30px !important;

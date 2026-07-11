@@ -22,10 +22,10 @@
     background-color: #16301f !important;
   }
   .footer-1 .footer-block__heading {
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-weight: 600 !important;
     font-style: normal !important;
-    text-transform: uppercase !important;
+    text-transform: none !important;
     font-size: 1.52rem !important; /* Scaled 0.95rem * 1.6 */
     color: #f1efe3 !important;
     letter-spacing: 0.05em !important;
@@ -34,13 +34,21 @@
   .footer-1 .footer-block__details,
   .footer-1 .footer-block__details p,
   .footer-1 .list-menu__item--link {
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: 1.472rem !important; /* Scaled 0.92rem * 1.6 */
     color: rgba(241, 239, 227, 0.78) !important;
     line-height: 1.6 !important;
   }
-  .footer-1 .list-menu__item--link:hover {
+  .footer-1 .footer-block__details a,
+  .footer-1 .list-menu__item--link,
+  .footer-1 .list-menu__item--link a {
+    text-decoration: none !important;
+  }
+  .footer-1 .list-menu__item--link:hover,
+  .footer-1 .list-menu__item--link:hover a,
+  .footer-1 .footer-block__details a:hover {
     color: #ffffff !important;
+    text-decoration: none !important;
   }
   .footer-1 .footer-block__list-social .list-social__link {
     display: inline-flex !important;
@@ -58,6 +66,8 @@
   .footer-1 .footer-block__list-social .list-social__link svg {
     width: 16px !important;
     height: 16px !important;
+  }
+  .footer-1 .footer-block__list-social .list-social__link.icon-facebook svg {
     fill: currentColor !important;
     stroke: none !important;
   }
@@ -85,7 +95,7 @@
   .footer-1 .footer-bottom__copyright,
   .footer-1 .footer-bottom__copyright p,
   .footer-1 .footer-bottom__link-list a {
-    font-family: 'Figtree', sans-serif !important;
+    font-family: var(--font-family-1) !important;
     font-size: 1.28rem !important; /* Scaled 0.8rem * 1.6 */
     color: rgba(241, 239, 227, 0.8) !important;
   }

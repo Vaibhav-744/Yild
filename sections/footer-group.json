@@ -17,7 +17,7 @@
         "text_c3mwi9": {
           "type": "text",
           "settings": {
-            "custom_width": "40",
+            "custom_width": "34",
             "heading": "",
             "logo": "shopify://shop_images/yild-logo_087a1a2b-3c8d-442f-8c28-d34cb96c5bd2.png",
             "logo_margin_bottom": 10,
@@ -58,7 +58,7 @@
         "592a8373-a70d-47d3-a311-321a645e1f14": {
           "type": "link_list",
           "settings": {
-            "custom_width": "20",
+            "custom_width": "22",
             "heading": "Shop",
             "menu": "shop",
             "mg_bottom": 0
@@ -67,7 +67,7 @@
         "a6e74cd6-bd47-4ada-98b5-15e28b94aef6": {
           "type": "link_list",
           "settings": {
-            "custom_width": "20",
+            "custom_width": "22",
             "heading": "Company",
             "menu": "company",
             "mg_bottom": 0
@@ -76,7 +76,7 @@
         "text_8hfCWE": {
           "type": "text",
           "settings": {
-            "custom_width": "20",
+            "custom_width": "22",
             "heading": "Contact",
             "logo_margin_bottom": 28,
             "subtext": "<p>Delivering fresh, local produce across the UK</p>",
@@ -119,8 +119,8 @@
             "pdtop_footer_bottom": 15,
             "pdbottom_footer_bottom": 15,
             "border_top": true,
-            "footer_bottom_color": "#F1EAE3",
-            "border_top_color": "#F1EAE3",
+            "footer_bottom_color": "#f1eae3",
+            "border_top_color": "#f1eae3",
             "footer_bottom_bg": "#16301f",
             "footer_bottom_bg_gradient": "",
             "show_copyright": true,

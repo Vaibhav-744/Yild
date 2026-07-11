@@ -5702,38 +5702,38 @@ body.is-custom-information .background-overlay {
 
     /* START: Container */
     .container {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1770 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1570 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1470 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1370 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1320 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .container-1170 {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .halo-row {
@@ -7340,6 +7340,7 @@ h2 {
     font-weight: 500;
     font-size: clamp(2.1rem, 4.2vw, 3.5rem);
     line-height: 1.05;
+    letter-spacing: normal;
 }
 
 .eyebrow-text {

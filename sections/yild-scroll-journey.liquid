@@ -1,0 +1,814 @@
+{%- style -%}
+  /* Ensure parent containers allow sticky positioning */
+  #MainContent, 
+  .content-for-layout,
+  .shopify-section {
+    overflow: visible !important;
+  }
+
+  /* Fixed layout for announcement bar on homepage */
+  .yild-announcement-bar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1002 !important;
+  }
+
+  /* Header wrapper fixed layout on homepage */
+  .header-navigation-wrapper,
+  .header-mobile,
+  .header-wrapper {
+    position: fixed !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1001 !important;
+    transition: top 0.3s ease !important;
+  }
+
+  /* Scrolled past styles (solid cream background, dark green text/icons) */
+  .header-navigation-wrapper.scrolled-past-journey .header-navigation,
+  .header-mobile.scrolled-past-journey,
+  .header-wrapper.scrolled-past-journey {
+    background: rgba(247, 245, 237, 0.92) !important;
+    backdrop-filter: blur(14px) !important;
+    box-shadow: 0 1px 0 rgba(31, 61, 43, 0.08) !important;
+    color: #1f3d2b !important;
+    transition: background 0.45s ease, color 0.45s ease, box-shadow 0.45s ease !important;
+  }
+
+  .header-navigation-wrapper.scrolled-past-journey .menu-lv-1__action,
+  .header-navigation-wrapper.scrolled-past-journey .header__heading-link,
+  .header-navigation-wrapper.scrolled-past-journey .header__heading-text,
+  .header-navigation-wrapper.scrolled-past-journey .header__icon,
+  .header-navigation-wrapper.scrolled-past-journey .header__icon svg,
+  .header-navigation-wrapper.scrolled-past-journey .dropdown-label .text,
+  .header-navigation-wrapper.scrolled-past-journey .dropdown-label svg,
+  .header-mobile.scrolled-past-journey a,
+  .header-mobile.scrolled-past-journey button,
+  .header-mobile.scrolled-past-journey span,
+  .header-mobile.scrolled-past-journey svg,
+  .header-navigation-wrapper.scrolled-past-journey .stroke-icon svg,
+  .header-mobile.scrolled-past-journey .stroke-icon svg {
+    color: #1f3d2b !important;
+    fill: #1f3d2b !important;
+    stroke: #1f3d2b !important;
+  }
+
+  .header-mobile.scrolled-past-journey .mobileMenu-toggle__Icon,
+  .header-mobile.scrolled-past-journey .mobileMenu-toggle__Icon:before,
+  .header-mobile.scrolled-past-journey .mobileMenu-toggle__Icon:after {
+    background-color: #1f3d2b !important;
+  }
+
+  .header-navigation-wrapper.scrolled-past-journey img.logo__main,
+  .header-mobile.scrolled-past-journey img.logo__main,
+  .header-wrapper.scrolled-past-journey img {
+    display: inline-block !important;
+    filter: none !important;
+  }
+  
+  .header-navigation-wrapper.scrolled-past-journey img.logo--transparent,
+  .header-mobile.scrolled-past-journey img.logo--transparent {
+    display: none !important;
+  }
+  
+  /* Initial styles overlaying the journey section (transparent background, white text/icons) */
+  .header-navigation-wrapper.on-journey-section .header-navigation,
+  .header-mobile.on-journey-section,
+  .header-wrapper.on-journey-section {
+    background: linear-gradient(180deg, rgba(12, 24, 14, 0.4), rgba(12, 24, 14, 0)) !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #ffffff !important;
+    transition: background 0.45s ease, color 0.45s ease, box-shadow 0.45s ease !important;
+  }
+
+  .header-navigation-wrapper.on-journey-section .menu-lv-1__action,
+  .header-navigation-wrapper.on-journey-section .header__heading-link,
+  .header-navigation-wrapper.on-journey-section .header__heading-text,
+  .header-navigation-wrapper.on-journey-section .header__icon,
+  .header-navigation-wrapper.on-journey-section .header__icon svg,
+  .header-navigation-wrapper.on-journey-section .dropdown-label .text,
+  .header-navigation-wrapper.on-journey-section .dropdown-label svg,
+  .header-mobile.on-journey-section a,
+  .header-mobile.on-journey-section button,
+  .header-mobile.on-journey-section span,
+  .header-mobile.on-journey-section svg,
+  .header-navigation-wrapper.on-journey-section .stroke-icon svg,
+  .header-mobile.on-journey-section .stroke-icon svg {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+  .header-navigation-wrapper.on-journey-section .cart-count-bubble,
+  .header-mobile.on-journey-section .cart-count-bubble {
+    background-color: #9fce0f !important; /* Yild green accent */
+    color: #16301f !important; /* Dark text */
+  }
+
+  .header-mobile.on-journey-section .mobileMenu-toggle__Icon,
+  .header-mobile.on-journey-section .mobileMenu-toggle__Icon:before,
+  .header-mobile.on-journey-section .mobileMenu-toggle__Icon:after {
+    background-color: #ffffff !important;
+  }
+
+  .header-navigation-wrapper.on-journey-section img.logo__main,
+  .header-mobile.on-journey-section img.logo__main {
+    display: none !important;
+  }
+
+  .header-navigation-wrapper.on-journey-section img.logo--transparent,
+  .header-mobile.on-journey-section img.logo--transparent,
+  .header-wrapper.on-journey-section img {
+    display: inline-block !important;
+    filter: brightness(0) invert(1) !important;
+  }
+
+  #yild-journey-{{ section.id }} {
+    position: relative;
+    height: {{ section.settings.scene_length }}vh;
+  }
+  #yild-journey-{{ section.id }} .journey-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-journey-{{ section.id }} .photo-layer {
+    position: absolute;
+    inset: 0;
+    will-change: transform, opacity;
+    transition: none !important;
+  }
+  #yild-journey-{{ section.id }} .photo-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+    transition: none !important;
+  }
+  #yild-journey-{{ section.id }} .legibility-scrim {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 6 !important;
+    pointer-events: none !important;
+    display: block !important;
+    background: linear-gradient(90deg, rgba(12, 26, 15, 0.72) 0%, rgba(12, 26, 15, 0.38) 40%, rgba(12, 26, 15, 0) 70%), 
+                linear-gradient(0deg, rgba(12, 26, 15, 0.55) 0%, rgba(12, 26, 15, 0) 42%) !important;
+  }
+  #yild-journey-{{ section.id }} .rail-container {
+    position: absolute;
+    z-index: 42;
+    right: clamp(20px, 3.6vw, 46px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    text-align: right;
+  }
+  #yild-journey-{{ section.id }} .rail-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 11px;
+    color: #ffffff;
+    font-size: 1.248rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.35s ease;
+  }
+  #yild-journey-{{ section.id }} .rail-item span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: transform 0.35s ease, background 0.35s ease;
+  }
+  #yild-journey-{{ section.id }} .caption-layer {
+    position: absolute;
+    z-index: 40;
+    inset: 0;
+    pointer-events: none;
+    color: #ffffff;
+  }
+  #yild-journey-{{ section.id }} .caption-box {
+    position: absolute;
+    left: max(clamp(20px, 4vw, 54px), calc((100vw - 1440px) / 2)) !important;
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: transform, opacity;
+    transition: none !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.hero-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: min(560px, 80vw) !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.sub-caption {
+    bottom: clamp(110px, 16vh, 180px);
+    max-width: min(520px, 80vw) !important;
+  }
+  #yild-journey-{{ section.id }} .caption-tag {
+    display: inline-block;
+    font-family: 'Figtree', sans-serif !important;
+    font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 20px !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.sub-caption .caption-tag {
+    margin-bottom: 12px !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.hero-caption .caption-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.36rem, 4.4vw, 5.76rem) !important; /* Scaled clamp(2.1rem, 4.4vw, 3.6rem) by 1.6 */
+    line-height: 1.06 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 0 16px 0 !important;
+    color: #ffffff !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.sub-caption .caption-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.52rem, 4.6vw, 5.76rem) !important; /* Scaled clamp(2.2rem, 4.6vw, 3.6rem) by 1.6 */
+    line-height: 1.05 !important;
+    margin-top:0 !important;
+    margin-bottom: 14px !important;
+    color: #ffffff !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.hero-caption .caption-desc {
+    font-family: 'Figtree', sans-serif !important;
+    font-size: clamp(1.568rem, 1.2vw, 1.84rem) !important; /* Scaled clamp(0.98rem, 1.2vw, 1.15rem) by 1.6 */
+    line-height: 1.6 !important;
+    max-width: 34ch !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin: 0 0 26px 0 !important;
+  }
+  #yild-journey-{{ section.id }} .caption-box.sub-caption .caption-desc {
+    font-family: 'Figtree', sans-serif !important;
+    font-size: clamp(1.6rem, 1.4vw, 1.92rem) !important; /* Scaled clamp(1rem, 1.4vw, 1.2rem) by 1.6 */
+    line-height: 1.55 !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    max-width: 42ch !important;
+    margin: 0 0 26px 0 !important;
+  }
+  #yild-journey-{{ section.id }} .caption-buttons {
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+    pointer-events: auto;
+  }
+  #yild-journey-{{ section.id }} .journey-btn-primary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 15px 30px !important;
+    border-radius: 100px !important;
+    box-shadow: 0 14px 32px rgba(8, 20, 10, 0.28) !important;
+    border: none !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s !important;
+    will-change: transform !important;
+  }
+  #yild-journey-{{ section.id }} .journey-btn-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 15px 30px !important;
+    border-radius: 100px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(3px) !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    will-change: transform !important;
+  }
+  #yild-journey-{{ section.id }} .scroll-hint {
+    position: absolute;
+    z-index: 41;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    color: #ffffff;
+    font-size: 1.152rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  #yild-journey-{{ section.id }} .scroll-hint span:last-child {
+    font-size: 1.68rem;
+    animation: scrollHintBob 1.8s ease-in-out infinite;
+  }
+{%- endstyle -%}
+
+<section id="yild-journey-{{ section.id }}" class="yild-journey-section">
+  <div class="journey-stage">
+    <!-- Image layers -->
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="photo-layer p-step-{{ forloop.index0 }}" style="z-index: {{ forloop.index }}; {% unless forloop.first %}opacity: 0;{% endunless %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 2200 }}" alt="{{ block.settings.image.alt | escape }}">
+          {%- else -%}
+            {%- if forloop.index == 1 -%}
+              <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=2200&q=80" alt="Farm field at sunrise">
+            {%- elsif forloop.index == 2 -%}
+              <img src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=2200&q=80" alt="Fresh harvest">
+            {%- elsif forloop.index == 3 -%}
+              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2200&q=80" alt="Journey transit road">
+            {%- else -%}
+              <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=2200&q=80" alt="Table display">
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        {%- assign idx0 = forloop.index0 -%}
+        <div class="photo-layer p-step-{{ idx0 }}" style="z-index: {{ forloop.index }}; {% unless forloop.first %}opacity: 0;{% endunless %}">
+          {%- if forloop.index == 1 -%}
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=2200&q=80" alt="Farm field at sunrise">
+          {%- elsif forloop.index == 2 -%}
+            <img src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=2200&q=80" alt="Fresh harvest">
+          {%- elsif forloop.index == 3 -%}
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=2200&q=80" alt="Journey transit road">
+          {%- else -%}
+            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=2200&q=80" alt="Table display">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+
+    <!-- Scrim overlay -->
+    <div class="legibility-scrim"></div>
+
+    <!-- Right Side Rail -->
+    {%- if section.settings.show_rail -%}
+      <div class="rail-container">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="rail-item r-step-{{ forloop.index0 }}" {% if forloop.first %}style="opacity: 1;"{% endif %}>
+              {{ block.settings.label }} <span {% if forloop.first %}style="transform: scale(1.3); background: #ffffff;"{% endif %}></span>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            {%- assign idx0 = forloop.index0 -%}
+            <div class="rail-item r-step-{{ idx0 }}" {% if forloop.first %}style="opacity: 1;"{% endif %}>
+              {%- if forloop.index == 1 -%}Farm{%- elsif forloop.index == 2 -%}Harvest{%- elsif forloop.index == 3 -%}Journey{%- else -%}Table{%- endif -%}
+              <span {% if forloop.first %}style="transform: scale(1.3); background: #ffffff;"{% endif %}></span>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Captions -->
+    <div class="caption-layer">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="caption-box {% if forloop.first %}hero-caption{% else %}sub-caption{% endif %} cap-step-{{ forloop.index0 }}" style="{% if forloop.first %}opacity: 1; pointer-events: auto;{% else %}opacity: 0;{% endif %}">
+            {%- if block.settings.tag != blank -%}
+              <span class="caption-tag eyebrow-text">{{ block.settings.tag }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              {%- if forloop.first -%}
+                <h1 class="caption-title">{{ block.settings.title | newline_to_br }}</h1>
+              {%- else -%}
+                <h2 class="caption-title">{{ block.settings.title | newline_to_br }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if block.settings.desc != blank -%}
+              <p class="caption-desc">{{ block.settings.desc }}</p>
+            {%- endif -%}
+            
+            {%- if block.settings.btn1_lbl != blank or block.settings.btn2_lbl != blank -%}
+              <div class="caption-buttons" style="margin-top: 18px;">
+                {%- if block.settings.btn1_lbl != blank -%}
+                  <a href="{{ block.settings.btn1_url }}" class="journey-btn-primary custom-button" style="background: {{ section.settings.btn_primary_bg }}; color: {{ section.settings.btn_primary_txt }};">{{ block.settings.btn1_lbl }}</a>
+                {%- endif -%}
+                {%- if forloop.first and block.settings.btn2_lbl != blank -%}
+                  <a href="{{ block.settings.btn2_url }}" class="journey-btn-secondary custom-button" style="color: #ffffff;">{{ block.settings.btn2_lbl }}</a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- caption 1 (Hero) -->
+        <div class="caption-box hero-caption cap-step-0" style="opacity: 1; pointer-events: auto;">
+          <span class="caption-tag eyebrow-text">Grow local · Buy local · Live better</span>
+          <h1 class="caption-title">From our farms,<br>to your table.</h1>
+          <p class="caption-desc">Fresh, health-scored produce — grown by local UK farmers and delivered straight to your door.</p>
+          <div class="caption-buttons">
+            <a href="#" class="journey-btn-primary custom-button" style="background: {{ section.settings.btn_primary_bg }}; color: {{ section.settings.btn_primary_txt }};">Shop fresh produce</a>
+            <a href="#" class="journey-btn-secondary custom-button" style="color: #ffffff;">How it works</a>
+          </div>
+        </div>
+
+        <!-- caption 2 (Harvest) -->
+        <div class="caption-box sub-caption cap-step-1">
+          <span class="caption-tag eyebrow-text">02 — HARVEST</span>
+          <h2 class="caption-title">Picked at peak ripeness</h2>
+          <p class="caption-desc">Hand-harvested the morning it's ready — so flavour and nutrients are locked in, not lost in storage.</p>
+        </div>
+
+        <!-- caption 3 (Journey) -->
+        <div class="caption-box sub-caption cap-step-2">
+          <span class="caption-tag eyebrow-text">03 — THE JOURNEY</span>
+          <h2 class="caption-title">On its way to you</h2>
+          <p class="caption-desc">Straight from the farm to your basket — no warehouses, no middlemen, no week-long waits.</p>
+        </div>
+
+        <!-- caption 4 (Table) -->
+        <div class="caption-box sub-caption cap-step-3">
+          <span class="caption-tag eyebrow-text">04 — YOUR TABLE</span>
+          <h2 class="caption-title">Fresh on your table</h2>
+          <p class="caption-desc">Every box is health-scored, traceable to the farm that grew it, and ready to enjoy.</p>
+          <div class="caption-buttons" style="margin-top: 18px;">
+            <a href="#" class="journey-btn-primary custom-button" style="background: {{ section.settings.btn_primary_bg }}; color: {{ section.settings.btn_primary_txt }};">Start your order</a>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let rafId = null;
+    function init() {
+      const section = document.getElementById("yild-journey-{{ section.id }}");
+      if (!section) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = {
+        hint: section.querySelector('.scroll-hint'),
+        headers: document.querySelectorAll('.header-navigation-wrapper, .header-mobile, .header-wrapper'),
+        announcement: document.querySelector('.yild-announcement-bar')
+      };
+      
+      const photos = Array.from(section.querySelectorAll('.photo-layer'));
+      const caps = Array.from(section.querySelectorAll('.caption-box'));
+      const rails = Array.from(section.querySelectorAll('.rail-item'));
+      const N = photos.length;
+      if (N === 0) return;
+
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+      const smooth = (t) => t * t * (3 - 2 * t);
+
+      const setPhoto = (el, op, scale) => {
+        if (!el) return;
+        el.style.opacity = String(op);
+        const img = el.firstElementChild;
+        if (img) img.style.transform = 'scale(' + scale + ')';
+      };
+
+      let headerSolid = null;
+
+      if (els.headers.length && !reduce) {
+        els.headers.forEach(h => {
+          h.classList.remove('scrolled-past-journey');
+          h.classList.add('on-journey-section');
+        });
+      }
+
+      const render = (p) => {
+        const step_fraction = 1 / N;
+
+        /* Render photo opacities and scales */
+        photos.forEach((el, i) => {
+          let op, scale;
+          if (i === 0) {
+            const fade_start = step_fraction - 0.07;
+            const fade_end = step_fraction + 0.05;
+            op = 1 - smooth(seg(p, fade_start, fade_end));
+            scale = 1 + 0.09 * seg(p, 0, step_fraction + 0.09);
+          } else if (i === N - 1) {
+            const fade_start = i * step_fraction - 0.07;
+            const fade_end = i * step_fraction + 0.07;
+            op = smooth(seg(p, fade_start, fade_end));
+            scale = 1.09 - 0.08 * seg(p, fade_start, 1);
+          } else {
+            const in_start = i * step_fraction - 0.07;
+            const in_end = i * step_fraction + 0.07;
+            const out_start = (i + 1) * step_fraction - 0.07;
+            const out_end = (i + 1) * step_fraction + 0.05;
+            op = smooth(seg(p, in_start, in_end)) * (1 - smooth(seg(p, out_start, out_end)));
+            scale = 1.09 - 0.07 * seg(p, in_start, out_end);
+          }
+          setPhoto(el, op, scale);
+        });
+
+        /* Render captions */
+        caps.forEach((c, i) => {
+          let o, ty;
+          if (i === 0) {
+            const fade_out_start = 0.03;
+            const fade_out_end = 0.13;
+            o = 1 - seg(p, fade_out_start, fade_out_end);
+            ty = -seg(p, 0, fade_out_end) * 26;
+            c.style.transform = 'translateY(calc(-50% + ' + ty + 'px))';
+          } else {
+            const a_start = i * step_fraction - 0.05;
+            const a_end = i * step_fraction + 0.02;
+            
+            const is_last = (i === N - 1);
+            const b_start = is_last ? 1.0 : (i + 1) * step_fraction - 0.11;
+            const b_end = is_last ? 1.05 : (i + 1) * step_fraction - 0.04;
+            
+            const fin = seg(p, a_start, a_end);
+            const fout = 1 - seg(p, b_start, b_end);
+            o = Math.min(fin, fout);
+            ty = lerp(30, 0, fin) - (1 - fout) * 22;
+            c.style.transform = 'translateY(' + ty + 'px)';
+          }
+          c.style.opacity = String(Math.max(0, o));
+          c.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+        });
+
+        if (els.hint) els.hint.style.opacity = String(1 - seg(p, 0.02, 0.1));
+
+        /* Render rails indicators */
+        if (rails.length) {
+          let idx = Math.floor(p / step_fraction);
+          idx = clamp(idx, 0, N - 1);
+          rails.forEach((d, i) => {
+            const on = i === idx;
+            d.style.opacity = on ? '1' : '0.45';
+            const dot = d.querySelector('span');
+            if (dot) {
+              dot.style.transform = on ? 'scale(1.3)' : 'scale(.6)';
+              dot.style.background = on ? '#ffffff' : 'rgba(255,255,255,.4)';
+            }
+          });
+        }
+
+        /* header background update (if set to interact) */
+        {%- if section.settings.interact_with_header -%}
+          if (els.headers.length) {
+            const barHeight = els.announcement ? els.announcement.offsetHeight : 0;
+            const past = section.getBoundingClientRect().bottom <= (barHeight + 78);
+            if (past !== headerSolid) {
+              headerSolid = past;
+              els.headers.forEach(h => {
+                if (past) {
+                  h.classList.remove('on-journey-section');
+                  h.classList.add('scrolled-past-journey');
+                } else {
+                  h.classList.remove('scrolled-past-journey');
+                  h.classList.add('on-journey-section');
+                }
+              });
+            }
+            // Dynamically set top position based on announcement bar height
+            els.headers.forEach(h => {
+              h.style.top = barHeight + 'px';
+            });
+          }
+        {%- endif -%}
+      };
+
+      const getProgress = () => {
+        const dist = section.offsetHeight - window.innerHeight - 150;
+        if (dist <= 0) return 0;
+        
+        let p = -section.getBoundingClientRect().top / dist;
+        
+        const bottomDist = section.getBoundingClientRect().bottom - window.innerHeight;
+        if (bottomDist > 0 && bottomDist < 180) {
+          const ratio = bottomDist / 180;
+          p = Math.max(p, lerp(1.0, p, ratio));
+        } else if (bottomDist <= 0) {
+          p = 1.0;
+        }
+        
+        return clamp(p, 0, 1);
+      };
+
+      if (rafId) cancelAnimationFrame(rafId);
+
+      if (reduce) {
+        const tick = () => { render(getProgress()); rafId = requestAnimationFrame(tick); };
+        rafId = requestAnimationFrame(tick);
+      } else {
+        let disp = getProgress();
+        const loop = () => {
+          const t = getProgress();
+          disp += (t - disp) * 0.14;
+          if (Math.abs(t - disp) < 0.0004) disp = t;
+          render(disp);
+          rafId = requestAnimationFrame(loop);
+        };
+        rafId = requestAnimationFrame(loop);
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        cancelAnimationFrame(rafId);
+        const header = document.querySelector('.header-wrapper');
+        if (header) {
+          header.classList.remove('on-journey-section');
+          header.classList.remove('scrolled-past-journey');
+        }
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Scroll Journey",
+  "settings": [
+    {
+      "type": "range",
+      "id": "scene_length",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "vh",
+      "label": "Scroll Scene Length",
+      "default": 440
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rail",
+      "label": "Show Indicator Rail",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "interact_with_header",
+      "label": "Interact with Floating Header Styles",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_bg",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_txt",
+      "label": "Button Text Color",
+      "default": "#1f3d2b"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Journey Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step Background Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rail Step Label",
+          "info": "Short word for the right-hand scroll rail navigation, e.g. 'Farm'."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Step Eyebrow Tagline"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Step Title"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Step Description"
+        },
+        {
+          "type": "text",
+          "id": "btn1_lbl",
+          "label": "Primary Button Label"
+        },
+        {
+          "type": "url",
+          "id": "btn1_url",
+          "label": "Primary Button Link"
+        },
+        {
+          "type": "text",
+          "id": "btn2_lbl",
+          "label": "Secondary Button Label",
+          "info": "Only rendered on the first (Hero) slide."
+        },
+        {
+          "type": "url",
+          "id": "btn2_url",
+          "label": "Secondary Button Link",
+          "info": "Only rendered on the first (Hero) slide."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Scroll Journey",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "label": "Farm",
+            "tag": "Grow local · Buy local · Live better",
+            "title": "From our farms,\nto your table.",
+            "desc": "Fresh, health-scored produce — grown by local UK farmers and delivered straight to your door.",
+            "btn1_lbl": "Shop fresh produce",
+            "btn2_lbl": "How it works"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Harvest",
+            "tag": "02 — HARVEST",
+            "title": "Picked at peak ripeness",
+            "desc": "Hand-harvested the morning it's ready — so flavour and nutrients are locked in, not lost in storage."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Journey",
+            "tag": "03 — THE JOURNEY",
+            "title": "On its way to you",
+            "desc": "Straight from the farm to your basket — no warehouses, no middlemen, no week-long waits."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "label": "Table",
+            "tag": "04 — YOUR TABLE",
+            "title": "Fresh on your table",
+            "desc": "Every box is health-scored, traceable to the farm that grew it, and ready to enjoy.",
+            "btn1_lbl": "Start your order"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

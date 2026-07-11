@@ -1,0 +1,343 @@
+{%- style -%}
+  #yild-how-works-{{ section.id }} {
+    padding: clamp(58px, 7vw, 108px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-how-works-{{ section.id }} .how-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  #yild-how-works-{{ section.id }} .how-image-card {
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(31, 61, 43, 0.16);
+    min-height: clamp(300px, 40vw, 520px);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-how-works-{{ section.id }} .how-image-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #yild-how-works-{{ section.id }} .how-image-badge {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    background: {{ section.settings.badge_bg_color }};
+    color: {{ section.settings.badge_txt_color }};
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 1.312rem;
+    font-weight: 600;
+  }
+  #yild-how-works-{{ section.id }} .how-info-col {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 120ms;
+  }
+  #yild-how-works-{{ section.id }} .how-image-card.is-revealed,
+  #yild-how-works-{{ section.id }} .how-info-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-how-works-{{ section.id }} .how-subtitle {
+    display: inline-block;
+    font-size: 1.216rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 12px;
+  }
+  #yild-how-works-{{ section.id }} .how-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
+    color: {{ section.settings.title_color }};
+    line-height: 1.05;
+    margin: 0 0 22px 0;
+  }
+  #yild-how-works-{{ section.id }} .how-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin: 0 0 28px 0;
+    padding: 0;
+  }
+  #yild-how-works-{{ section.id }} .how-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 1.632rem;
+    line-height: 1.5;
+    color: {{ section.settings.list_txt_color }};
+  }
+  #yild-how-works-{{ section.id }} .how-bullet {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: {{ section.settings.bullet_bg_color }};
+    color: {{ section.settings.bullet_txt_color }};
+    display: grid;
+    place-items: center;
+    font-size: 1.12rem;
+    font-weight: 700;
+  }
+  #yild-how-works-{{ section.id }} .how-cta-button {
+    display: inline-block;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 100px;
+    background: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_txt_color }};
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
+    will-change: transform;
+  }
+  #yild-how-works-{{ section.id }} .how-cta-button:hover {
+    background-color: {{ section.settings.btn_bg_hover }};
+  }
+
+  @media (max-width: 760px) {
+    #yild-how-works-{{ section.id }} .how-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-how-works-{{ section.id }}" class="yild-how-works-section">
+  <div class="how-grid">
+    <div class="how-image-card">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" />
+      {%- else -%}
+        <img src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=1000&q=80" alt="Fresh vegetable harvest" loading="lazy" />
+      {%- endif -%}
+      
+      {%- if section.settings.badge_text != blank -%}
+        <div class="how-image-badge">{{ section.settings.badge_text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="how-info-col">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="how-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      
+      {%- if section.settings.title != blank -%}
+        <h2 class="how-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+
+      <ul class="how-list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'bullet_point' -%}
+            <li class="how-item" {{ block.shopify_attributes }}>
+              <span class="how-bullet">✓</span>
+              {{ block.settings.text }}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.btn_lbl != blank -%}
+        <a href="{{ section.settings.btn_url | default: '#' }}" data-magnetic="0.3" class="how-cta-button">
+          {{ section.settings.btn_lbl }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-how-works-{{ section.id }}");
+      if (!section) return;
+
+      const imgCard = section.querySelector('.how-image-card');
+      const infoCol = section.querySelector('.how-info-col');
+
+      if (observer) observer.disconnect();
+
+      // Scroll Reveal
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (imgCard) imgCard.classList.add('is-revealed');
+            if (infoCol) infoCol.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild How It Works",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#eaf0e9"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "list_txt_color",
+      "label": "List Item Text Color",
+      "default": "#3a4a3d"
+    },
+    {
+      "type": "color",
+      "id": "bullet_bg_color",
+      "label": "Checkmark Circle BG",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "bullet_txt_color",
+      "label": "Checkmark Icon Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Image Badge Background",
+      "default": "rgba(247, 245, 237, 0.94)"
+    },
+    {
+      "type": "color",
+      "id": "badge_txt_color",
+      "label": "Image Badge Text Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_hover",
+      "label": "Button Hover Background",
+      "default": "#16301f"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Simple, flexible, local"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "How does Yild work?"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Column Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Image Badge Caption",
+      "default": "Fresh from the fields, every Sunday"
+    },
+    {
+      "type": "text",
+      "id": "btn_lbl",
+      "label": "Button Label",
+      "default": "Start shopping"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet_point",
+      "name": "Bullet Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "List Item Text",
+          "default": "We deliver to your postcode same-day, weekly"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild How It Works",
+      "blocks": [
+        { "type": "bullet_point", "settings": { "text": "We deliver to your postcode same-day, weekly" } },
+        { "type": "bullet_point", "settings": { "text": "Order online or send us a message on WhatsApp" } },
+        { "type": "bullet_point", "settings": { "text": "No minimum order, flat-rate delivery" } },
+        { "type": "bullet_point", "settings": { "text": "We collect from the grower and deliver every Sunday" } },
+        { "type": "bullet_point", "settings": { "text": "No commitment — skip or cancel by Friday midnight" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

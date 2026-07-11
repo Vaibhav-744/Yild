@@ -1,0 +1,236 @@
+{%- style -%}
+  #yild-planet-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-planet-{{ section.id }} .planet-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  #yild-planet-{{ section.id }} .planet-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto clamp(34px, 4vw, 50px);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-planet-{{ section.id }} .planet-subtitle {
+    display: inline-block;
+    font-size: 1.216rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 12px;
+  }
+  #yild-planet-{{ section.id }} .planet-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
+    color: {{ section.settings.title_color }};
+    line-height: 1.05;
+    margin: 0;
+  }
+  #yild-planet-{{ section.id }} .planet-header.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-planet-{{ section.id }} .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  #yild-planet-{{ section.id }} .pillar-card {
+    background: #ffffff;
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 22px;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.03);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-planet-{{ section.id }} .pillar-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-planet-{{ section.id }} .pillar-icon {
+    font-size: 3.2rem;
+    margin-bottom: 12px;
+  }
+  #yild-planet-{{ section.id }} .pillar-text {
+    font-size: 1.568rem;
+    color: {{ section.settings.card_txt_color }};
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    #yild-planet-{{ section.id }} .pillars-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    #yild-planet-{{ section.id }} .pillars-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-planet-{{ section.id }}" class="yild-planet-first-section">
+  <div class="planet-container">
+    <div class="planet-header">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="planet-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="planet-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="pillars-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'pillar' -%}
+          <div class="pillar-card" {{ block.shopify_attributes }}>
+            <div class="pillar-icon">{{ block.settings.icon }}</div>
+            <p class="pillar-text">{{ block.settings.description }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-planet-{{ section.id }}");
+      if (!section) return;
+
+      const header = section.querySelector('.planet-header');
+      const cards = section.querySelectorAll('.pillar-card');
+
+      if (observer) observer.disconnect();
+
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (header) header.classList.add('is-revealed');
+            cards.forEach((card, index) => {
+              const delay = parseInt(card.dataset.delay) || index * 90;
+              setTimeout(() => {
+                card.classList.add('is-revealed');
+              }, delay);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Planet First",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "card_txt_color",
+      "label": "Card Text Color",
+      "default": "#3a4a3d"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e6ebe2"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Put farmers & planet first"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Good for you, your farmer and the planet"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Emoji)",
+          "default": "🌱"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Say no to artificial pesticides with locally grown veg"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Planet First",
+      "blocks": [
+        { "type": "pillar", "settings": { "icon": "🌱", "description": "Say no to artificial pesticides with locally grown veg" } },
+        { "type": "pillar", "settings": { "icon": "♻️", "description": "Surplus and by-products given a second life, not the bin" } },
+        { "type": "pillar", "settings": { "icon": "🚜", "description": "Champion fair pay for our hardworking farmers" } },
+        { "type": "pillar", "settings": { "icon": "📦", "description": "Less packaging, less waste, less driving about" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

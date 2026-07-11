@@ -1,0 +1,380 @@
+{%- style -%}
+  #yild-newsletter-{{ section.id }} {
+    padding: 0 clamp(20px, 4vw, 54px) clamp(58px, 7vw, 96px);
+    background: {{ section.settings.section_bg }};
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-card {
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+    background: {{ section.settings.card_bg }};
+    color: {{ section.settings.card_txt_color }};
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: stretch;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-content {
+    position: relative;
+    padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 68px);
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-subtitle {
+    display: inline-block;
+    font-size: 1.216rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 14px;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.36rem, 4.4vw, 5.44rem);
+    line-height: 1.04;
+    margin: 0 0 14px 0;
+    color: {{ section.settings.card_txt_color }};
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-desc {
+    color: {{ section.settings.card_txt_muted }};
+    font-size: 1.728rem;
+    line-height: 1.55;
+    margin: 0 0 28px 0;
+    max-width: 48ch;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-form-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 520px;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-input {
+    flex: 1;
+    min-width: 220px;
+    padding: 15px 20px;
+    border-radius: 100px;
+    border: 1.5px solid {{ section.settings.input_border }};
+    background: {{ section.settings.input_bg }};
+    color: {{ section.settings.card_txt_color }};
+    font-family: inherit;
+    font-size: 1.6rem;
+    outline: none;
+    transition: border-color 0.25s;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-input:focus {
+    border-color: #ffffff;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-btn {
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 100px;
+    background: {{ section.settings.btn_bg }};
+    color: {{ section.settings.btn_txt }};
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s, transform 0.15s;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-btn:hover {
+    background-color: #ffffff;
+    opacity: 0.95;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-btn:active {
+    transform: scale(0.97);
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-success {
+    flex-basis: 100%;
+    color: {{ section.settings.success_txt_color }};
+    font-weight: 500;
+    margin-top: 10px;
+    font-size: 1.52rem;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-disclaimer {
+    margin-top: 18px;
+    font-size: 1.248rem;
+    color: {{ section.settings.disclaimer_color }};
+    line-height: 1.4;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-image-col {
+    position: relative;
+    min-height: 300px;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-image-col img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #yild-newsletter-{{ section.id }} .newsletter-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, {{ section.settings.card_bg }} 0%, rgba(31,61,43,0) 45%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    #yild-newsletter-{{ section.id }} .newsletter-card {
+      grid-template-columns: 1fr;
+    }
+    #yild-newsletter-{{ section.id }} .newsletter-image-col {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    #yild-newsletter-{{ section.id }} .newsletter-input,
+    #yild-newsletter-{{ section.id }} .newsletter-btn {
+      width: 100%;
+      flex: none;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-newsletter-{{ section.id }}" class="yild-newsletter-section">
+  <div class="newsletter-card">
+    <div class="newsletter-content">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="newsletter-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="newsletter-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.desc != blank -%}
+        <p class="newsletter-desc">{{ section.settings.desc }}</p>
+      {%- endif -%}
+
+      {%- form 'customer', class: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        
+        <div class="newsletter-form-row">
+          <input
+            id="NewsletterForm-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="newsletter-input"
+            value="{{ form.email }}"
+            aria-required="true"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            {% if form.errors %}
+              autofocus
+              aria-invalid="true"
+              aria-describedby="Newsletter-error-{{ section.id }}"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="Newsletter-success-{{ section.id }}"
+            {% endif %}
+            placeholder="{{ section.settings.placeholder_text }}"
+            required
+          >
+          <button type="submit" class="newsletter-btn" name="commit" id="Subscribe-{{ section.id }}" aria-label="Subscribe">
+            {{ section.settings.button_text }}
+          </button>
+
+          {%- if form.posted_successfully? -%}
+            <p class="newsletter-success" id="Newsletter-success-{{ section.id }}" tabindex="-1" autofocus>
+              🎉 {{ section.settings.success_msg }}
+            </p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <p class="newsletter-success" style="color: #ff8888;" id="Newsletter-error-{{ section.id }}">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endform -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="newsletter-disclaimer">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="newsletter-image-col">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" />
+      {%- else -%}
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000&q=80" alt="Hands holding fresh organic food" loading="lazy" />
+      {%- endif -%}
+      <div class="newsletter-image-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-newsletter-{{ section.id }}");
+      if (!section) return;
+
+      const card = section.querySelector('.newsletter-card');
+
+      if (observer) observer.disconnect();
+
+      // Scroll Reveal
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (card) card.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Newsletter Offer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Outer Background",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "card_txt_color",
+      "label": "Card Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "card_txt_muted",
+      "label": "Card Description Color",
+      "default": "rgba(241, 239, 227, 0.82)"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Tag Color",
+      "default": "#a9c4ac"
+    },
+    {
+      "type": "color",
+      "id": "input_bg",
+      "label": "Email Input Background",
+      "default": "rgba(241, 239, 227, 0.08)"
+    },
+    {
+      "type": "color",
+      "id": "input_border",
+      "label": "Email Input Border",
+      "default": "rgba(241, 239, 227, 0.28)"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Submit Button Background",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt",
+      "label": "Submit Button Text Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "success_txt_color",
+      "label": "Success Message Color",
+      "default": "#cfe0cf"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Disclaimer Text Color",
+      "default": "rgba(241, 239, 227, 0.55)"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Love veg, recipes & news?"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "40% off your first basket — code YILDFRESH"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description",
+      "default": "Sign up to our newsletter for fresh-harvest updates, recipes and news — and enjoy 40% off your first basket at checkout."
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Input Placeholder",
+      "default": "you@email.com"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Send my coupon →"
+    },
+    {
+      "type": "textarea",
+      "id": "success_msg",
+      "label": "Success message text",
+      "default": "You're in! Check your inbox for code YILDFRESH."
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "*Offer applies to first orders only and cannot be combined with other promotions. Message us to check delivery availability for your postcode."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Promo Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Newsletter Offer"
+    }
+  ]
+}
+{% endschema %}

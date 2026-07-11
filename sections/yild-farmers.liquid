@@ -1,0 +1,956 @@
+{%- style -%}
+  #yild-farmers-{{ section.id }} {
+    padding: clamp(58px, 7vw, 108px) clamp(20px, 5vw, 54px);
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #yild-farmers-{{ section.id }} .farmers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  #yild-farmers-{{ section.id }} .farmers-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto clamp(30px, 4vw, 44px);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-farmers-{{ section.id }} .farmers-header.is-revealed,
+  #yild-farmers-{{ section.id }} .farmers-hero-banner.is-revealed,
+  #yild-farmers-{{ section.id }} .grower-cta-banner.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-farmers-{{ section.id }} .header-subtitle {
+    display: inline-block;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 12px;
+  }
+  #yild-farmers-{{ section.id }} .header-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
+    line-height: 1.05;
+    color: {{ section.settings.title_color }};
+    margin: 0;
+  }
+  #yild-farmers-{{ section.id }} .farmers-hero-banner {
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 20px 50px rgba(31, 61, 43, 0.14);
+    min-height: clamp(280px, 42vw, 440px);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 90ms;
+  }
+  #yild-farmers-{{ section.id }} .farmers-hero-banner img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+  }
+  #yild-farmers-{{ section.id }} .farmers-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(12, 26, 15, 0.7) 0%, rgba(12, 26, 15, 0.25) 45%, rgba(12, 26, 15, 0) 70%);
+  }
+  #yild-farmers-{{ section.id }} .farmers-hero-content {
+    position: relative;
+    padding: clamp(28px, 4vw, 48px);
+    max-width: 560px;
+    color: {{ section.settings.banner_text_color }};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: clamp(280px, 42vw, 440px);
+  }
+  #yild-farmers-{{ section.id }} .hero-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: {{ section.settings.banner_badge_bg }};
+    color: {{ section.settings.banner_badge_txt }};
+    padding: 6px 13px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    font-family: 'Figtree', sans-serif !important;
+    font-size: 1.152rem !important; /* Scaled 0.72rem * 1.6 */
+    font-weight: 700 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+  }
+  #yild-farmers-{{ section.id }} .hero-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.56rem, 3vw, 3.84rem);
+    line-height: 1.1;
+    margin: 0 0 12px 0;
+    color: {{ section.settings.banner_text_color }} !important;
+  }
+  #yild-farmers-{{ section.id }} .hero-desc {
+    font-size: 1.632rem;
+    line-height: 1.55;
+    color: {{ section.settings.banner_text_color_muted }} !important;
+    max-width: 42ch;
+    margin: 0;
+  }
+  #yild-farmers-{{ section.id }} .reviews-scroller {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    margin: 0 -4px;
+    padding: 4px;
+  }
+  #yild-farmers-{{ section.id }} .reviews-scroller::-webkit-scrollbar {
+    display: none;
+  }
+  #yild-farmers-{{ section.id }} .reviews-track {
+    display: flex;
+    gap: 22px;
+    align-items: stretch;
+  }
+  #yild-farmers-{{ section.id }} .review-card {
+    flex: 0 0 auto;
+    background: {{ section.settings.card_bg_color }};
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 22px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-farmers-{{ section.id }} .review-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-farmers-{{ section.id }} .review-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  #yild-farmers-{{ section.id }} .avatar-circle {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: {{ section.settings.avatar_bg_color }};
+    color: {{ section.settings.avatar_txt_color }};
+    display: grid;
+    place-items: center;
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.76rem;
+  }
+  #yild-farmers-{{ section.id }} .reviewer-name {
+    font-weight: 600;
+    font-size: 1.728rem;
+    color: {{ section.settings.title_color }};
+    margin: 0;
+  }
+  #yild-farmers-{{ section.id }} .stars-rating {
+    color: {{ section.settings.star_color }};
+    letter-spacing: 2px;
+    font-size: 1.36rem;
+  }
+  #yild-farmers-{{ section.id }} .review-quote {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-size: 1.888rem !important;
+    color: {{ section.settings.quote_color }} !important;
+    line-height: 1.5 !important;
+    margin: 0 0 20px 0 !important;
+  }
+  #yild-farmers-{{ section.id }} .review-link {
+    margin-top: auto !important;
+    color: {{ section.settings.link_color }} !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important;
+    text-decoration: none !important;
+  }
+  #yild-farmers-{{ section.id }} .reviews-dots {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 26px;
+  }
+  #yild-farmers-{{ section.id }} .grower-cta-banner {
+    margin-top: clamp(28px, 4vw, 44px);
+    background: linear-gradient(120deg, {{ section.settings.cta_grad_start }}, {{ section.settings.cta_grad_end }});
+    border-radius: 24px;
+    padding: clamp(26px, 4vw, 40px) clamp(24px, 4vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    color: {{ section.settings.cta_text_color }};
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 150ms;
+  }
+  #yild-farmers-{{ section.id }} .cta-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 2.6vw, 3.36rem);
+    color: {{ section.settings.cta_text_color }};
+    margin: 0 0 6px 0;
+  }
+  #yild-farmers-{{ section.id }} .cta-desc {
+    color: {{ section.settings.cta_text_muted }};
+    max-width: 46ch;
+    line-height: 1.55;
+    margin: 0;
+  }
+  #yild-farmers-{{ section.id }} .cta-btn {
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+    background: {{ section.settings.cta_btn_bg }} !important;
+    color: {{ section.settings.cta_btn_txt }} !important;
+    text-decoration: none !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 14px 28px !important;
+    border-radius: 100px !important;
+    transition: transform 0.25s cubic-bezier(.16,1,.3,1) !important;
+    will-change: transform !important;
+  }
+  @media (max-width: 560px) {
+    #yild-farmers-{{ section.id }} .cta-btn {
+      width: 100% !important;
+      text-align: center;
+    }
+  }
+
+  /* Grid Highlights Styles */
+  #yild-farmers-{{ section.id }} .growers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  #yild-farmers-{{ section.id }} .grower-figure {
+    margin: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid {{ section.settings.card_border_color }};
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-farmers-{{ section.id }} .grower-figure.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-farmers-{{ section.id }} .figure-image-wrapper {
+    aspect-ratio: 1.35;
+    overflow: hidden;
+  }
+  #yild-farmers-{{ section.id }} .figure-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #yild-farmers-{{ section.id }} .figure-caption {
+    padding: 16px 18px;
+    font-size: 1.52rem;
+    color: {{ section.settings.quote_color }};
+  }
+  #yild-farmers-{{ section.id }} .grower-figure-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  @media (max-width: 760px) {
+    #yild-farmers-{{ section.id }} .growers-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-farmers-{{ section.id }}" class="yild-farmers-section">
+  <div class="farmers-container">
+    
+    <!-- Section Header -->
+    <div class="farmers-header">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="header-subtitle eyebrow-text">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="header-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+
+    <!-- Hero Banner Overlay Box -->
+    <div class="farmers-hero-banner">
+      {%- if section.settings.banner_image != blank -%}
+        <img src="{{ section.settings.banner_image | image_url: width: 1200 }}" alt="{{ section.settings.banner_image.alt | escape }}">
+      {%- else -%}
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80" alt="Growers Team">
+      {%- endif -%}
+      <div class="farmers-hero-overlay"></div>
+      <div class="farmers-hero-content">
+        {%- if section.settings.banner_badge != blank -%}
+          <span class="hero-badge eyebrow-text">{{ section.settings.banner_badge }}</span>
+        {%- endif -%}
+        {%- if section.settings.banner_title != blank -%}
+          <h3 class="hero-title">{{ section.settings.banner_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.banner_desc != blank -%}
+          <p class="hero-desc">{{ section.settings.banner_desc }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- Highlights Grid -->
+    <div class="growers-grid" id="growersGrid-{{ section.id }}">
+      <figure class="grower-figure" data-delay="0">
+        {%- if section.settings.highlight_url_1 != blank -%}
+          <a href="{{ section.settings.highlight_url_1 }}" class="grower-figure-link">
+        {%- endif -%}
+        <div class="figure-image-wrapper">
+          {%- if section.settings.highlight_img_1 != blank -%}
+            <img src="{{ section.settings.highlight_img_1 | image_url: width: 600 }}" alt="{{ section.settings.highlight_img_1.alt | escape }}" loading="lazy" />
+          {%- else -%}
+            <img src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=600&q=80" alt="Fields worked with care" loading="lazy" />
+          {%- endif -%}
+        </div>
+        <figcaption class="figure-caption">{{ section.settings.highlight_cap_1 }}</figcaption>
+        {%- if section.settings.highlight_url_1 != blank -%}
+          </a>
+        {%- endif -%}
+      </figure>
+      
+      <figure class="grower-figure" data-delay="110">
+        {%- if section.settings.highlight_url_2 != blank -%}
+          <a href="{{ section.settings.highlight_url_2 }}" class="grower-figure-link">
+        {%- endif -%}
+        <div class="figure-image-wrapper">
+          {%- if section.settings.highlight_img_2 != blank -%}
+            <img src="{{ section.settings.highlight_img_2 | image_url: width: 600 }}" alt="{{ section.settings.highlight_img_2.alt | escape }}" loading="lazy" />
+          {%- else -%}
+            <img src="https://images.unsplash.com/photo-1574359411659-15573a27f812?w=600&q=80" alt="Mixed traditional farming" loading="lazy" />
+          {%- endif -%}
+        </div>
+        <figcaption class="figure-caption">{{ section.settings.highlight_cap_2 }}</figcaption>
+        {%- if section.settings.highlight_url_2 != blank -%}
+          </a>
+        {%- endif -%}
+      </figure>
+
+      <figure class="grower-figure" data-delay="220">
+        {%- if section.settings.highlight_url_3 != blank -%}
+          <a href="{{ section.settings.highlight_url_3 }}" class="grower-figure-link">
+        {%- endif -%}
+        <div class="figure-image-wrapper">
+          {%- if section.settings.highlight_img_3 != blank -%}
+            <img src="{{ section.settings.highlight_img_3 | image_url: width: 600 }}" alt="{{ section.settings.highlight_img_3.alt | escape }}" loading="lazy" />
+          {%- else -%}
+            <img src="https://images.unsplash.com/photo-1545468130-447a24731b38?w=600&q=80" alt="Pasture raised cows" loading="lazy" />
+          {%- endif -%}
+        </div>
+        <figcaption class="figure-caption">{{ section.settings.highlight_cap_3 }}</figcaption>
+        {%- if section.settings.highlight_url_3 != blank -%}
+          </a>
+        {%- endif -%}
+      </figure>
+    </div>
+
+    <!-- Review Cards Track -->
+    <div class="reviews-scroller" id="reviewsViewport-{{ section.id }}">
+      <div class="reviews-track" id="reviewsTrack-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'grower_review' -%}
+            <article class="review-card" style="transition-delay: {{ forloop.index0 | times: 90 }}ms;" {{ block.shopify_attributes }}>
+              <div class="review-header">
+                <div class="avatar-circle">{{ block.settings.initial }}</div>
+                <div>
+                  <h3 class="reviewer-name">{{ block.settings.name }}</h3>
+                  <div class="stars-rating">
+                    {%- assign stars_count = block.settings.rating -%}
+                    {%- for i in (1..stars_count) -%}★{%- endfor -%}
+                  </div>
+                </div>
+              </div>
+              <p class="review-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+              {%- if block.settings.link_label != blank -%}
+                <a href="{{ block.settings.link_url }}" class="review-link">{{ block.settings.link_label }} &rarr;</a>
+              {%- endif -%}
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    
+    <div class="reviews-dots" id="reviewsDots-{{ section.id }}"></div>
+
+    <!-- Call to Action Grower Panel -->
+    <div class="grower-cta-banner">
+      <div>
+        {%- if section.settings.cta_title != blank -%}
+          <h3 class="cta-title">{{ section.settings.cta_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.cta_desc != blank -%}
+          <p class="cta-desc">{{ section.settings.cta_desc }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.cta_btn_lbl != blank -%}
+        <a href="{{ section.settings.cta_btn_url }}" class="cta-btn custom-button" data-magnetic="0.3">{{ section.settings.cta_btn_lbl }}</a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-farmers-{{ section.id }}");
+      if (!section) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const header = section.querySelector('.farmers-header');
+      const hero = section.querySelector('.farmers-hero-banner');
+      const cta = section.querySelector('.grower-cta-banner');
+      const cards = section.querySelectorAll('.review-card');
+      const figures = section.querySelectorAll('.grower-figure');
+
+      if (observer) observer.disconnect();
+
+      // Scroll Reveal
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (header) header.classList.add('is-revealed');
+            if (hero) hero.classList.add('is-revealed');
+            if (cta) cta.classList.add('is-revealed');
+            cards.forEach(card => card.classList.add('is-revealed'));
+            figures.forEach(fig => {
+              const delay = parseInt(fig.dataset.delay) || 0;
+              setTimeout(() => {
+                fig.classList.add('is-revealed');
+              }, delay);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(section);
+
+      // Slider logic
+      const viewport = section.querySelector('#reviewsViewport-{{ section.id }}');
+      const track = section.querySelector('#reviewsTrack-{{ section.id }}');
+      const dots = section.querySelector('#reviewsDots-{{ section.id }}');
+
+      if (!viewport || !track) return;
+
+      const gap = 22;
+      const state = { page: 0, pages: 1, timer: null };
+      const autoInterval = 6000;
+      
+      const cardsList = () => [...track.children];
+      const mq = () => window.matchMedia('(min-width:820px)').matches;
+
+      const layout = () => {
+        const pv = mq() ? 2 : 1;
+        cardsList().forEach((c) => {
+          c.style.flex = '0 0 calc((100% - ' + ((pv - 1) * gap) + 'px) / ' + pv + ')';
+          c.style.scrollSnapAlign = 'start';
+        });
+        
+        state.pages = Math.max(1, Math.ceil(cardsList().length / pv));
+        if (state.page > state.pages - 1) state.page = state.pages - 1;
+        renderDots();
+        go(state.page);
+      };
+
+      const renderDots = () => {
+        if (!dots) return;
+        if (state.pages <= 1) { dots.style.display = 'none'; dots.innerHTML = ''; return; }
+        dots.style.display = 'flex';
+        dots.innerHTML = '';
+        for (let i = 0; i < state.pages; i++) {
+          const d = document.createElement('button');
+          d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          d.style.cssText = 'height:9px;border:none;padding:0;cursor:pointer;border-radius:100px;transition:width .3s ease,background .3s ease;width:' + (i === state.page ? '26px' : '9px') + ';background:' + (i === state.page ? '#1f3d2b' : '#c7d2c5') + ';margin:0 4px;';
+          d.addEventListener('click', () => { go(i, true); restartTimer(); });
+          dots.appendChild(d);
+        }
+      };
+
+      const updateDots = () => {
+        if (!dots) return;
+        [...dots.children].forEach((d, i) => {
+          d.style.width = i === state.page ? '26px' : '9px';
+          d.style.background = i === state.page ? '#1f3d2b' : '#c7d2c5';
+        });
+      };
+
+      let animId = null;
+      const tweenTo = (left) => {
+        cancelAnimationFrame(animId);
+        const start = viewport.scrollLeft, dist = left - start, t0 = performance.now(), dur = 440;
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+        const stepFn = (now) => {
+          const k = Math.min(1, (now - t0) / dur);
+          viewport.scrollLeft = start + dist * ease(k);
+          if (k < 1) animId = requestAnimationFrame(stepFn);
+        };
+        animId = requestAnimationFrame(stepFn);
+      };
+
+      const go = (i, smooth) => {
+        state.page = Math.max(0, Math.min(i, state.pages - 1));
+        const pv = mq() ? 2 : 1;
+        const idx = Math.min(state.page * pv, cardsList().length - 1);
+        const target = cardsList()[idx];
+        const left = target ? target.offsetLeft : state.page * viewport.clientWidth;
+        if (smooth) tweenTo(left); else viewport.scrollLeft = left;
+        updateDots();
+      };
+
+      let st = null;
+      viewport.addEventListener('scroll', () => {
+        clearTimeout(st);
+        st = setTimeout(() => {
+          const p = Math.round(viewport.scrollLeft / viewport.clientWidth);
+          if (p !== state.page && p >= 0 && p < state.pages) { state.page = p; updateDots(); }
+        }, 90);
+      }, { passive: true });
+
+      const nextSlide = () => {
+        go((state.page + 1) % state.pages, true);
+      };
+
+      const restartTimer = () => {
+        clearInterval(state.timer);
+        state.timer = setInterval(nextSlide, autoInterval);
+      };
+
+      viewport.removeEventListener('pointerenter', () => clearInterval(state.timer));
+      viewport.removeEventListener('pointerleave', restartTimer);
+      viewport.addEventListener('pointerenter', () => clearInterval(state.timer));
+      viewport.addEventListener('pointerleave', restartTimer);
+
+      layout();
+      restartTimer();
+      window.removeEventListener('resize', layout);
+      window.addEventListener('resize', layout);
+
+      // Magnetic CTAs (disabled for now)
+      /*
+      const magneticBtn = section.querySelector('[data-magnetic]');
+      if (magneticBtn) {
+        const strength = parseFloat(magneticBtn.dataset.magnetic) || 0.3;
+        magneticBtn.style.transition = 'transform .25s cubic-bezier(.16,1,.3,1)';
+        magneticBtn.style.willChange = 'transform';
+        
+        // Remove existing listeners to avoid multiple bindings
+        const newBtn = magneticBtn.cloneNode(true);
+        magneticBtn.parentNode.replaceChild(newBtn, magneticBtn);
+        
+        newBtn.addEventListener('pointermove', (e) => {
+          const r = newBtn.getBoundingClientRect();
+          const mx = e.clientX - (r.left + r.width / 2);
+          const my = e.clientY - (r.top + r.height / 2);
+          newBtn.style.transform = 'translate(' + (mx * strength) + 'px,' + (my * strength) + 'px)';
+        });
+        
+        newBtn.addEventListener('pointerleave', () => {
+          newBtn.style.transform = 'translate(0,0)';
+        });
+      }
+      */
+
+      section._cleanupFarmers = () => {
+        clearInterval(state.timer);
+        window.removeEventListener('resize', layout);
+        if (observer) observer.disconnect();
+      };
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        const sectionEl = document.getElementById("yild-farmers-{{ section.id }}");
+        if (sectionEl && sectionEl._cleanupFarmers) sectionEl._cleanupFarmers();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Farmers Marketplace",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "General Text Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Local farmer marketplace"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "Meet the people who grow your food"
+    },
+    {
+      "type": "header",
+      "content": "Hero Banner Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "banner_badge",
+      "label": "Badge Text",
+      "default": "Real growers · real faces"
+    },
+    {
+      "type": "color",
+      "id": "banner_badge_bg",
+      "label": "Badge Background Color",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "color",
+      "id": "banner_badge_txt",
+      "label": "Badge Text Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner Title",
+      "default": "Every box connects you to a person, not a warehouse."
+    },
+    {
+      "type": "textarea",
+      "id": "banner_desc",
+      "label": "Banner Description",
+      "default": "From family farms across Kent, our growers pick, pack and send your produce — and get a fair price for it."
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color",
+      "label": "Banner Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color_muted",
+      "label": "Banner Description Color",
+      "default": "rgba(241, 241, 227, 0.9)"
+    },
+    {
+      "type": "header",
+      "content": "Grid Highlights Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "highlight_img_1",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "highlight_cap_1",
+      "label": "Card 1 Caption",
+      "default": "Fields worked with care, row by row"
+    },
+    {
+      "type": "url",
+      "id": "highlight_url_1",
+      "label": "Card 1 Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "highlight_img_2",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "highlight_cap_2",
+      "label": "Card 2 Caption",
+      "default": "Mixed farms, raised the traditional way"
+    },
+    {
+      "type": "url",
+      "id": "highlight_url_2",
+      "label": "Card 2 Link URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "highlight_img_3",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "highlight_cap_3",
+      "label": "Card 3 Caption",
+      "default": "Pasture-raised, close to home"
+    },
+    {
+      "type": "url",
+      "id": "highlight_url_3",
+      "label": "Card 3 Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Testimonials Card Settings"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e6ebe2"
+    },
+    {
+      "type": "color",
+      "id": "avatar_bg_color",
+      "label": "Avatar Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "avatar_txt_color",
+      "label": "Avatar Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars Color",
+      "default": "#c79a3e"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Text Color",
+      "default": "#3a4a3d"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Card Link Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "header",
+      "content": "Grower CTA Block Settings"
+    },
+    {
+      "type": "color",
+      "id": "cta_grad_start",
+      "label": "Gradient Color 1",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "cta_grad_end",
+      "label": "Gradient Color 2",
+      "default": "#16301f"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_muted",
+      "label": "CTA Description Color",
+      "default": "rgba(241, 239, 227, 0.82)"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA Title",
+      "default": "Are you a grower?"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_desc",
+      "label": "CTA Description",
+      "default": "Join our network and reach customers who value clean, traceable food — and get a fair price for it."
+    },
+    {
+      "type": "text",
+      "id": "cta_btn_lbl",
+      "label": "CTA Button Label",
+      "default": "Become a farmer →"
+    },
+    {
+      "type": "url",
+      "id": "cta_btn_url",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn_bg",
+      "label": "CTA Button BG",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn_txt",
+      "label": "CTA Button Text",
+      "default": "#16301f"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "grower_review",
+      "name": "Grower Review/Quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "initial",
+          "label": "Avatar Initial Letter",
+          "default": "G"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Grower/Farm Name",
+          "default": "G.W. Breach & Sons"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Grower Quote",
+          "default": "Since joining Yild our sales have grown and we finally get a fair price for the food we grow."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Farm Link Label",
+          "default": "View farm & produce"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Farm Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Farmers Marketplace",
+      "blocks": [
+        {
+          "type": "grower_review",
+          "settings": {
+            "initial": "G",
+            "name": "G.W. Breach & Sons",
+            "rating": 5,
+            "quote": "Since joining Yild our sales have grown and we finally get a fair price for the food we grow."
+          }
+        },
+        {
+          "type": "grower_review",
+          "settings": {
+            "initial": "O",
+            "name": "Organic North Co-op",
+            "rating": 5,
+            "quote": "Yild lets us tell our story directly to customers. People care where their food comes from."
+          }
+        },
+        {
+          "type": "grower_review",
+          "settings": {
+            "initial": "L",
+            "name": "Loddington Farm",
+            "rating": 5,
+            "quote": "The health-score system rewards us for growing clean — it has changed how we farm for the better."
+          }
+        },
+        {
+          "type": "grower_review",
+          "settings": {
+            "initial": "B",
+            "name": "Burscombe Cliff Farm",
+            "rating": 5,
+            "quote": "Orders come in the night before and go out the same morning. No waste, no warehouse, no waiting."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

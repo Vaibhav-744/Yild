@@ -1,0 +1,257 @@
+{%- style -%}
+  #yild-poverty-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #yild-poverty-{{ section.id }} .poverty-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(30px, 5vw, 64px);
+    align-items: center;
+  }
+  #yild-poverty-{{ section.id }} .poverty-content {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-poverty-{{ section.id }} .poverty-image-card {
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    min-height: clamp(260px, 32vw, 400px);
+    position: relative;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 120ms;
+  }
+  #yild-poverty-{{ section.id }} .poverty-content.is-revealed,
+  #yild-poverty-{{ section.id }} .poverty-image-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-poverty-{{ section.id }} .poverty-subtitle {
+    display: inline-block;
+    font-size: 1.216rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 16px;
+  }
+  #yild-poverty-{{ section.id }} .poverty-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.36rem, 4.2vw, 5.44rem);
+    line-height: 1.06;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 18px 0;
+  }
+  #yild-poverty-{{ section.id }} .poverty-desc {
+    font-size: 1.76rem;
+    line-height: 1.65;
+    color: {{ section.settings.desc_color }};
+    max-width: 48ch;
+    margin: 0 0 28px 0;
+  }
+  #yild-poverty-{{ section.id }} .poverty-cta-button {
+    display: inline-block;
+    font-weight: 600;
+    padding: 14px 30px;
+    border-radius: 100px;
+    background: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_txt_color }};
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s;
+    will-change: transform;
+  }
+  #yild-poverty-{{ section.id }} .poverty-cta-button:hover {
+    background-color: {{ section.settings.btn_bg_hover }};
+  }
+  #yild-poverty-{{ section.id }} .poverty-image-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    #yild-poverty-{{ section.id }} .poverty-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-poverty-{{ section.id }}" class="yild-food-poverty-section">
+  <div class="poverty-grid">
+    <div class="poverty-content">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="poverty-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="poverty-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.desc != blank -%}
+        <p class="poverty-desc">{{ section.settings.desc }}</p>
+      {%- endif -%}
+      {%- if section.settings.btn_lbl != blank -%}
+        <a href="{{ section.settings.btn_url | default: '#' }}" data-magnetic="0.3" class="poverty-cta-button">
+          {{ section.settings.btn_lbl }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="poverty-image-card">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" />
+      {%- else -%}
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000&q=80" alt="Fresh vegetable spread" loading="lazy" />
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-poverty-{{ section.id }}");
+      if (!section) return;
+
+      const content = section.querySelector('.poverty-content');
+      const imgCard = section.querySelector('.poverty-image-card');
+
+      if (observer) observer.disconnect();
+
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (content) content.classList.add('is-revealed');
+            if (imgCard) imgCard.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Food Poverty",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "rgba(241, 239, 227, 0.85)"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt_color",
+      "label": "Button Text Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_hover",
+      "label": "Button Hover Background",
+      "default": "#e6e0cc"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Every box gives back"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Fight food poverty with us"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description",
+      "default": "We donate fresh, local produce for every Vegetable Box sold — supporting families in the communities we deliver to."
+    },
+    {
+      "type": "text",
+      "id": "btn_lbl",
+      "label": "Button Label",
+      "default": "Find out more"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Highlight Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Food Poverty"
+    }
+  ]
+}
+{% endschema %}

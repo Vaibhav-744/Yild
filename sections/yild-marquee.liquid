@@ -1,0 +1,276 @@
+{%- style -%}
+  #yild-marquee-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    overflow: hidden;
+    padding: clamp(22px, 3vw, 38px) 0;
+    border-top: 1px solid {{ section.settings.border_color }};
+    border-bottom: 1px solid {{ section.settings.border_color }};
+  }
+  #yild-marquee-{{ section.id }} .marquee-row {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  #yild-marquee-{{ section.id }} .marquee-row:not(:first-child) {
+    margin-top: 10px;
+  }
+  #yild-marquee-{{ section.id }} .marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  #yild-marquee-{{ section.id }} .marquee-track.row-1 {
+    animation: marqueeL-{{ section.id }} {{ section.settings.row1_speed }}s linear infinite;
+  }
+  #yild-marquee-{{ section.id }} .marquee-track.row-2 {
+    animation: marqueeR-{{ section.id }} {{ section.settings.row2_speed }}s linear infinite;
+  }
+  #yild-marquee-{{ section.id }} .marquee-group {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  #yild-marquee-{{ section.id }} .phrase-big {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.72rem, 3.6vw, 4.8rem);
+    white-space: nowrap;
+    line-height: 1.2;
+    padding: 0 0.55em;
+  }
+  #yild-marquee-{{ section.id }} .phrase-small {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.28rem, 1.2vw, 1.6rem);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+    white-space: nowrap;
+    line-height: 1.2;
+    padding: 0 0.55em;
+  }
+  #yild-marquee-{{ section.id }} .separator {
+    color: {{ section.settings.accent_color }};
+    font-size: 0.8em;
+    display: inline-block;
+    align-self: center;
+    padding: 0 0.55em;
+  }
+
+  @keyframes marqueeL-{{ section.id }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-12.5%); }
+  }
+  @keyframes marqueeR-{{ section.id }} {
+    from { transform: translateX(-12.5%); }
+    to { transform: translateX(0); }
+  }
+{%- endstyle -%}
+
+<section id="yild-marquee-{{ section.id }}" class="yild-marquee-section">
+  <!-- Row 1: Big Serif Phrases -->
+  <div class="marquee-row" id="mRow1-{{ section.id }}">
+    <div class="marquee-track row-1">
+      {%- for i in (1..8) -%}
+        <div class="marquee-group" {% if forloop.first == false %}aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row_1_phrase' -%}
+              <span class="phrase-big" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+              <span class="separator">✦</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Row 2: Small Sans-Serif Phrases -->
+  <div class="marquee-row" id="mRow2-{{ section.id }}">
+    <div class="marquee-track row-2">
+      {%- for i in (1..8) -%}
+        <div class="marquee-group" {% if forloop.first == false %}aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row_2_phrase' -%}
+              <span class="phrase-small" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+              <span class="separator">✦</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let rafId = null;
+    function init() {
+      const section = document.getElementById("yild-marquee-{{ section.id }}");
+      if (!section) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      const r1 = section.querySelector('#mRow1-{{ section.id }}');
+      const r2 = section.querySelector('#mRow2-{{ section.id }}');
+      
+      let extra = 0;
+      let lastY = window.scrollY;
+      
+      if (rafId) cancelAnimationFrame(rafId);
+
+      const loop = () => {
+        const y = window.scrollY;
+        extra += (y - lastY) * 1.1;
+        extra *= 0.86;
+        lastY = y;
+        
+        if (Math.abs(extra) < 0.04) extra = 0;
+        
+        if (r1) r1.style.transform = 'translateX(' + extra.toFixed(2) + 'px)';
+        if (r2) r2.style.transform = 'translateX(' + (-extra).toFixed(2) + 'px)';
+        
+        rafId = requestAnimationFrame(loop);
+      };
+      
+      rafId = requestAnimationFrame(loop);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        cancelAnimationFrame(rafId);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Scrolling Marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#a9c4ac"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "rgba(241, 239, 227, 0.1)"
+    },
+    {
+      "type": "range",
+      "id": "row1_speed",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "s",
+      "label": "Row 1 Scroll Speed (Duration)",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "row2_speed",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "s",
+      "label": "Row 2 Scroll Speed (Duration)",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row_1_phrase",
+      "name": "Row 1 Phrase (Big)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Phrase Text",
+          "default": "Fresh from the farm"
+        }
+      ]
+    },
+    {
+      "type": "row_2_phrase",
+      "name": "Row 2 Phrase (Small)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Phrase Text",
+          "default": "Zero middlemen"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Scrolling Marquee",
+      "blocks": [
+        {
+          "type": "row_1_phrase",
+          "settings": { "text": "Fresh from the farm" }
+        },
+        {
+          "type": "row_1_phrase",
+          "settings": { "text": "Health-scored 0–100" }
+        },
+        {
+          "type": "row_1_phrase",
+          "settings": { "text": "Locally grown" }
+        },
+        {
+          "type": "row_1_phrase",
+          "settings": { "text": "Zero middlemen" }
+        },
+        {
+          "type": "row_1_phrase",
+          "settings": { "text": "Picked at peak ripeness" }
+        },
+        {
+          "type": "row_2_phrase",
+          "settings": { "text": "Direct from Kent farms" }
+        },
+        {
+          "type": "row_2_phrase",
+          "settings": { "text": "100% Traceable" }
+        },
+        {
+          "type": "row_2_phrase",
+          "settings": { "text": "Fresh harvest weekly" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

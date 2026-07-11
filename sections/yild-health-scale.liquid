@@ -1,0 +1,436 @@
+{%- style -%}
+  #yild-scale-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-scale-{{ section.id }} .scale-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #yild-scale-{{ section.id }} .scale-header {
+    margin-bottom: clamp(36px, 4vw, 52px);
+  }
+  #yild-scale-{{ section.id }} .scale-subtitle {
+    display: inline-block;
+    font-size: 1.216rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 14px;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-scale-{{ section.id }} .scale-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem);
+    color: {{ section.settings.title_color }};
+    margin: 0 0 16px 0;
+    line-height: 1.05;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 80ms;
+  }
+  #yild-scale-{{ section.id }} .scale-desc {
+    font-size: 1.76rem;
+    color: {{ section.settings.desc_color }};
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 160ms;
+  }
+  #yild-scale-{{ section.id }} .scale-header.is-revealed .scale-subtitle,
+  #yild-scale-{{ section.id }} .scale-header.is-revealed .scale-title,
+  #yild-scale-{{ section.id }} .scale-header.is-revealed .scale-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-scale-{{ section.id }} .scale-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    margin: 0 -4px;
+    padding: 4px;
+  }
+  #yild-scale-{{ section.id }} .scale-grid {
+    display: flex;
+    gap: 16px;
+  }
+  #yild-scale-{{ section.id }} .scale-card {
+    flex: 0 0 calc((100% - 16px) / 2); /* mobile: 2 per view */
+    background: #ffffff;
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 22px;
+    padding: 28px 20px;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.04);
+    opacity: 0;
+    transform: translateY(34px);
+    scroll-snap-align: start;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-scale-{{ section.id }} .scale-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-scale-{{ section.id }} .scale-circle {
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--title-font);
+    font-weight: 500;
+    font-size: 1.92rem;
+    border-width: 2px;
+    border-style: solid;
+  }
+  #yild-scale-{{ section.id }} .scale-card-title {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 1.792rem;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 6px 0;
+  }
+  #yild-scale-{{ section.id }} .scale-card-desc {
+    font-size: 1.472rem;
+    color: {{ section.settings.card_desc_color }};
+    line-height: 1.5;
+    margin: 0;
+  }
+  #yild-scale-{{ section.id }} .scale-dots {
+    display: none;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 26px;
+  }
+
+  @media (min-width: 720px) {
+    #yild-scale-{{ section.id }} .scale-card {
+      flex: 0 0 calc((100% - 48px) / 4); /* desktop: 4 per view */
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-scale-{{ section.id }}" class="yild-health-scale-section">
+  <div class="scale-container">
+    <div class="scale-header">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="scale-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="scale-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.desc != blank -%}
+        <p class="scale-desc">{{ section.settings.desc }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="scale-viewport yild-scroller" id="scaleViewport-{{ section.id }}">
+      <div class="scale-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'score_tier' -%}
+            <div class="scale-card" {{ block.shopify_attributes }}>
+              <div class="scale-circle" style="color: {{ block.settings.accent_color }}; background: {{ block.settings.circle_bg }}; border-color: {{ block.settings.circle_border }};">
+                {{ block.settings.score_range }}
+              </div>
+              <h3 class="scale-card-title">{{ block.settings.tier_name }}</h3>
+              <p class="scale-card-desc">{{ block.settings.tier_desc }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor %}
+      </div>
+    </div>
+    
+    <div class="scale-dots" id="scaleDots-{{ section.id }}"></div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let revealObserver = null;
+    let sliderInstance = null;
+
+    function init() {
+      const section = document.getElementById("yild-scale-{{ section.id }}");
+      if (!section) return;
+
+      const header = section.querySelector('.scale-header');
+      const cards = section.querySelectorAll('.scale-card');
+
+      // 1. Scroll Reveal setup
+      if (revealObserver) revealObserver.disconnect();
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (header) header.classList.add('is-revealed');
+            cards.forEach((card, index) => {
+              setTimeout(() => {
+                card.classList.add('is-revealed');
+              }, index * 90);
+            });
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealObserver.observe(section);
+
+      // 2. Slider Dot Navigation setup
+      const viewport = document.getElementById("scaleViewport-{{ section.id }}");
+      const dotsContainer = document.getElementById("scaleDots-{{ section.id }}");
+      if (viewport && dotsContainer) {
+        const isMobile = () => !window.matchMedia('(min-width:720px)').matches;
+        
+        const renderDots = () => {
+          const mobile = isMobile();
+          if (!mobile) {
+            dotsContainer.style.display = 'none';
+            dotsContainer.innerHTML = '';
+            return;
+          }
+          dotsContainer.style.display = 'flex';
+          dotsContainer.innerHTML = '';
+          const cardCount = cards.length;
+          const pages = Math.ceil(cardCount / 2); // 2 cards per page on mobile
+          
+          let activeIndex = Math.round(viewport.scrollLeft / viewport.clientWidth);
+          if (activeIndex >= pages) activeIndex = pages - 1;
+
+          for (let i = 0; i < pages; i++) {
+            const dot = document.createElement('button');
+            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            dot.style.height = '9px';
+            dot.style.border = 'none';
+            dot.style.padding = '0';
+            dot.style.cursor = 'pointer';
+            dot.style.borderRadius = '100px';
+            dot.style.transition = 'width .3s ease, background .3s ease';
+            dot.style.width = (i === activeIndex ? '26px' : '9px');
+            dot.style.background = (i === activeIndex ? '{{ section.settings.title_color }}' : '#c7d2c5');
+            
+            dot.addEventListener('click', () => {
+              const targetCardIndex = i * 2;
+              const targetCard = cards[targetCardIndex];
+              if (targetCard) {
+                viewport.scrollTo({
+                  left: targetCard.offsetLeft,
+                  behavior: 'smooth'
+                });
+              }
+            });
+            dotsContainer.appendChild(dot);
+          }
+        };
+
+        const updateActiveDot = () => {
+          const pages = Math.ceil(cards.length / 2);
+          let activeIndex = Math.round(viewport.scrollLeft / (viewport.clientWidth || 1));
+          if (activeIndex >= pages) activeIndex = pages - 1;
+          const dots = dotsContainer.children;
+          for (let i = 0; i < dots.length; i++) {
+            dots[i].style.width = (i === activeIndex ? '26px' : '9px');
+            dots[i].style.background = (i === activeIndex ? '{{ section.settings.title_color }}' : '#c7d2c5');
+          }
+        };
+
+        let scrollTimeout = null;
+        viewport.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(updateActiveDot, 60);
+        }, { passive: true });
+
+        renderDots();
+        window.addEventListener('resize', renderDots);
+        
+        sliderInstance = {
+          destroy: () => {
+            window.removeEventListener('resize', renderDots);
+          }
+        };
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (revealObserver) revealObserver.disconnect();
+        if (sliderInstance) sliderInstance.destroy();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Health Scale",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#eaf0e9"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card Description Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e6ebe2"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The Yild Health Score"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Every product, scored 0–100"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description",
+      "default": "We analyse ingredients — sugar, salt, fats, additives and more — so a single number tells you how clean a product really is."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "score_tier",
+      "name": "Score Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "score_range",
+          "label": "Score Range",
+          "default": "90+"
+        },
+        {
+          "type": "text",
+          "id": "tier_name",
+          "label": "Tier Name",
+          "default": "Excellent"
+        },
+        {
+          "type": "text",
+          "id": "tier_desc",
+          "label": "Tier Description",
+          "default": "Clean, whole or organic."
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Accent Text Color",
+          "default": "#2f7d4f"
+        },
+        {
+          "type": "color",
+          "id": "circle_bg",
+          "label": "Circle Background Color",
+          "default": "#eef3ec"
+        },
+        {
+          "type": "color",
+          "id": "circle_border",
+          "label": "Circle Border Color",
+          "default": "#cfe0cf"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Health Scale",
+      "blocks": [
+        {
+          "type": "score_tier",
+          "settings": {
+            "score_range": "90+",
+            "tier_name": "Excellent",
+            "tier_desc": "Clean, whole or organic.",
+            "accent_color": "#2f7d4f",
+            "circle_bg": "#eef3ec",
+            "circle_border": "#cfe0cf"
+          }
+        },
+        {
+          "type": "score_tier",
+          "settings": {
+            "score_range": "70+",
+            "tier_name": "Good",
+            "tier_desc": "Solid, minor trade-offs.",
+            "accent_color": "#5f8a5a",
+            "circle_bg": "#eef3ec",
+            "circle_border": "#d6e0d3"
+          }
+        },
+        {
+          "type": "score_tier",
+          "settings": {
+            "score_range": "50+",
+            "tier_name": "Average",
+            "tier_desc": "Okay in moderation.",
+            "accent_color": "#b08a2e",
+            "circle_bg": "#f6efdd",
+            "circle_border": "#e8d9b4"
+          }
+        },
+        {
+          "type": "score_tier",
+          "settings": {
+            "score_range": "0–49",
+            "tier_name": "Poor",
+            "tier_desc": "High in things to avoid.",
+            "accent_color": "#9a3b2e",
+            "circle_bg": "#f6e7e2",
+            "circle_border": "#e8c9bf"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

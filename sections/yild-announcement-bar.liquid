@@ -1,0 +1,65 @@
+{%- style -%}
+  #yild-announcement-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    text-align: center;
+    font-size: 1.28rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 8px 16px;
+    line-height: 1.4;
+  }
+  #yild-announcement-{{ section.id }} strong {
+    color: {{ section.settings.accent_color }};
+    font-weight: 700;
+  }
+{%- endstyle -%}
+
+{%- if section.settings.enable -%}
+  <div id="yild-announcement-{{ section.id }}" class="yild-announcement-bar">
+    {{ section.settings.message }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Yild Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Bold Color",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message",
+      "label": "Announcement Text",
+      "default": "Enjoy <strong>40% off</strong> your first basket with code <strong>YILDFRESH</strong> at checkout."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

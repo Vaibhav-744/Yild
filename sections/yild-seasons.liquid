@@ -1,0 +1,452 @@
+{%- style -%}
+  #yild-seasons-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: clamp(80px, 11vw, 160px) clamp(20px, 5vw, 54px);
+  }
+  #yild-seasons-{{ section.id }} .seasons-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 76px);
+    align-items: center;
+  }
+  @media (max-width: 980px) {
+    #yild-seasons-{{ section.id }} .seasons-grid {
+      grid-template-columns: 1fr !important;
+      gap: 40px !important;
+    }
+    #yild-seasons-{{ section.id }} .seasons-media {
+      height: 74vw !important;
+      min-height: 320px;
+    }
+  }
+  #yild-seasons-{{ section.id }} .editorial-col {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-seasons-{{ section.id }} .editorial-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-seasons-{{ section.id }} .seasons-subtitle {
+    display: inline-block;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 18px;
+  }
+  #yild-seasons-{{ section.id }} .seasons-title {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.36rem, 4.2vw, 5.6rem);
+    line-height: 1.06;
+    margin: 0 0 20px 0;
+    color: {{ section.settings.text_color }};
+  }
+  #yild-seasons-{{ section.id }} .seasons-desc {
+    font-size: 1.76rem;
+    line-height: 1.65;
+    color: {{ section.settings.text_color_muted }};
+    max-width: 46ch;
+    margin: 0 0 14px 0;
+  }
+  #yild-seasons-{{ section.id }} .seasons-desc:last-of-type {
+    margin-bottom: 28px;
+  }
+  #yild-seasons-{{ section.id }} .seasons-cta {
+    display: inline-block;
+    background: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_txt_color }};
+    text-decoration: none;
+    transition: transform 0.25s cubic-bezier(.16,1,.3,1);
+    will-change: transform;
+  }
+  #yild-seasons-{{ section.id }} .seasons-media {
+    position: relative;
+    height: min(580px, 72vh);
+  }
+  #yild-seasons-{{ section.id }} .media-box-1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 74%;
+    height: 78%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(8, 20, 10, 0.4);
+  }
+  #yild-seasons-{{ section.id }} .media-box-1 img {
+    width: 100%;
+    height: 118%;
+    object-fit: cover;
+    position: relative;
+    top: -9%;
+    will-change: transform;
+  }
+  #yild-seasons-{{ section.id }} .media-box-2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 56%;
+    height: 58%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 7px solid {{ section.settings.bg_color }};
+    box-shadow: 0 24px 54px rgba(8, 20, 10, 0.45);
+  }
+  #yild-seasons-{{ section.id }} .media-box-2 img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    position: relative;
+    top: -10%;
+    will-change: transform;
+  }
+  #yild-seasons-{{ section.id }} .score-badge {
+    position: absolute;
+    top: 8%;
+    left: -4%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    background: {{ section.settings.badge_bg_color }};
+    color: {{ section.settings.badge_txt_color }};
+    padding: 13px 18px;
+    border-radius: 16px;
+    box-shadow: 0 18px 40px rgba(8, 20, 10, 0.35);
+    will-change: transform;
+  }
+  #yild-seasons-{{ section.id }} .score-badge-number {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.68rem;
+    color: {{ section.settings.badge_score_color }};
+    background: {{ section.settings.badge_score_bg }};
+    border: 2px solid {{ section.settings.badge_score_border }};
+  }
+  #yild-seasons-{{ section.id }} .score-badge-text {
+    line-height: 1.2;
+  }
+  #yild-seasons-{{ section.id }} .score-badge-title {
+    font-weight: 700;
+    font-size: 1.52rem;
+  }
+  #yild-seasons-{{ section.id }} .score-badge-desc {
+    font-size: 1.248rem;
+    color: {{ section.settings.badge_desc_color }};
+  }
+{%- endstyle -%}
+
+<section id="yild-seasons-{{ section.id }}" class="yild-seasons-section">
+  <div class="seasons-grid">
+    <div class="editorial-col">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="seasons-subtitle eyebrow-text">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="seasons-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.desc1 != blank -%}
+        <p class="seasons-desc">{{ section.settings.desc1 }}</p>
+      {%- endif -%}
+      {%- if section.settings.desc2 != blank -%}
+        <p class="seasons-desc">{{ section.settings.desc2 }}</p>
+      {%- endif -%}
+      {%- if section.settings.btn_lbl != blank -%}
+        <a href="{{ section.settings.btn_url }}" class="seasons-cta custom-button" data-magnetic="0.3">{{ section.settings.btn_lbl }}</a>
+      {%- endif -%}
+    </div>
+    
+    <div class="seasons-media">
+      <!-- Media 1 -->
+      <div class="media-box-1">
+        {%- if section.settings.image_1 != blank -%}
+          <img data-parallax="0.05" src="{{ section.settings.image_1 | image_url: width: 800 }}" alt="{{ section.settings.image_1.alt | escape }}">
+        {%- else -%}
+          <img data-parallax="0.05" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" alt="Farm shop display">
+        {%- endif -%}
+      </div>
+
+      <!-- Media 2 -->
+      <div class="media-box-2">
+        {%- if section.settings.image_2 != blank -%}
+          <img data-parallax="-0.06" src="{{ section.settings.image_2 | image_url: width: 600 }}" alt="{{ section.settings.image_2.alt | escape }}">
+        {%- else -%}
+          <img data-parallax="-0.06" src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=600&q=80" alt="Harvest crate">
+        {%- endif -%}
+      </div>
+
+      <!-- Score Badge Card -->
+      <div class="score-badge" data-parallax="0.11">
+        <span class="score-badge-number">{{ section.settings.badge_score }}</span>
+        <div class="score-badge-text">
+          <div class="score-badge-title">{{ section.settings.badge_title }}</div>
+          <div class="score-badge-desc">{{ section.settings.badge_desc }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    let rafId = null;
+
+    function init() {
+      const section = document.getElementById("yild-seasons-{{ section.id }}");
+      if (!section) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const editorialCol = section.querySelector('.editorial-col');
+
+      if (observer) observer.disconnect();
+
+      // Scroll Reveal
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (editorialCol) editorialCol.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      
+      observer.observe(section);
+
+      // Parallax scrolling
+      if (rafId) cancelAnimationFrame(rafId);
+      
+      if (!reduce) {
+        const parallaxEls = section.querySelectorAll('[data-parallax]');
+
+        const loop = () => {
+          const vh = window.innerHeight;
+          const vc = vh / 2;
+          
+          parallaxEls.forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.bottom < -200 || r.top > vh + 200) return;
+            const factor = parseFloat(el.dataset.parallax) || 0;
+            const off = (r.top + r.height / 2 - vc) * factor;
+            el.style.transform = 'translate3d(0,' + off.toFixed(2) + 'px,0)';
+          });
+          
+          rafId = requestAnimationFrame(loop);
+        };
+        
+        rafId = requestAnimationFrame(loop);
+      }
+
+      // Magnetic button effect (disabled for now)
+      /*
+      const magneticBtn = section.querySelector('[data-magnetic]');
+      if (magneticBtn) {
+        const strength = parseFloat(magneticBtn.dataset.magnetic) || 0.3;
+        magneticBtn.style.transition = 'transform .25s cubic-bezier(.16,1,.3,1)';
+        magneticBtn.style.willChange = 'transform';
+        
+        // Remove existing listeners to avoid multiple bindings
+        const newBtn = magneticBtn.cloneNode(true);
+        magneticBtn.parentNode.replaceChild(newBtn, magneticBtn);
+        
+        newBtn.addEventListener('pointermove', (e) => {
+          const r = newBtn.getBoundingClientRect();
+          const mx = e.clientX - (r.left + r.width / 2);
+          const my = e.clientY - (r.top + r.height / 2);
+          newBtn.style.transform = 'translate(' + (mx * strength) + 'px,' + (my * strength) + 'px)';
+        });
+        
+        newBtn.addEventListener('pointerleave', () => {
+          newBtn.style.transform = 'translate(0,0)';
+        });
+      }
+      */
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+        cancelAnimationFrame(rafId);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Seasons Editorial",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "text_color_muted",
+      "label": "Muted Text Color",
+      "default": "rgba(241, 239, 227, 0.82)"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#a9c4ac"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "btn_txt_color",
+      "label": "Button Text Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Rooted in the seasons"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Section Title",
+      "default": "We grow with the rhythm of the land, not the warehouse."
+    },
+    {
+      "type": "textarea",
+      "id": "desc1",
+      "label": "Paragraph 1",
+      "default": "Every crop has its season. We let our farmers plant, tend and harvest on nature's clock — so what lands on your table is at the height of its flavour and nutrition."
+    },
+    {
+      "type": "textarea",
+      "id": "desc2",
+      "label": "Paragraph 2",
+      "default": "No cold-stored months. No flown-in shortcuts. Just food, in time."
+    },
+    {
+      "type": "text",
+      "id": "btn_lbl",
+      "label": "Button Label",
+      "default": "See what's in season"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1 (Large Background)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2 (Overlapping Foreground)"
+    },
+    {
+      "type": "header",
+      "content": "Season Badge Info"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "badge_txt_color",
+      "label": "Badge Text Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "badge_desc_color",
+      "label": "Badge Description Text Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "color",
+      "id": "badge_score_bg",
+      "label": "Badge Score Circle BG",
+      "default": "#eef3ec"
+    },
+    {
+      "type": "color",
+      "id": "badge_score_color",
+      "label": "Badge Score Number Color",
+      "default": "#2f7d4f"
+    },
+    {
+      "type": "color",
+      "id": "badge_score_border",
+      "label": "Badge Score Circle Border",
+      "default": "#cfe0cf"
+    },
+    {
+      "type": "text",
+      "id": "badge_score",
+      "label": "Score Number",
+      "default": "92"
+    },
+    {
+      "type": "text",
+      "id": "badge_title",
+      "label": "Badge Title",
+      "default": "Avg. health score"
+    },
+    {
+      "type": "text",
+      "id": "badge_desc",
+      "label": "Badge Description",
+      "default": "across this season's box"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Seasons Editorial"
+    }
+  ]
+}
+{% endschema %}

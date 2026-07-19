@@ -29,12 +29,13 @@
       "type": "yild-newsletter",
       "settings": {
         "bg_color": "#f7f5ed",
-        "card_bg": "linear-gradient(160deg, #1f3d2b, #16301f)",
+        "card_bg": "linear-gradient(160deg, rgba(31, 61, 43, 1), rgba(22, 48, 31, 1) 100%)",
         "card_txt": "#f1efe3",
-        "desc_color": "rgba(241, 239, 227, 0.82)",
+        "desc_color": "#f1efe3d1",
         "overlay_color_1": "#1f3d2b",
         "title": "Get recipes & harvest news in your inbox",
         "description": "Sign up to our newsletter — plus 40% off your first basket with code YILDFRESH.",
+        "image": "shopify://shop_images/dairy-hamper.png",
         "success_message": "You're in! Fresh reads on the way.",
         "padding_top": 0,
         "padding_bottom": 96

@@ -4,7 +4,7 @@
 :root {
     --title-font: 'Newsreader';
     --body-font: 'Figtree';
-    
+
     /* Yild Brand Colors */
     --yild-green-dark: #1f3d2b;
     --yild-green-muted: #4e7355;
@@ -17,7 +17,7 @@
     --yild-bg-error: #f6e7e2;
     --yild-text-muted: #5d6b60;
     --yild-dots-inactive: #c7d2c5;
-    
+
     /* Additional UI borders and text */
     --yild-border-color: #e6ebe2;
     --yild-border-success: #d3e0d3;
@@ -193,7 +193,7 @@ option.soldout {
 }
 
 .wrapper-body {
-    padding-bottom: 80px;
+    padding-bottom: 0;
 }
 
 .template-index .wrapper-body {
@@ -5019,7 +5019,7 @@ body.is-custom-information .background-overlay {
     }
 
     .wrapper-body {
-        padding-bottom: 50px;
+        padding-bottom: 0;
     }
 
     /* END: Container; */

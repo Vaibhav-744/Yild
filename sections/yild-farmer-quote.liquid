@@ -1,0 +1,146 @@
+{%- style -%}
+  #farmer-quote-{{ section.id }} {
+    padding: clamp(58px, 7vw, 96px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #farmer-quote-{{ section.id }} .quote-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  #farmer-quote-{{ section.id }} .quote-text {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-size: clamp(2.24rem, 2.6vw, 3.2rem) !important; /* Scaled clamp(1.4rem, 2.6vw, 2rem) */
+    line-height: 1.4 !important;
+    margin: 0 0 16px 0 !important;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    letter-spacing:normal;
+  }
+  #farmer-quote-{{ section.id }} .quote-text.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #farmer-quote-{{ section.id }} .quote-author {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.author_color }} !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+  }
+  #farmer-quote-{{ section.id }} .quote-author.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+{%- endstyle -%}
+
+<section id="farmer-quote-{{ section.id }}" class="yild-farmer-quote-section">
+  <div class="quote-wrapper">
+    {%- if section.settings.quote != blank -%}
+      <p class="quote-text">
+        {{ section.settings.quote }}
+      </p>
+    {%- endif -%}
+    {%- if section.settings.author != blank -%}
+      <p class="quote-author">
+        {{ section.settings.author }}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("farmer-quote-{{ section.id }}");
+      if (!section) return;
+
+      const txt = section.querySelector('.quote-text');
+      const auth = section.querySelector('.quote-author');
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (txt) txt.classList.add('is-revealed');
+            if (auth) auth.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Farmer Quote",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Quote Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "author_color",
+      "label": "Author Accent Color",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote Text",
+      "default": "\"Since I joined Yild, my sales have grown significantly and my customer base has tripled in three months, with little to no loss on my harvest.\""
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Quote Author",
+      "default": "A Yild Partner Farmer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Farmer Quote"
+    }
+  ]
+}
+{% endschema %}

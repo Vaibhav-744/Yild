@@ -69,6 +69,7 @@
         "15d9d2f4-1bdd-49c8-9a99-58246020f05c",
         "f4d12560-a07c-4bd4-a934-2a8eddeaccc9"
       ],
+      "disabled": true,
       "settings": {
         "show_breadcrumb": true,
         "breadcrumb_alignment": "left",
@@ -89,10 +90,8 @@
         "faqs_text": "<p>Below FAQ are some common concerns of our clients before purchasing the theme.\n<br> If you have other questions, please just send it to <a href=\"mailto:example@domain.com\" style=\"text-decoration: underline;\">example@domain.com</a>.</p>",
         "faqs_message_heading": "Need Help?",
         "faqs_message_text": "<span>If you have an issue or question that requires immediate assistance, you can click the button below to chat live with a Customer Service representative.   \n<br> \n<br>\nIf we aren’t available, drop us an email and we will get back to you within 20-36 hours!</span>",
-        "message_method_icon_1": "shopify://shop_images/messenger.jpg",
         "message_method_link_1": "https://facebook.com",
         "message_method_text_1": "Message Us",
-        "message_method_icon_2": "shopify://shop_images/envelope.jpg",
         "message_method_link_2": "https://gmail.com",
         "message_method_text_2": "Contact Us",
         "contact_content_text": "Unable to find satisfactory answers ?",
@@ -107,9 +106,99 @@
         "contact_color_bg_hover": "#e93d29",
         "contact_color_bg_gradient_hover": ""
       }
+    },
+    "yild_faq_hero_ChpfTM": {
+      "type": "yild-faq-hero",
+      "name": "Yild FAQ Hero",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "subtitle_color": "#4e7355",
+        "title_color": "#1f3d2b",
+        "subtitle": "Good to know",
+        "title": "Frequently asked questions"
+      }
+    },
+    "yild_faq_grouped_PVNBie": {
+      "type": "yild-faq-grouped",
+      "blocks": {
+        "category_heading_MDmx6N": {
+          "type": "category_heading",
+          "settings": {
+            "heading": "Ordering & delivery"
+          }
+        },
+        "faq_item_Cggz3J": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Order directly on the website, or message us on WhatsApp and we'll take it from there.</p>"
+          }
+        },
+        "faq_item_aGQy4w": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "<p>All orders go out on Sunday, fresh from the farm.</p>"
+          }
+        },
+        "category_heading_mAHGj7": {
+          "type": "category_heading",
+          "settings": {
+            "heading": "Payment & offers"
+          }
+        },
+        "faq_item_DzX9Hy": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>Direct bank transfer, debit card, Apple Pay, Google Pay, or PayPal.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_heading_MDmx6N",
+        "faq_item_Cggz3J",
+        "faq_item_aGQy4w",
+        "category_heading_mAHGj7",
+        "faq_item_DzX9Hy"
+      ],
+      "name": "Yild Grouped FAQ List",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "heading_color": "#1f3d2b",
+        "title_color": "#1f3d2b",
+        "subtitle_color": "#4e7355",
+        "answer_color": "#5d6b60",
+        "link_color": "#4e7355",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#e6ebe2"
+      }
+    },
+    "yild_faq_help_banner_tiFFTM": {
+      "type": "yild-faq-help-banner",
+      "name": "Yild FAQ Help Banner",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "card_bg_color": "#1f3d2b",
+        "card_txt_color": "#f1efe3",
+        "card_txt_muted": "rgba(241, 239, 227, 0.82)",
+        "title": "Still have a question?",
+        "desc": "Message us on WhatsApp — friendly, local customer care.",
+        "btn1_lbl": "WhatsApp us →",
+        "btn1_url": "",
+        "btn1_bg": "#9fce0f",
+        "btn1_txt": "#16301f",
+        "btn2_lbl": "Contact page",
+        "btn2_url": "shopify://pages/contact",
+        "btn2_border_color": "rgba(241, 239, 227, 0.4)",
+        "btn2_txt_color": "#f1efe3"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "yild_faq_hero_ChpfTM",
+    "yild_faq_grouped_PVNBie",
+    "yild_faq_help_banner_tiFFTM"
   ]
 }

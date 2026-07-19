@@ -1,0 +1,192 @@
+{%- style -%}
+  #grower-intro-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #grower-intro-{{ section.id }} .intro-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+  #grower-intro-{{ section.id }} .intro-left-col {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-intro-{{ section.id }} .intro-left-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-intro-{{ section.id }} .intro-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin: 0 0 12px 0 !important;
+    line-height: 1.2 !important;
+  }
+  #grower-intro-{{ section.id }} .intro-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem) !important; /* Scaled clamp(2rem, 3.6vw, 3.1rem) */
+    color: {{ section.settings.title_color }} !important;
+    line-height: 1.06 !important;
+    margin: 0 !important;
+  }
+  #grower-intro-{{ section.id }} .intro-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.728rem !important; /* Scaled 1.08rem * 1.6 */
+    line-height: 1.7 !important;
+    color: {{ section.settings.text_color }} !important;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+  }
+  #grower-intro-{{ section.id }} .intro-right-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-intro-{{ section.id }} .intro-right-col p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+    letter-spacing:normal;
+  }
+
+  @media (max-width: 980px) {
+    #grower-intro-{{ section.id }} .intro-grid {
+      grid-template-columns: 1fr !important;
+      gap: 34px !important;
+    }
+  }
+{%- endstyle -%}
+
+<section id="grower-intro-{{ section.id }}" class="grower-intro-section">
+  <div class="intro-grid">
+    <div class="intro-left-col">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="intro-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="intro-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+    <div class="intro-right-col">
+      {%- if section.settings.story_content != blank -%}
+        {{ section.settings.story_content }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("grower-intro-{{ section.id }}");
+      if (!section) return;
+
+      const left = section.querySelector('.intro-left-col');
+      const right = section.querySelector('.intro-right-col');
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (left) left.classList.add('is-revealed');
+            if (right) right.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Grower Intro",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Story Content Color",
+      "default": "#3a4a3d"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Small farms, honest food"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "We believe small, local farms are the most honest way to grow food."
+    },
+    {
+      "type": "richtext",
+      "id": "story_content",
+      "label": "Story Content (Right Column)",
+      "default": "<p>Every grower we work with cares for their soil, animals and land, farming in a way that puts long-term sustainability ahead of short-term yield.</p><p>We only carry produce we'd be happy to put on our own tables, sourced from growers we trust and delivered fresh to your door.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grower Intro"
+    }
+  ]
+}
+{% endschema %}

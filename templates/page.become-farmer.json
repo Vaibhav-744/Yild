@@ -11,10 +11,156 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {}
+    },
+    "yild_farmer_hero_MYH9kA": {
+      "type": "yild-farmer-hero",
+      "name": "Yild Farmer Hero",
+      "settings": {
+        "image": "shopify://shop_images/rhubarb-harvest.png",
+        "image_alt": "Farmer harvesting fresh rhubarb",
+        "subtitle": "Become a Farmer",
+        "title": "Grow with us.",
+        "min_height_desktop": 430,
+        "min_height_mobile": 400,
+        "fallback_bg_color": "#1f3d2b",
+        "overlay_gradient": "linear-gradient(356deg, rgba(12, 26, 15, 0.78), rgba(12, 26, 15, 0.36) 57%, rgba(12, 26, 15, 0.1) 100%)",
+        "subtitle_color": "rgba(255, 255, 255, 0.85)",
+        "text_color": "#ffffff"
+      }
+    },
+    "yild_farmer_benefits_QYzKh9": {
+      "type": "yild-farmer-benefits",
+      "blocks": {
+        "benefit_card_g8FyyV": {
+          "type": "benefit_card",
+          "settings": {
+            "title": "Fair prices, up front",
+            "description": "Set prices that reflect the real cost of growing well — and keep more of every sale."
+          }
+        },
+        "benefit_card_zE8c3C": {
+          "type": "benefit_card",
+          "settings": {
+            "title": "Little to no waste",
+            "description": "Orders come in the night before, so you only pick what's sold. Surplus gets a second life."
+          }
+        },
+        "benefit_card_fbinAC": {
+          "type": "benefit_card",
+          "settings": {
+            "title": "We handle delivery",
+            "description": "We collect from your farm and deliver every Sunday. You focus on growing."
+          }
+        },
+        "benefit_card_VaJ4qT": {
+          "type": "benefit_card",
+          "settings": {
+            "title": "Your story, told",
+            "description": "Customers see your farm on every product — and buy from you, not a warehouse."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_card_g8FyyV",
+        "benefit_card_zE8c3C",
+        "benefit_card_fbinAC",
+        "benefit_card_VaJ4qT"
+      ],
+      "name": "Yild Farmer Benefits",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "subtitle_color": "#4e7355",
+        "title_color": "#1f3d2b",
+        "desc_color": "#5d6b60",
+        "card_bg": "#ffffff",
+        "card_border": "#e6ebe2",
+        "subtitle": "Why partner with Yild",
+        "title": "Fair pay, direct customers, less waste"
+      }
+    },
+    "yild_farmer_apply_rEpYBF": {
+      "type": "yild-farmer-apply",
+      "blocks": {
+        "step_timeline_gJUMde": {
+          "type": "step_timeline",
+          "settings": {
+            "step_index": "1",
+            "title": "Get in touch",
+            "description": "Fill in this form, or send us a DM on <a href=\"https://wa.me/447494531781\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>."
+          }
+        },
+        "step_timeline_EaC9W4": {
+          "type": "step_timeline",
+          "settings": {
+            "step_index": "2",
+            "title": "We arrange a visit",
+            "description": "We come to your farm, see how you grow, and agree fair prices together."
+          }
+        },
+        "step_timeline_dPJ7pU": {
+          "type": "step_timeline",
+          "settings": {
+            "step_index": "3",
+            "title": "Start selling",
+            "description": "Your produce goes live, orders arrive the night before, and we collect on Sunday."
+          }
+        }
+      },
+      "block_order": [
+        "step_timeline_gJUMde",
+        "step_timeline_EaC9W4",
+        "step_timeline_dPJ7pU"
+      ],
+      "name": "Yild Farmer Apply",
+      "settings": {
+        "bg_color": "#eaf0e9",
+        "subtitle_color": "#4e7355",
+        "title_color": "#1f3d2b",
+        "desc_color": "#5d6b60",
+        "link_color": "#4e7355",
+        "step_num_bg": "#1f3d2b",
+        "step_num_txt": "#ffffff",
+        "subtitle": "How it works",
+        "title": "Three steps to your first Sunday delivery",
+        "form_title": "Apply to become a partner farmer",
+        "form_bg": "#ffffff",
+        "form_border": "#e6ebe2",
+        "label_color": "#3a4a3d",
+        "form_input_bg": "#f7f5ed",
+        "form_input_border": "#d6ddd2",
+        "form_input_txt": "#26332a",
+        "accent_color": "#4e7355",
+        "btn_bg": "#1f3d2b",
+        "btn_txt": "#ffffff",
+        "placeholder_name": "Jane Smith",
+        "placeholder_farm": "Hillside Farm",
+        "placeholder_email": "you@email.com",
+        "placeholder_phone": "+44 …",
+        "placeholder_location": "Town / county",
+        "placeholder_produce": "Tell us about your produce…",
+        "btn_lbl": "Send application →",
+        "success_message": "Thanks! We've got your application — we'll be in touch to arrange a farm visit."
+      }
+    },
+    "yild_farmer_quote_rQk9qQ": {
+      "type": "yild-farmer-quote",
+      "name": "Yild Farmer Quote",
+      "settings": {
+        "bg_color": "#1f3d2b",
+        "text_color": "#f1efe3",
+        "author_color": "#9fce0f",
+        "quote": "\"Since I joined Yild, my sales have grown significantly and my customer base has tripled in three months, with little to no loss on my harvest.\"",
+        "author": "A Yild Partner Farmer"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "yild_farmer_hero_MYH9kA",
+    "yild_farmer_benefits_QYzKh9",
+    "yild_farmer_apply_rEpYBF",
+    "yild_farmer_quote_rQk9qQ"
   ]
 }

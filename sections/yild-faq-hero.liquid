@@ -1,0 +1,79 @@
+{%- style -%}
+  #yild-faq-hero-{{ section.id }} {
+    padding: clamp(60px, 8vw, 110px) clamp(20px, 4vw, 54px) clamp(28px, 4vw, 48px);
+    background: {{ section.settings.bg_color }};
+    text-align: center;
+  }
+  #yild-faq-hero-{{ section.id }} .faq-hero-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin-bottom: 14px;
+  }
+  #yild-faq-hero-{{ section.id }} .faq-hero-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.84rem, 5.4vw, 6.72rem) !important; /* Scaled clamp(2.4rem, 5.4vw, 4.2rem) * 1.6 */
+    line-height: 1.04 !important;
+    color: {{ section.settings.title_color }} !important;
+    margin: 0 !important;
+    letter-spacing:normal;
+  }
+{%- endstyle -%}
+
+<section id="yild-faq-hero-{{ section.id }}" class="yild-faq-hero-section">
+  {%- if section.settings.subtitle != blank -%}
+    <span class="faq-hero-subtitle">{{ section.settings.subtitle }}</span>
+  {%- endif -%}
+  {%- if section.settings.title != blank -%}
+    <h1 class="faq-hero-title">{{ section.settings.title }}</h1>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Yild FAQ Hero",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle / Eyebrow",
+      "default": "Good to know"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently asked questions"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild FAQ Hero"
+    }
+  ]
+}
+{% endschema %}

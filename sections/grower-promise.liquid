@@ -1,0 +1,249 @@
+{%- style -%}
+  #grower-promise-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #grower-promise-{{ section.id }} .promise-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 5vw, 64px);
+    align-items: center;
+  }
+  #grower-promise-{{ section.id }} .promise-left-col {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-promise-{{ section.id }} .promise-left-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-promise-{{ section.id }} .promise-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }} !important;
+    margin: 0 0 16px 0 !important;
+    line-height: 1.2 !important;
+  }
+  #grower-promise-{{ section.id }} .promise-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.2rem, 3.8vw, 4.96rem) !important; /* Scaled clamp(2rem, 3.8vw, 3.1rem) */
+    line-height: 1.08 !important;
+    margin: 0 !important;
+    color: {{ section.settings.text_color }} !important;
+  }
+  #grower-promise-{{ section.id }} .promise-right-col {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+  }
+  #grower-promise-{{ section.id }} .promise-right-col.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-promise-{{ section.id }} .promise-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.728rem !important; /* Scaled 1.08rem * 1.6 */
+    line-height: 1.7 !important;
+    color: {{ section.settings.desc_color }} !important;
+    margin: 0 0 22px 0 !important;
+  }
+  #grower-promise-{{ section.id }} .promise-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.6rem !important; /* Scaled 1rem * 1.6 */
+    margin: 0;
+    padding: 0;
+  }
+  #grower-promise-{{ section.id }} .promise-list-item {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    line-height: 1.4 !important;
+  }
+  #grower-promise-{{ section.id }} .promise-checkmark {
+    color: {{ section.settings.accent_color }};
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  @media (max-width: 980px) {
+    #grower-promise-{{ section.id }} .promise-grid {
+      grid-template-columns: 1fr !important;
+      gap: 34px !important;
+    }
+  }
+{%- endstyle -%}
+
+<section id="grower-promise-{{ section.id }}" class="grower-promise-section">
+  <div class="promise-grid">
+    <div class="promise-left-col">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="promise-subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="promise-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+    <div class="promise-right-col">
+      {%- if section.settings.description != blank -%}
+        <p class="promise-desc">{{ section.settings.description }}</p>
+      {%- endif -%}
+      <ul class="promise-list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'promise_item' -%}
+            <li class="promise-list-item" {{ block.shopify_attributes }}>
+              <span class="promise-checkmark">✓</span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("grower-promise-{{ section.id }}");
+      if (!section) return;
+
+      const left = section.querySelector('.promise-left-col');
+      const right = section.querySelector('.promise-right-col');
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (left) left.classList.add('is-revealed');
+            if (right) right.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Grower Promise",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "rgba(241, 239, 227, 0.85)"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Our Supplier Promise"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "No grower on Yild is ever left guessing what they'll be paid."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Every grower we work with agrees to fair pricing, fair payment terms, and full transparency about how their food is grown."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise_item",
+      "name": "Promise Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Promise Bullet Text",
+          "default": "Fair pricing, agreed up front"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grower Promise",
+      "blocks": [
+        {
+          "type": "promise_item",
+          "settings": {
+            "text": "Fair pricing, agreed up front"
+          }
+        },
+        {
+          "type": "promise_item",
+          "settings": {
+            "text": "Fair payment terms, always honoured"
+          }
+        },
+        {
+          "type": "promise_item",
+          "settings": {
+            "text": "Full transparency about how food is grown"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

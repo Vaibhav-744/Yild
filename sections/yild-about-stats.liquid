@@ -1,0 +1,243 @@
+{%- style -%}
+  #yild-about-stats-{{ section.id }} {
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+  }
+  #yild-about-stats-{{ section.id }} .stats-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  #yild-about-stats-{{ section.id }} .stat-card {
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: 18px;
+    padding: 22px;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-about-stats-{{ section.id }} .stat-card.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-about-stats-{{ section.id }} .stat-number {
+    font-family: var(--title-font) !important;
+    font-weight: 500 !important;
+    font-size: 3.68rem !important; /* Scaled 2.3rem * 1.6 */
+    color: {{ section.settings.num_color }} !important;
+    line-height: 1.2 !important;
+  }
+  #yild-about-stats-{{ section.id }} .stat-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    color: {{ section.settings.text_color_muted }} !important;
+    margin: 4px 0 0 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  @media (max-width: 768px) {
+    #yild-about-stats-{{ section.id }} .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 480px) {
+    #yild-about-stats-{{ section.id }} .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-about-stats-{{ section.id }}" class="yild-about-stats-section">
+  <div class="stats-grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'stat' -%}
+        <div class="stat-card" style="transition-delay: {{ forloop.index0 | times: 90 }}ms;" {{ block.shopify_attributes }}>
+          <div class="stat-number" data-count="{{ block.settings.value }}" data-suffix="{{ block.settings.suffix }}">
+            0{{ block.settings.suffix }}
+          </div>
+          {%- if block.settings.desc != blank -%}
+            <p class="stat-desc">{{ block.settings.desc }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-about-stats-{{ section.id }}");
+      if (!section) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cards = section.querySelectorAll('.stat-card');
+
+      if (observer) observer.disconnect();
+
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            cards.forEach(card => {
+              card.classList.add('is-revealed');
+              const numEl = card.querySelector('.stat-number');
+              if (numEl && !numEl.classList.contains('counted')) {
+                numEl.classList.add('counted');
+                runCounter(numEl);
+              }
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      observer.observe(section);
+
+      function runCounter(el) {
+        const target = parseFloat(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        if (reduce || isNaN(target)) {
+          el.textContent = el.dataset.count + suffix;
+          return;
+        }
+        
+        const duration = 1500;
+        const start = performance.now();
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+        
+        const step = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          el.textContent = Math.round(target * ease(t)) + suffix;
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild About Stats Grid",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "General Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "text_color_muted",
+      "label": "Muted Text Color",
+      "default": "rgba(241, 239, 227, 0.74)"
+    },
+    {
+      "type": "color",
+      "id": "num_color",
+      "label": "Number Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card Border Color",
+      "default": "rgba(241, 239, 227, 0.18)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Stat Number/Value",
+          "default": "40"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "+"
+        },
+        {
+          "type": "text",
+          "id": "desc",
+          "label": "Description",
+          "default": "Local farmers & growing"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild About Stats Grid",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "40",
+            "suffix": "+",
+            "desc": "Local farmers & growing"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "0",
+            "suffix": "",
+            "desc": "Middlemen in between"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "100",
+            "suffix": "%",
+            "desc": "Traceable to the farm"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "1",
+            "suffix": " box",
+            "desc": "Sold = produce donated"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -9,37 +9,9 @@
  */
 {
   "sections": {
-    "google-map": {
-      "type": "google-map",
-      "settings": {
-        "show_custom_map": true,
-        "container": "fullwidth",
-        "mg_top_desktop": 0,
-        "mg_top_tablet": 0,
-        "mg_top_mobile": 0,
-        "mg_bottom_desktop": 30,
-        "mg_bottom_tablet": 0,
-        "mg_bottom_mobile": 0,
-        "block_title": "",
-        "block_text": "",
-        "block_align": "center",
-        "block_max_width": 300,
-        "btn_text": "",
-        "btn_text_color": "",
-        "btn_border_color": "",
-        "btn_bg_color": "",
-        "btn_bg_color_gradient": "",
-        "btn_text_color_hover": "",
-        "btn_border_color_hover": "",
-        "btn_bg_color_hover": "",
-        "btn_bg_color_hover_gradient": "",
-        "btn_max_width": 205,
-        "btn_link": "",
-        "block_content": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0985086794008!2d-122.40480278434755!3d37.7877311191863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808814a1b309%3A0x616fef8687897e9!2s685%20Market%20St%2C%20San%20Francisco%2C%20CA%2094105%2C%20Hoa%20K%E1%BB%B3!5e0!3m2!1svi!2s!4v1658982243728!5m2!1svi!2s\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
-      }
-    },
     "main": {
       "type": "main-contact-us-1",
+      "disabled": true,
       "settings": {
         "show_breadcrumb": true,
         "breadcrumb_alignment": "left",
@@ -65,10 +37,148 @@
         "contact_info_content_2": "<p>Opening Hours:\n<br>\nMON to SAT: \n9:00AM - 10:00PM\n<br>\nSUN: 10:00AM - 6:00PM</p>",
         "enable_border_top": true
       }
+    },
+    "yild_contact_hero_LAbrht": {
+      "type": "yild-contact-hero",
+      "name": "Yild Contact Hero",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "subtitle_color": "#4e7355",
+        "title_color": "#1f3d2b",
+        "desc_color": "#5d6b60",
+        "subtitle": "Contact us",
+        "title": "We'd love to hear from you",
+        "description": "Questions about your box, delivery areas, or partnering with us? Friendly, local customer care — usually fastest on WhatsApp."
+      }
+    },
+    "yild_contact_cards_AefRCR": {
+      "type": "yild-contact-cards",
+      "blocks": {
+        "contact_card_M44Vyh": {
+          "type": "contact_card",
+          "settings": {
+            "icon_type": "whatsapp",
+            "title": "WhatsApp",
+            "description": "Fastest way to reach us — orders, questions, delivery checks.",
+            "link_lbl": "+44 7494 531781 →",
+            "link_url": "https://wa.me/447494531781",
+            "card_bg": "#1f3d2b",
+            "card_border": "rgba(0,0,0,0)",
+            "enable_shadow": false,
+            "card_txt": "#f1efe3",
+            "card_desc_color": "#f1efe3cc",
+            "link_color": "#9fce0f",
+            "icon_bg": "#9fce0f",
+            "icon_txt": "#16301f"
+          }
+        },
+        "contact_card_QPYMMa": {
+          "type": "contact_card",
+          "settings": {
+            "icon_type": "email",
+            "title": "Email",
+            "description": "For anything that isn't urgent — we reply within a working day.",
+            "link_lbl": "info@yild.co.uk →",
+            "link_url": "mailto:info@yild.co.uk",
+            "card_bg": "#ffffff",
+            "card_border": "#e6ebe2",
+            "enable_shadow": true,
+            "card_txt": "#1f3d2b",
+            "card_desc_color": "#5d6b60",
+            "link_color": "#4e7355",
+            "icon_bg": "#eef3ec",
+            "icon_txt": "#1f3d2b"
+          }
+        },
+        "contact_card_LfnnHd": {
+          "type": "contact_card",
+          "settings": {
+            "icon_type": "phone",
+            "title": "Phone",
+            "description": "Prefer to talk? Give us a ring during the day.",
+            "link_lbl": "+44 7494 531781 →",
+            "link_url": "tel:+447494531781",
+            "card_bg": "#ffffff",
+            "card_border": "#e6ebe2",
+            "enable_shadow": true,
+            "card_txt": "#1f3d2b",
+            "card_desc_color": "#5d6b60",
+            "link_color": "#4e7355",
+            "icon_bg": "#eef3ec",
+            "icon_txt": "#1f3d2b"
+          }
+        }
+      },
+      "block_order": [
+        "contact_card_M44Vyh",
+        "contact_card_QPYMMa",
+        "contact_card_LfnnHd"
+      ],
+      "name": "Yild Contact Cards",
+      "settings": {
+        "bg_color": "#f7f5ed"
+      }
+    },
+    "yild_contact_form_HwFAQD": {
+      "type": "yild-contact-form",
+      "blocks": {
+        "bullet_point_q9WcU6": {
+          "type": "bullet_point",
+          "settings": {
+            "text": "Delivering fresh, local produce across the UK"
+          }
+        },
+        "bullet_point_m3D8T6": {
+          "type": "bullet_point",
+          "settings": {
+            "text": "Orders go out every Sunday, fresh from the farm"
+          }
+        },
+        "bullet_point_ehgYJa": {
+          "type": "bullet_point",
+          "settings": {
+            "text": "Message us to check delivery for your postcode"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_point_q9WcU6",
+        "bullet_point_m3D8T6",
+        "bullet_point_ehgYJa"
+      ],
+      "name": "Yild Contact Form",
+      "settings": {
+        "bg_color": "#f7f5ed",
+        "title_color": "#1f3d2b",
+        "desc_color": "#5d6b60",
+        "checklist_color": "#3a4a3d",
+        "accent_color": "#4e7355",
+        "border_color": "#d6ddd2",
+        "title": "Send us a message",
+        "description": "Whether it's about this week's box, checking delivery for your postcode, or becoming a partner farmer — drop us a line and we'll get back to you.",
+        "fb_url": "https://www.facebook.com/yildharvestuk/",
+        "ig_url": "https://www.instagram.com/yild_uk",
+        "form_bg": "#ffffff",
+        "form_border": "#e6ebe2",
+        "label_color": "#3a4a3d",
+        "form_input_bg": "#f7f5ed",
+        "form_input_border": "#d6ddd2",
+        "form_input_txt": "#26332a",
+        "btn_bg": "#1f3d2b",
+        "btn_txt": "#ffffff",
+        "placeholder_name": "Jane Smith",
+        "placeholder_email": "you@email.com",
+        "placeholder_subject": "e.g. Delivery to my postcode",
+        "placeholder_message": "How can we help?",
+        "btn_lbl": "Send message →",
+        "success_message": "Message sent! We'll get back to you within a working day."
+      }
     }
   },
   "order": [
-    "google-map",
-    "main"
+    "main",
+    "yild_contact_hero_LAbrht",
+    "yild_contact_cards_AefRCR",
+    "yild_contact_form_HwFAQD"
   ]
 }

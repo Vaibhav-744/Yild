@@ -1,0 +1,354 @@
+{%- style -%}
+  #yild-faq-grouped-{{ section.id }} {
+    padding: clamp(20px, 3vw, 40px) clamp(20px, 4vw, 54px) clamp(20px, 3vw, 30px);
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-categories-container {
+    max-width: 840px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(30px, 4vw, 44px);
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-category-block {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-category-block.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-category-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: 2.4rem !important; /* Scaled 1.5rem * 1.6 */
+    color: {{ section.settings.heading_color }} !important;
+    margin: 0 0 14px 0 !important;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-item {
+    background: {{ section.settings.card_bg_color }};
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-question-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 20px 22px;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.68rem !important; /* Scaled 1.05rem * 1.6 */
+    color: {{ section.settings.title_color }} !important;
+    outline: none;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-icon {
+    flex: 0 0 auto;
+    font-size: 2.08rem; /* Scaled 1.3rem * 1.6 */
+    font-weight: 400;
+    color: {{ section.settings.subtitle_color }};
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    line-height: 1;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-answer-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-answer-text {
+    padding: 0 22px 20px;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.568rem !important; /* Scaled 0.98rem * 1.6 */
+    line-height: 1.6 !important;
+    color: {{ section.settings.answer_color }} !important;
+    margin: 0;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-answer-text p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-answer-text a {
+    color: {{ section.settings.link_color }};
+    font-weight: 600;
+    text-decoration: none;
+  }
+  #yild-faq-grouped-{{ section.id }} .faq-answer-text a:hover {
+    text-decoration: underline;
+  }
+
+{%- endstyle -%}
+
+<section id="yild-faq-grouped-{{ section.id }}" class="yild-faq-grouped-section">
+  <div class="faq-categories-container">
+    {%- assign has_open_category = false -%}
+    
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'category_heading' -%}
+        {%- if has_open_category -%}
+            </div>
+          </div>
+        {%- endif -%}
+        <div class="faq-category-block" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="faq-category-title">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          <div class="faq-list">
+          {%- assign has_open_category = true -%}
+      {%- elsif block.type == 'faq_item' -%}
+        {%- unless has_open_category -%}
+          <div class="faq-category-block">
+            <div class="faq-list">
+            {%- assign has_open_category = true -%}
+        {%- endunless -%}
+        <div class="faq-item" data-faq {{ block.shopify_attributes }}>
+          <button class="faq-question-btn" data-faq-q>
+            {{ block.settings.question }}
+            <span class="faq-icon" data-faq-i>+</span>
+          </button>
+          <div class="faq-answer-wrapper" data-faq-a>
+            <div class="faq-answer-text">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+    
+    {%- if has_open_category -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    let revealObserver = null;
+    let clickListeners = [];
+
+    function init() {
+      const section = document.getElementById("yild-faq-grouped-{{ section.id }}");
+      if (!section) return;
+
+      const catBlocks = section.querySelectorAll('.faq-category-block');
+
+      // 1. Scroll Reveal setup
+      if (revealObserver) revealObserver.disconnect();
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      catBlocks.forEach(block => {
+        revealObserver.observe(block);
+      });
+
+      // 2. Accordion setup
+      const items = section.querySelectorAll('[data-faq]');
+      
+      // clear old listeners if re-initializing
+      clickListeners.forEach(item => {
+        item.btn.removeEventListener('click', item.handler);
+      });
+      clickListeners = [];
+
+      items.forEach((item) => {
+        const btn = item.querySelector('[data-faq-q]');
+        const panel = item.querySelector('[data-faq-a]');
+        const icon = item.querySelector('[data-faq-i]');
+        if (!btn || !panel) return;
+
+        const set = (open) => {
+          item.setAttribute('data-open', open ? '1' : '0');
+          panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+          if (icon) {
+            icon.style.transform = open ? 'rotate(45deg)' : 'rotate(0deg)';
+          }
+        };
+
+        const handler = () => {
+          const isOpen = item.getAttribute('data-open') === '1';
+          set(!isOpen);
+        };
+
+        btn.addEventListener('click', handler);
+        clickListeners.push({ btn, handler });
+        
+        // initialize as closed
+        set(false);
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (revealObserver) revealObserver.disconnect();
+        clickListeners.forEach(item => {
+          item.btn.removeEventListener('click', item.handler);
+        });
+        clickListeners = [];
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild Grouped FAQ List",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Category Heading Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Question Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Toggle Icon Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e6ebe2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_heading",
+      "name": "Category Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Category Title",
+          "default": "Ordering & delivery"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I place an order?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Order directly on the website, or message us on WhatsApp and we'll take it from there.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Grouped FAQ List",
+      "blocks": [
+        {
+          "type": "category_heading",
+          "settings": {
+            "heading": "Ordering & delivery"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Order directly on the website, or message us on WhatsApp and we'll take it from there.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "<p>All orders go out on Sunday, fresh from the farm.</p>"
+          }
+        },
+        {
+          "type": "category_heading",
+          "settings": {
+            "heading": "Payment & offers"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>Direct bank transfer, debit card, Apple Pay, Google Pay, or PayPal.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

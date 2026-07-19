@@ -1,0 +1,125 @@
+{%- style -%}
+  #yild-about-hero-{{ section.id }} {
+    position: relative;
+    min-height: clamp(380px, 52vh, 560px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-about-hero-{{ section.id }} .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #yild-about-hero-{{ section.id }} .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(12, 26, 15, 0.78) 0%, rgba(12, 26, 15, 0.22) 55%, rgba(12, 26, 15, 0.1) 100%);
+    z-index: 1;
+    display:block;
+  }
+  #yild-about-hero-{{ section.id }} .hero-content-wrap {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 54px);
+    color: {{ section.settings.title_color }};
+    z-index: 2;
+  }
+  #yild-about-hero-{{ section.id }} .hero-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin-bottom: 14px;
+  }
+  #yild-about-hero-{{ section.id }} .hero-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(4.16rem, 6vw, 7.36rem) !important; /* Scaled clamp(2.6rem, 6vw, 4.6rem) * 1.6 */
+    line-height: 1.03 !important;
+    max-width: 14ch !important;
+    margin: 0 !important;
+    color: {{ section.settings.title_color }} !important;
+    letter-spacing:normal;
+  }
+{%- endstyle -%}
+
+<section id="yild-about-hero-{{ section.id }}" class="yild-about-hero-section">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: 
+      class: 'hero-bg-img', 
+      loading: 'eager', 
+      widths: '375, 550, 750, 1100, 1500, 1780, 2000',
+      alt: section.settings.image.alt | escape
+    }}
+  {%- else -%}
+    <img src="https://images.unsplash.com/photo-1500937386664-56d15ef3c7e3?w=2000&q=80" alt="Fields and crops" class="hero-bg-img" loading="eager" />
+  {%- endif -%}
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content-wrap">
+    {%- if section.settings.subtitle != blank -%}
+      <span class="hero-subtitle">{{ section.settings.subtitle }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h1 class="hero-title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yild About Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback BG Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle / Eyebrow",
+      "default": "About Yild"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "rgba(255, 255, 255, 0.85)"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Real food, from real farms."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild About Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,274 @@
+{%- style -%}
+  #yild-faq-help-{{ section.id }} {
+    padding: clamp(20px, 3vw, 30px) clamp(20px, 4vw, 54px) clamp(58px, 7vw, 96px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #yild-faq-help-{{ section.id }} .help-banner-container {
+    max-width: 840px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #yild-faq-help-{{ section.id }} .help-banner-container.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #yild-faq-help-{{ section.id }} .help-banner-card {
+    background: {{ section.settings.card_bg_color }};
+    color: {{ section.settings.card_txt_color }};
+    border-radius: 24px;
+    padding: clamp(26px, 4vw, 40px);
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    flex-wrap: nowrap !important;
+    box-shadow: 0 16px 40px rgba(31, 61, 43, 0.08);
+  }
+  #yild-faq-help-{{ section.id }} .help-text-col {
+    flex: 1 1 auto;
+    max-width: 480px;
+    text-align: left;
+  }
+  #yild-faq-help-{{ section.id }} .help-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: 2.4rem !important; /* Scaled 1.5rem * 1.6 */
+    margin: 0 0 6px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing:normal;
+    color: {{ section.settings.card_txt_color }} !important;
+  }
+  #yild-faq-help-{{ section.id }} .help-desc {
+    font-family: var(--font-family-1) !important;
+    color: {{ section.settings.card_txt_muted | color_modify: 'alpha', 0.82 }} !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+    letter-spacing:normal;
+    font-size: 1.568rem !important; /* Scaled 0.98rem * 1.6 */
+  }
+  #yild-faq-help-{{ section.id }} .help-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    flex-wrap: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  #yild-faq-help-{{ section.id }} .btn-primary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 14px 28px !important;
+    border-radius: 100px !important;
+    background: {{ section.settings.btn1_bg }} !important;
+    color: {{ section.settings.btn1_txt }} !important;
+    text-decoration: none !important;
+    border: none !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s !important;
+  }
+  #yild-faq-help-{{ section.id }} .btn-primary:hover {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+  #yild-faq-help-{{ section.id }} .btn-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 14px 28px !important;
+    border-radius: 100px !important;
+    border: 1.5px solid {{ section.settings.btn2_border_color | color_modify: 'alpha', 0.4 }} !important;
+    color: {{ section.settings.btn2_txt_color }} !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    transition: background-color 0.25s, color 0.25s !important;
+  }
+  #yild-faq-help-{{ section.id }} .btn-secondary:hover {
+    background-color: {{ section.settings.btn2_border_color }} !important;
+    color: {{ section.settings.card_bg_color }} !important;
+  }
+
+  @media (max-width: 620px) {
+    #yild-faq-help-{{ section.id }} .help-banner-card {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 24px !important;
+      flex-wrap: wrap !important;
+    }
+    #yild-faq-help-{{ section.id }} .help-actions {
+      flex-wrap: wrap !important;
+    }
+  }
+{%- endstyle -%}
+
+<section id="yild-faq-help-{{ section.id }}" class="yild-faq-help-section">
+  <div class="help-banner-container">
+    <div class="help-banner-card">
+      <div class="help-text-col">
+        {%- if section.settings.title != blank -%}
+          <h3 class="help-title">{{ section.settings.title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.desc != blank -%}
+          <p class="help-desc">{{ section.settings.desc }}</p>
+        {%- endif -%}
+      </div>
+      <div class="help-actions">
+        {%- if section.settings.btn1_lbl != blank -%}
+          <a href="{{ section.settings.btn1_url | default: 'https://wa.me/447494531781' }}" data-magnetic="0.3" class="btn-primary">
+            {{ section.settings.btn1_lbl }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.btn2_lbl != blank -%}
+          <a href="{{ section.settings.btn2_url }}" class="btn-secondary">
+            {{ section.settings.btn2_lbl }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("yild-faq-help-{{ section.id }}");
+      if (!section) return;
+
+      const container = section.querySelector('.help-banner-container');
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (container) container.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      observer.observe(section);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yild FAQ Help Banner",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card BG Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "card_txt_color",
+      "label": "Card Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "card_txt_muted",
+      "label": "Card Text Muted Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Still have a question?"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description",
+      "default": "Message us on WhatsApp — friendly, local customer care."
+    },
+    {
+      "type": "text",
+      "id": "btn1_lbl",
+      "label": "Primary Button Label",
+      "default": "WhatsApp us →"
+    },
+    {
+      "type": "url",
+      "id": "btn1_url",
+      "label": "Primary Button URL"
+    },
+    {
+      "type": "color",
+      "id": "btn1_bg",
+      "label": "Primary Button BG",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "color",
+      "id": "btn1_txt",
+      "label": "Primary Button Text Color",
+      "default": "#16301f"
+    },
+    {
+      "type": "text",
+      "id": "btn2_lbl",
+      "label": "Secondary Button Label",
+      "default": "Contact page"
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "Secondary Button URL"
+    },
+    {
+      "type": "color",
+      "id": "btn2_border_color",
+      "label": "Secondary Button Border Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "btn2_txt_color",
+      "label": "Secondary Button Text Color",
+      "default": "#f1efe3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild FAQ Help Banner"
+    }
+  ]
+}
+{% endschema %}

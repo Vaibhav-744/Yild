@@ -1,0 +1,166 @@
+{%- style -%}
+  #farmer-hero-{{ section.id }} {
+    position: relative;
+    min-height: {{ section.settings.min_height_desktop }}px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: {{ section.settings.fallback_bg_color }};
+  }
+  #farmer-hero-{{ section.id }} .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+  #farmer-hero-{{ section.id }} .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.overlay_gradient }};
+    z-index: 2;
+    display:block;
+  }
+  #farmer-hero-{{ section.id }} .hero-content-wrapper {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 54px);
+    color: {{ section.settings.text_color }};
+    z-index: 3;
+  }
+  #farmer-hero-{{ section.id }} .hero-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin: 0 0 14px 0 !important;
+    line-height: 1.2 !important;
+  }
+  #farmer-hero-{{ section.id }} .hero-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(4.16rem, 6vw, 7.36rem) !important; /* Scaled clamp(2.6rem, 6vw, 4.6rem) */
+    line-height: 1.03 !important;
+    max-width: 14ch !important;
+    margin: 0 !important;
+    color: {{ section.settings.text_color }} !important;
+    letter-spacing:normal;
+  }
+
+  @media (max-width: 768px) {
+    #farmer-hero-{{ section.id }} {
+      min-height: {{ section.settings.min_height_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="farmer-hero-{{ section.id }}" class="yild-farmer-hero-section">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'hero-bg-img', loading: 'eager', alt: section.settings.image.alt | escape }}
+  {%- else -%}
+    <img src="{{ 'rhubarb-harvest.png' | asset_url }}" alt="{{ section.settings.image_alt | default: 'Farmer harvesting fresh rhubarb' }}" class="hero-bg-img" loading="eager" onerror="this.style.display='none';" />
+  {%- endif -%}
+  <div class="hero-overlay"></div>
+  <div class="hero-content-wrapper">
+    {%- if section.settings.subtitle != blank -%}
+      <span class="hero-subtitle">{{ section.settings.subtitle }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h1 class="hero-title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yild Farmer Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Farmer harvesting fresh rhubarb"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Become a Farmer"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Grow with us."
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "min_height_desktop",
+      "label": "Desktop Min Height (px)",
+      "min": 350,
+      "max": 800,
+      "step": 10,
+      "default": 540
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Mobile Min Height (px)",
+      "min": 300,
+      "max": 600,
+      "step": 10,
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "fallback_bg_color",
+      "label": "Fallback BG Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay_gradient",
+      "label": "Background Overlay Gradient",
+      "default": "linear-gradient(0deg, rgba(12, 26, 15, 0.78) 0%, rgba(12, 26, 15, 0.22) 55%, rgba(12, 26, 15, 0.1) 100%)"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "rgba(255, 255, 255, 0.85)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Title Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Farmer Hero"
+    }
+  ]
+}
+{% endschema %}

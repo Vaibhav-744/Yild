@@ -1,0 +1,105 @@
+{%- style -%}
+  #contact-hero-{{ section.id }} {
+    padding: clamp(60px, 8vw, 110px) clamp(20px, 4vw, 54px) clamp(28px, 4vw, 48px);
+    background: {{ section.settings.bg_color }};
+    text-align: center;
+  }
+  #contact-hero-{{ section.id }} .hero-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.248rem !important; /* Scaled 0.78rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin: 0 0 14px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing:normal;
+  }
+  #contact-hero-{{ section.id }} .hero-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.84rem, 5.4vw, 6.72rem) !important; /* Scaled clamp(2.4rem, 5.4vw, 4.2rem) */
+    line-height: 1.04 !important;
+    color: {{ section.settings.title_color }} !important;
+    margin: 0 !important;
+    letter-spacing:normal;
+  }
+  #contact-hero-{{ section.id }} .hero-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.728rem !important; /* Scaled 1.08rem * 1.6 */
+    color: {{ section.settings.desc_color }} !important;
+    line-height: 1.6 !important;
+    margin: 14px auto 0 auto !important;
+    max-width: 52ch !important;
+    letter-spacing:normal;
+  }
+{%- endstyle -%}
+
+<section id="contact-hero-{{ section.id }}" class="yild-contact-hero-section">
+  {%- if section.settings.subtitle != blank -%}
+    <span class="hero-subtitle">{{ section.settings.subtitle }}</span>
+  {%- endif -%}
+  {%- if section.settings.title != blank -%}
+    <h1 class="hero-title">{{ section.settings.title }}</h1>
+  {%- endif -%}
+  {%- if section.settings.description != blank -%}
+    <p class="hero-desc">{{ section.settings.description }}</p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Yild Contact Hero",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f5ed"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Contact us"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "We'd love to hear from you"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Questions about your box, delivery areas, or partnering with us? Friendly, local customer care — usually fastest on WhatsApp."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Contact Hero"
+    }
+  ]
+}
+{% endschema %}

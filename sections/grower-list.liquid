@@ -1,0 +1,504 @@
+{%- style -%}
+  #grower-list-{{ section.id }} {
+    padding: clamp(58px, 7vw, 100px) clamp(20px, 4vw, 54px);
+    background: {{ section.settings.bg_color }};
+  }
+  #grower-list-{{ section.id }} .list-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto clamp(34px, 4vw, 50px);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-list-{{ section.id }} .list-header.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-list-{{ section.id }} .list-subtitle {
+    display: inline-block;
+    font-family: var(--font-family-1) !important;
+    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }} !important;
+    margin: 0 0 12px 0 !important;
+    line-height: 1.2 !important;
+  }
+  #grower-list-{{ section.id }} .list-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(3.2rem, 3.6vw, 4.96rem) !important; /* Scaled clamp(2rem, 3.6vw, 3.1rem) */
+    color: {{ section.settings.title_color }} !important;
+    line-height: 1.05 !important;
+    margin: 0 !important;
+  }
+  #grower-list-{{ section.id }} .growers-grid {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  #grower-list-{{ section.id }} .grower-item {
+    background: {{ section.settings.card_bg_color }};
+    border: 1px solid {{ section.settings.card_border_color }};
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-list-{{ section.id }} .grower-item.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-list-{{ section.id }} .grower-img-wrap {
+    aspect-ratio: 1.4;
+    overflow: hidden;
+    background: #f7f5ed;
+  }
+  #grower-list-{{ section.id }} .grower-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-list-{{ section.id }} .grower-item:hover .grower-img {
+    transform: scale(1.03);
+  }
+  #grower-list-{{ section.id }} .grower-content {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex: 1;
+  }
+  #grower-list-{{ section.id }} .grower-card-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: 2.16rem !important; /* Scaled 1.35rem * 1.6 */
+    color: {{ section.settings.title_color }} !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+  }
+  #grower-list-{{ section.id }} .grower-card-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.504rem !important; /* Scaled 0.94rem * 1.6 */
+    color: {{ section.settings.card_desc_color }} !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+    letter-spacing:normal;
+  }
+  #grower-list-{{ section.id }} .grower-card-link {
+    margin-top: auto;
+    padding-top: 8px;
+    color: {{ section.settings.link_color }} !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.2s;
+  }
+  #grower-list-{{ section.id }} .grower-card-link:hover {
+    opacity: 0.8;
+  }
+
+  /* CTA B2B Card Styling */
+  #grower-list-{{ section.id }} .cta-card-item {
+    background: {{ section.settings.cta_bg }};
+    color: {{ section.settings.cta_txt }};
+    border-radius: 22px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #grower-list-{{ section.id }} .cta-card-item.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #grower-list-{{ section.id }} .cta-card-title {
+    font-family: var(--title-font) !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: 2.4rem !important; /* Scaled 1.5rem * 1.6 */
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    color: {{ section.settings.cta_txt }} !important;
+  }
+  #grower-list-{{ section.id }} .cta-card-desc {
+    font-family: var(--font-family-1) !important;
+    font-size: 1.536rem !important; /* Scaled 0.96rem * 1.6 */
+    color: {{ section.settings.cta_txt_muted }} !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+  #grower-list-{{ section.id }} .cta-card-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-family-1) !important;
+    font-weight: 600 !important;
+    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
+    padding: 12px 24px !important;
+    border-radius: 100px !important;
+    background: {{ section.settings.cta_btn_bg }} !important;
+    color: {{ section.settings.cta_btn_txt }} !important;
+    text-decoration: none !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s !important;
+  }
+  #grower-list-{{ section.id }} .cta-card-btn:hover {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 980px) {
+    #grower-list-{{ section.id }} .growers-grid {
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+  @media (max-width: 620px) {
+    #grower-list-{{ section.id }} .growers-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+{%- endstyle -%}
+
+<section id="grower-list-{{ section.id }}" class="growers-list-section">
+  <div class="list-header">
+    {%- if section.settings.subtitle != blank -%}
+      <span class="list-subtitle">{{ section.settings.subtitle }}</span>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 class="list-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+  </div>
+
+  <div class="growers-grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'grower_card' -%}
+        <article class="grower-item" {{ block.shopify_attributes }}>
+          <div class="grower-img-wrap">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: class: 'grower-img', loading: 'lazy', alt: block.settings.title | escape }}
+            {%- elsif block.settings.fallback_image != blank -%}
+              <img src="{{ block.settings.fallback_image | asset_url }}" alt="{{ block.settings.title }}" class="grower-img" loading="lazy" onerror="this.src='{{ 'oranges.jpg' | asset_url }}';" />
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'grower-img' }}
+            {%- endif -%}
+          </div>
+          <div class="grower-content">
+            {%- if block.settings.title != blank -%}
+              <h3 class="grower-card-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="grower-card-desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+            {%- if block.settings.link_url != blank and block.settings.link_lbl != blank -%}
+              <a href="{{ block.settings.link_url }}" class="grower-card-link">
+                {{ block.settings.link_lbl }}
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- elsif block.type == 'cta_card' -%}
+        <div class="cta-card-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.title != blank -%}
+            <h3 class="cta-card-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="cta-card-desc">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.btn_url != blank and block.settings.btn_lbl != blank -%}
+            <a href="{{ block.settings.btn_url }}" class="cta-card-btn">
+              {{ block.settings.btn_lbl }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    let observer = null;
+    function init() {
+      const section = document.getElementById("grower-list-{{ section.id }}");
+      if (!section) return;
+
+      const header = section.querySelector('.list-header');
+      const cards = section.querySelectorAll('.grower-item, .cta-card-item');
+
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      if (header) observer.observe(header);
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("shopify:section:load", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        init();
+      }
+    });
+
+    document.addEventListener("shopify:section:unload", function(e) {
+      if (e.detail.sectionId === "{{ section.id }}") {
+        if (observer) observer.disconnect();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Growers Grid List",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#eaf0e9"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Section Subtitle Color",
+      "default": "#4e7355"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Section Title Color",
+      "default": "#1f3d2b"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border",
+      "default": "#e6ebe2"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card Description Color",
+      "default": "#5d6b60"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Card Link Color",
+      "default": "#2f7d4f"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Our network"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Meet the growers"
+    },
+    {
+      "type": "header",
+      "content": "CTA Card Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "cta_bg",
+      "label": "CTA Card Background Gradient",
+      "default": "linear-gradient(160deg, #1f3d2b, #16301f)"
+    },
+    {
+      "type": "color",
+      "id": "cta_txt",
+      "label": "CTA Card Text Color",
+      "default": "#f1efe3"
+    },
+    {
+      "type": "color",
+      "id": "cta_txt_muted",
+      "label": "CTA Card Text Muted Color",
+      "default": "rgba(241, 239, 227, 0.85)"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn_bg",
+      "label": "CTA Button Background",
+      "default": "#9fce0f"
+    },
+    {
+      "type": "color",
+      "id": "cta_btn_txt",
+      "label": "CTA Button Text",
+      "default": "#16301f"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "grower_card",
+      "name": "Grower Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Grower Photo"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "Fallback Asset Image Name",
+          "info": "e.g. oranges.jpg (looks in assets folder)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Grower Title",
+          "default": "Grower Name"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Grower Description",
+          "default": "Grower story description goes here."
+        },
+        {
+          "type": "text",
+          "id": "link_lbl",
+          "label": "Link Label",
+          "default": "Read story →"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    },
+    {
+      "type": "cta_card",
+      "name": "CTA (Grow With Us) Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Want to grow with us?"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "If you're a local grower or producer and think your produce belongs in a Yild box, we'd love to hear from you."
+        },
+        {
+          "type": "text",
+          "id": "btn_lbl",
+          "label": "Button Label",
+          "default": "Become a Farmer →"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Growers Grid List",
+      "blocks": [
+        {
+          "type": "grower_card",
+          "settings": {
+            "title": "Battle Born & Bread",
+            "description": "A small artisan sourdough bakery based in Battle, East Sussex, where bread is made with patience, skill, and a strong respect for traditional baking methods.",
+            "fallback_image": "oranges.jpg"
+          }
+        },
+        {
+          "type": "grower_card",
+          "settings": {
+            "title": "Burscombe Cliff Farm",
+            "description": "A long-established farm in the Weald of Kent, run by Hilary Jones, where farming is guided by care for the land, livestock, and the natural rhythms of the seasons.",
+            "fallback_image": "yild-team.jpg"
+          }
+        },
+        {
+          "type": "grower_card",
+          "settings": {
+            "title": "GW Breach",
+            "description": "A trusted local grower supplying fresh, seasonal produce to Yild baskets.",
+            "fallback_image": "farm-shop.jpg"
+          }
+        },
+        {
+          "type": "grower_card",
+          "settings": {
+            "title": "Katie's Kitchen",
+            "description": "Katie is a chef and former tea room owner with a lifelong passion for baking — blending traditional methods with her own creative approach to cakes, pastries and savouries, made with care.",
+            "fallback_image": "oranges.jpg"
+          }
+        },
+        {
+          "type": "grower_card",
+          "settings": {
+            "title": "Organic North Co-operative",
+            "description": "Co-operative wholesalers bringing certified organic produce from a network of northern growers.",
+            "fallback_image": "harvest-crate.jpg"
+          }
+        },
+        {
+          "type": "cta_card",
+          "settings": {
+            "title": "Want to grow with us?",
+            "description": "If you're a local grower or producer and think your produce belongs in a Yild box, we'd love to hear from you.",
+            "btn_lbl": "Become a Farmer →"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

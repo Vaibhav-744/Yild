@@ -196,7 +196,7 @@
             {%- if block.settings.image != blank -%}
               {{ block.settings.image | image_url: width: 600 | image_tag: class: 'grower-img', loading: 'lazy', alt: block.settings.title | escape }}
             {%- elsif block.settings.fallback_image != blank -%}
-              <img src="{{ block.settings.fallback_image | asset_url }}" alt="{{ block.settings.title }}" class="grower-img" loading="lazy" onerror="this.src='{{ 'oranges.jpg' | asset_url }}';" />
+              <img src="{{ block.settings.fallback_image | asset_url }}" alt="{{ block.settings.title }}" class="grower-img" loading="lazy" onerror="this.onerror=null;this.src='{{ 'oranges.jpg' | asset_url }}';" />
             {%- else -%}
               {{ 'image' | placeholder_svg_tag: 'grower-img' }}
             {%- endif -%}

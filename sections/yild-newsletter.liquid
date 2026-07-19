@@ -1,251 +1,127 @@
 {%- style -%}
   #yild-newsletter-{{ section.id }} {
-    padding: 0 clamp(20px, 4vw, 54px) clamp(58px, 7vw, 96px);
-    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top }}px clamp(20px, 4vw, 54px) {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
   }
-  #yild-newsletter-{{ section.id }} .newsletter-card {
+  #yild-newsletter-{{ section.id }} .offer-card {
     max-width: 1440px;
     margin: 0 auto;
-    position: relative;
     overflow: hidden;
     border-radius: 30px;
     background: {{ section.settings.card_bg }};
-    color: {{ section.settings.card_txt_color }};
+    color: {{ section.settings.card_txt }};
     display: grid;
     grid-template-columns: 1.15fr 1fr;
     align-items: stretch;
-    box-shadow: 0 20px 50px rgba(12, 26, 15, 0.28) !important;
+    box-shadow: 0 20px 50px rgba(31, 61, 43, 0.12);
     opacity: 0;
     transform: translateY(34px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  #yild-newsletter-{{ section.id }} .newsletter-card.is-revealed {
+  #yild-newsletter-{{ section.id }} .offer-card.is-revealed {
     opacity: 1;
     transform: translateY(0);
   }
-  #yild-newsletter-{{ section.id }} .newsletter-content {
-    position: relative;
-    padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 68px);
+  #yild-newsletter-{{ section.id }} .offer-content {
+    padding: clamp(40px, 6vw, 64px) clamp(28px, 5vw, 68px);
   }
-  #yild-newsletter-{{ section.id }} .newsletter-subtitle {
-    display: inline-block !important;
-    font-family: var(--font-family-1) !important;
-    font-size: 1.216rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    color: {{ section.settings.subtitle_color }} !important;
-    margin-bottom: 14px !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-title {
-    font-family: var(--font-family-2) !important;
+  #yild-newsletter-{{ section.id }} .offer-title {
+    font-family: var(--title-font) !important;
     font-style: italic !important;
     font-weight: 500 !important;
-    font-size: clamp(3.36rem, 4.4vw, 5.44rem) !important;
-    line-height: 1.04 !important;
-    margin: 0 0 14px 0 !important;
-    color: {{ section.settings.card_txt_color }} !important;
-    text-transform: none !important;
+    font-size: clamp(2.88rem, 3.4vw, 4.16rem) !important; /* Scaled clamp(1.8rem, 3.4vw, 2.6rem) */
+    line-height: 1.08 !important;
+    margin: 0 0 12px 0 !important;
+    color: {{ section.settings.card_txt }} !important;
+    letter-spacing: normal;
   }
-  #yild-newsletter-{{ section.id }} .code-highlight {
+  #yild-newsletter-{{ section.id }} .offer-desc {
     font-family: var(--font-family-1) !important;
-    text-transform: uppercase !important;
-    display: inline-block !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-desc {
-    font-family: var(--font-family-1) !important;
-    color: {{ section.settings.card_txt_muted }} !important;
-    font-size: 1.728rem !important;
+    color: {{ section.settings.desc_color }} !important;
+    font-size: 1.632rem !important; /* Scaled 1.02rem * 1.6 */
     line-height: 1.55 !important;
-    margin: 0 0 28px 0 !important;
-    max-width: 48ch !important;
-    padding:0;
+    margin: 0 0 24px 0 !important;
+    letter-spacing: normal;
   }
-  #yild-newsletter-{{ section.id }} .newsletter-form-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    width:100%;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-input {
-    flex: 1 !important;
-    min-width: 220px !important;
-    padding: 15px 20px !important;
-    border-radius: 100px !important;
-    border: 1.5px solid {{ section.settings.input_border }} !important;
-    background: {{ section.settings.input_bg }} !important;
-    color: {{ section.settings.card_txt_color }} !important;
-    font-family: var(--font-family-1) !important;
-    font-size: 1.6rem !important;
-    outline: none !important;
-    transition: border-color 0.25s !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-input::placeholder {
-    color: rgba(241, 239, 227, 0.65) !important;
-    opacity: 1 !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-input:focus {
-    border-color: #ffffff !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-family: var(--font-family-1) !important;
-    font-weight: 600 !important;
-    font-size: 1.44rem !important; /* Scaled 0.9rem * 1.6 */
-    padding: 15px 30px !important;
-    border-radius: 100px !important;
-    background: {{ section.settings.btn_bg }} !important;
-    color: {{ section.settings.btn_txt }} !important;
-    border: none !important;
-    min-width: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    line-height: 1.2 !important;
-    cursor: pointer !important;
-    transition: background-color 0.25s, transform 0.15s !important;
-    will-change: transform !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-btn:hover {
-    background-color: #ffffff !important;
-    opacity: 0.95 !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-btn:active {
-    transform: scale(0.97) !important;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-success {
-    flex-basis: 100%;
-    color: {{ section.settings.success_txt_color }};
-    font-weight: 500;
-    margin-top: 10px;
-    font-size: 1.52rem;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-disclaimer {
-    font-family: var(--font-family-1) !important;
-    margin: 28px 0 0;
-    font-size: 1.248rem;
-    color: {{ section.settings.disclaimer_color }};
-    line-height: 1.4;
-  }
-  #yild-newsletter-{{ section.id }} .newsletter-image-col {
+  #yild-newsletter-{{ section.id }} .offer-img-box {
     position: relative;
-    min-height: 300px;
+    min-height: 280px;
+    background: #f7f5ed;
   }
-  #yild-newsletter-{{ section.id }} .newsletter-image-col img {
+  #yild-newsletter-{{ section.id }} .offer-img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1 !important;
   }
-  #yild-newsletter-{{ section.id }} .newsletter-image-overlay {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 2 !important;
-    background: linear-gradient(90deg, {{ section.settings.card_bg }} 0%, rgba(31,61,43,0) 45%) !important;
-    pointer-events: none !important;
+  #yild-newsletter-{{ section.id }} .offer-gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, {{ section.settings.overlay_color_1 }} 0%, rgba(31, 61, 43, 0) 45%);
     display:block;
+    opacity:1;
   }
 
-  @media (max-width: 760px) {
-    #yild-newsletter-{{ section.id }} .newsletter-card {
-      grid-template-columns: 1fr;
+  @media (max-width: 980px) {
+    #yild-newsletter-{{ section.id }} .offer-card {
+      grid-template-columns: 1fr !important;
     }
-    #yild-newsletter-{{ section.id }} .newsletter-image-col {
-      display: none;
-    }
-  }
-  @media (max-width: 560px) {
-    #yild-newsletter-{{ section.id }} .newsletter-input,
-    #yild-newsletter-{{ section.id }} .newsletter-btn {
-      width: 100%;
-      flex: none;
+    #yild-newsletter-{{ section.id }} .offer-gradient-overlay {
+      background: linear-gradient(0deg, {{ section.settings.overlay_color_1 }} 0%, rgba(31, 61, 43, 0) 45%) !important;
     }
   }
 {%- endstyle -%}
 
-<section id="yild-newsletter-{{ section.id }}" class="yild-newsletter-section">
-  <div class="newsletter-card">
-    <div class="newsletter-content">
-      {%- if section.settings.subtitle != blank -%}
-        <span class="newsletter-subtitle">{{ section.settings.subtitle }}</span>
-      {%- endif -%}
+<section id="yild-newsletter-{{ section.id }}" class="yild-newsletter-wrapper-section">
+  <div class="offer-card">
+    <div class="offer-content">
       {%- if section.settings.title != blank -%}
-        {%- if section.settings.title contains 'YILDFRESH' -%}
-          {%- assign title_html = section.settings.title | replace: 'YILDFRESH', '<span class="code-highlight">YILDFRESH</span>' -%}
-        {%- elsif section.settings.title contains 'code ' -%}
-          {%- assign parts = section.settings.title | split: 'code ' -%}
-          {%- assign code_word = parts[1] | strip -%}
-          {%- capture replacement -%}code <span class="code-highlight">{{ code_word }}</span>{%- endcapture -%}
-          {%- assign title_html = section.settings.title | replace: 'code ', 'code ' | replace: code_word, replacement -%}
-        {%- else -%}
-          {%- assign title_html = section.settings.title -%}
-        {%- endif -%}
-        <h2 class="newsletter-title">{{ title_html }}</h2>
+        <h2 class="offer-title">{{ section.settings.title }}</h2>
       {%- endif -%}
-      {%- if section.settings.desc != blank -%}
-        <p class="newsletter-desc">{{ section.settings.desc }}</p>
+      {%- if section.settings.description != blank -%}
+        <p class="offer-desc">{{ section.settings.description }}</p>
       {%- endif -%}
 
       {%- form 'customer', class: 'newsletter-form' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
         
-        <div class="newsletter-form-row">
-          <input
-            id="NewsletterForm-{{ section.id }}"
-            type="email"
-            name="contact[email]"
-            class="newsletter-input"
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter-form-note" style="color: #cfe0cf; font-weight: 500; font-size: 1.6rem; padding-bottom: 12px; margin: 0;">
+            {{ section.settings.success_message }}
+          </p>
+        {%- elsif form.errors -%}
+          <p class="newsletter-form-note" style="color: #ffb3b3; font-weight: 500; font-size: 1.6rem; padding-bottom: 12px; margin: 0;">
+            {{ form.errors | default_errors }}
+          </p>
+        {%- endif -%}
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; max-width: 520px; width: 100%;">
+          <input 
+            type="email" 
+            name="contact[email]" 
             value="{{ form.email }}"
             aria-required="true"
-            autocorrect="off"
-            autocapitalize="off"
-            autocomplete="email"
-            {% if form.errors %}
-              autofocus
-              aria-invalid="true"
-              aria-describedby="Newsletter-error-{{ section.id }}"
-            {% elsif form.posted_successfully? %}
-              aria-describedby="Newsletter-success-{{ section.id }}"
-            {% endif %}
-            placeholder="{{ section.settings.placeholder_text }}"
-            required
+            required 
+            placeholder="you@email.com" 
+            style="flex: 1; min-width: 220px; padding: 15px 20px; border-radius: 100px; border: 1.5px solid rgba(241,239,227,.28); background: rgba(241,239,227,.08); color: #f1efe3; font-family: inherit; font-size: 1.6rem;" 
+          />
+          <button 
+            type="submit" 
+            style="font-family: inherit; font-size: 1.6rem; font-weight: 600; padding: 15px 30px; border-radius: 100px; background: #f1efe3; color: #1f3d2b; border: none; cursor: pointer; transition: opacity 0.2s;"
           >
-          <button type="submit" class="newsletter-btn" name="commit" id="Subscribe-{{ section.id }}" aria-label="Subscribe">
-            {{ section.settings.button_text }}
+            Sign up →
           </button>
-
-          {%- if form.posted_successfully? -%}
-            <p class="newsletter-success" id="Newsletter-success-{{ section.id }}" tabindex="-1" autofocus>
-              🎉 {{ section.settings.success_msg }}
-            </p>
-          {%- endif -%}
-          {%- if form.errors -%}
-            <p class="newsletter-success" style="color: #ff8888;" id="Newsletter-error-{{ section.id }}">
-              {{ form.errors.translated_fields.email | capitalize }}
-              {{ form.errors.messages.email }}
-            </p>
-          {%- endif -%}
         </div>
       {%- endform -%}
-
-      {%- if section.settings.disclaimer != blank -%}
-        <p class="newsletter-disclaimer">{{ section.settings.disclaimer }}</p>
-      {%- endif -%}
     </div>
-
-    <div class="newsletter-image-col">
+    <div class="offer-img-box">
       {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" />
+        {{ section.settings.image | image_url: width: 800 | image_tag: class: 'offer-img', loading: 'lazy', alt: section.settings.title | escape }}
       {%- else -%}
-        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1000&q=80" alt="Hands holding fresh organic food" loading="lazy" />
+        <img src="{{ 'dairy-hamper.png' | asset_url }}" alt="Yild newsletter hamper" class="offer-img" loading="lazy" onerror="this.onerror=null;this.src='{{ 'yild-box.jpg' | asset_url }}';" />
       {%- endif -%}
-      <div class="newsletter-image-overlay"></div>
+      <div class="offer-gradient-overlay"></div>
     </div>
   </div>
 </section>
@@ -257,21 +133,19 @@
       const section = document.getElementById("yild-newsletter-{{ section.id }}");
       if (!section) return;
 
-      const card = section.querySelector('.newsletter-card');
+      const card = section.querySelector('.offer-card');
 
       if (observer) observer.disconnect();
-
-      // Scroll Reveal
       observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            if (card) card.classList.add('is-revealed');
+            entry.target.classList.add('is-revealed');
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.1 });
 
-      observer.observe(section);
+      if (card) observer.observe(card);
     }
 
     if (document.readyState === "loading") {
@@ -296,125 +170,88 @@
 
 {% schema %}
 {
-  "name": "Yild Newsletter Offer",
+  "name": "Yild Newsletter Box",
   "settings": [
     {
       "type": "color",
-      "id": "section_bg",
-      "label": "Section Outer Background",
+      "id": "bg_color",
+      "label": "Background Color",
       "default": "#f7f5ed"
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "card_bg",
       "label": "Card Background",
-      "default": "#1f3d2b"
+      "default": "linear-gradient(160deg, #1f3d2b, #16301f)"
     },
     {
       "type": "color",
-      "id": "card_txt_color",
+      "id": "card_txt",
       "label": "Card Text Color",
       "default": "#f1efe3"
     },
     {
       "type": "color",
-      "id": "card_txt_muted",
+      "id": "desc_color",
       "label": "Card Description Color",
       "default": "rgba(241, 239, 227, 0.82)"
     },
     {
       "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Tag Color",
-      "default": "#a9c4ac"
-    },
-    {
-      "type": "color",
-      "id": "input_bg",
-      "label": "Email Input Background",
-      "default": "rgba(241, 239, 227, 0.08)"
-    },
-    {
-      "type": "color",
-      "id": "input_border",
-      "label": "Email Input Border",
-      "default": "rgba(241, 239, 227, 0.28)"
-    },
-    {
-      "type": "color",
-      "id": "btn_bg",
-      "label": "Submit Button Background",
-      "default": "#f1efe3"
-    },
-    {
-      "type": "color",
-      "id": "btn_txt",
-      "label": "Submit Button Text Color",
+      "id": "overlay_color_1",
+      "label": "Overlay Gradient End Color",
+      "info": "Should match card background color for seamless image blend",
       "default": "#1f3d2b"
-    },
-    {
-      "type": "color",
-      "id": "success_txt_color",
-      "label": "Success Message Color",
-      "default": "#cfe0cf"
-    },
-    {
-      "type": "color",
-      "id": "disclaimer_color",
-      "label": "Disclaimer Text Color",
-      "default": "rgba(241, 239, 227, 0.55)"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "Love veg, recipes & news?"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Main Title",
-      "default": "40% off your first basket — code YILDFRESH"
+      "label": "Title",
+      "default": "Get recipes & harvest news in your inbox"
     },
     {
       "type": "textarea",
-      "id": "desc",
+      "id": "description",
       "label": "Description",
-      "default": "Sign up to our newsletter for fresh-harvest updates, recipes and news — and enjoy 40% off your first basket at checkout."
-    },
-    {
-      "type": "text",
-      "id": "placeholder_text",
-      "label": "Input Placeholder",
-      "default": "you@email.com"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button Label",
-      "default": "Send my coupon →"
-    },
-    {
-      "type": "textarea",
-      "id": "success_msg",
-      "label": "Success message text",
-      "default": "You're in! Check your inbox for code YILDFRESH."
-    },
-    {
-      "type": "textarea",
-      "id": "disclaimer",
-      "label": "Disclaimer",
-      "default": "*Offer applies to first orders only and cannot be combined with other promotions. Message us to check delivery availability for your postcode."
+      "default": "Sign up to our newsletter — plus 40% off your first basket with code YILDFRESH."
     },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Promo Image"
+      "label": "Right Column Image"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "You're in! Fresh reads on the way."
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 96
     }
   ],
   "presets": [
     {
-      "name": "Yild Newsletter Offer"
+      "name": "Yild Newsletter Box"
     }
   ]
 }

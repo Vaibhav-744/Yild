@@ -1,0 +1,796 @@
+{{ 'component-product.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-product-form.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_image   = current_variant.image | default: product.featured_image
+-%}
+
+{%- style -%}
+  /* ── Meet The Farmers – PDP ────────────────────────────────── */
+  #mtf-section-{{ section.id }}.productView {
+    background: #f7f5ed !important;
+    padding: clamp(36px, 5vw, 64px) clamp(20px, 4vw, 54px) !important;
+    display: block !important;
+    max-width: unset !important;
+    margin: 0 !important;
+  }
+
+  /* Grid wrapper */
+  #mtf-grid-{{ section.id }} {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: start;
+  }
+
+  /* ── Media col ────────────────────────────────────────────── */
+  #mtf-media-{{ section.id }} {
+    position: sticky;
+    top: 130px;
+  }
+
+  .mtf-image-wrap {
+    border-radius: 26px;
+    overflow: hidden;
+    background: #f7f5ed;
+    aspect-ratio: 1;
+    border: 1.5px dashed #c4cfc2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mtf-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mtf-image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+  }
+
+  /* ── Info col ─────────────────────────────────────────────── */
+  #mtf-info-{{ section.id }} {}
+
+  /* Breadcrumb */
+  .mtf-breadcrumb {
+    font-size: .82rem;
+    color: #5d6b60;
+    margin-bottom: 16px;
+  }
+  .mtf-breadcrumb a { color: #4e7355; }
+
+  /* Event badge */
+  .mtf-badge {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #4e7355;
+    background: #eef3ec;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+
+  /* Title */
+  .mtf-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    line-height: 1.06;
+    color: #1f3d2b;
+    margin-bottom: 14px;
+  }
+
+  /* Price row */
+  .mtf-price-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .mtf-price-row .price {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 2rem;
+    color: #1f3d2b;
+    margin: 0;
+  }
+  .mtf-price-row .price__last,
+  .mtf-price-row .price-item {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+  }
+  .mtf-price-row .mtf-per {
+    font-size: .9rem;
+    color: #5d6b60;
+  }
+
+  /* Short description */
+  .mtf-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #3a4a3d;
+    margin-bottom: 22px;
+    max-width: 52ch;
+  }
+
+  /* ── Variant picker override ──────────────────────────────── */
+  #mtf-section-{{ section.id }} .productView-options {
+    margin-bottom: 18px;
+  }
+
+  #mtf-section-{{ section.id }} .form__label {
+    font-size: .85rem;
+    font-weight: 600;
+    color: #3a4a3d;
+    margin-bottom: 8px;
+    display: block;
+  }
+  #mtf-section-{{ section.id }} [data-header-option] {
+    font-weight: 400;
+    color: #5d6b60;
+    display: none;
+  }
+
+  /* Pill buttons */
+  #mtf-section-{{ section.id }} .product-form__radio { display: none; }
+
+  #mtf-section-{{ section.id }} .product-form__input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #mtf-section-{{ section.id }} .product-form__label {
+    padding: 11px 26px !important;
+    border-radius: 100px !important;
+    border: 1.5px solid #d6ddd2 !important;
+    background: #fff !important;
+    color: #1f3d2b !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    font-size: .9rem !important;
+    cursor: pointer !important;
+    transition: background .2s, color .2s, border-color .2s !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: unset !important;
+    height: unset !important;
+    margin: 0 !important;
+  }
+  #mtf-section-{{ section.id }} .product-form__radio:checked + .product-form__label {
+    background: #1f3d2b !important;
+    color: #fff !important;
+    border-color: #1f3d2b !important;
+  }
+  #mtf-section-{{ section.id }} .product-form__label.soldout {
+    opacity: .45;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+  #mtf-section-{{ section.id }} .product-form__label:hover:not(.soldout) {
+    background: #eef3ec !important;
+    border-color: #4e7355 !important;
+  }
+
+  /* ── Quantity (theme quantity-input Web Component) ───────── */
+  #mtf-section-{{ section.id }} .productView-quantity {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-bottom: 22px !important;
+    justify-content: flex-start !important;
+  }
+  #mtf-section-{{ section.id }} .quantity__label {
+    font-size: .85rem !important;
+    font-weight: 600 !important;
+    color: #3a4a3d !important;
+    margin-bottom: 0 !important;
+    width: auto !important;
+    min-width: unset !important;
+    flex: unset !important;
+  }
+  #mtf-section-{{ section.id }} .quantity__container {
+    display: inline-flex !important;
+    align-items: center !important;
+    border: 1.5px solid #d6ddd2 !important;
+    border-radius: 100px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    margin: 0 !important;
+    width: auto !important;
+  }
+  #mtf-section-{{ section.id }} .btn-quantity {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #1f3d2b;
+    transition: background .2s;
+  }
+  #mtf-section-{{ section.id }} .btn-quantity:hover { background: #f0f5f0; }
+  #mtf-section-{{ section.id }} .quantity__input {
+    width: 40px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    color: #1f3d2b !important;
+    -moz-appearance: textfield !important;
+    height: 42px !important;
+    line-height: 42px !important;
+    margin: 0 !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  #mtf-section-{{ section.id }} .quantity__input::-webkit-inner-spin-button,
+  #mtf-section-{{ section.id }} .quantity__input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+  /* ── ATC button ──────────────────────────────────────────── */
+  #mtf-section-{{ section.id }} .productView-buttons { margin-bottom: 0; }
+
+  #mtf-section-{{ section.id }} .product-form__submit,
+  #mtf-section-{{ section.id }} .button--primary {
+    width: 100% !important;
+    max-width: 420px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 9px !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    font-size: 1.02rem !important;
+    padding: 16px !important;
+    border-radius: 100px !important;
+    background: #1f3d2b !important;
+    color: #fff !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background .25s, color .25s !important;
+    margin-bottom: 12px !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+  }
+  #mtf-section-{{ section.id }} .product-form__submit:hover,
+  #mtf-section-{{ section.id }} .button--primary:hover {
+    background: #16301f !important;
+  }
+  #mtf-section-{{ section.id }} .product-form__submit[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+
+  /* ── Availability pill ───────────────────────────────────── */
+  .mtf-availability {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #2f7d4f;
+    margin-bottom: 22px;
+  }
+  .mtf-availability-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2f7d4f;
+    flex: 0 0 auto;
+  }
+  .mtf-availability.unavailable { color: #b04040; }
+  .mtf-availability.unavailable .mtf-availability-dot { background: #b04040; }
+
+  /* ── Benefits list ───────────────────────────────────────── */
+  .mtf-benefits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .96rem;
+    color: #3a4a3d;
+    margin-bottom: 26px;
+    padding: 0;
+  }
+  .mtf-benefits li { display: flex; gap: 10px; align-items: flex-start; }
+  .mtf-benefits li .mtf-check { color: #4e7355; font-weight: 700; flex: 0 0 auto; }
+
+  /* ── FAQ accordion ───────────────────────────────────────── */
+  .mtf-faqs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+  .mtf-faq {
+    background: #fff;
+    border: 1px solid #e6ebe2;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .mtf-faq summary {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 16px 18px;
+    font-weight: 600;
+    font-size: .98rem;
+    color: #1f3d2b;
+    list-style: none;
+    user-select: none;
+  }
+  .mtf-faq summary::-webkit-details-marker { display: none; }
+  .mtf-faq-icon {
+    flex: 0 0 auto;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #4e7355;
+    transition: transform .3s ease;
+  }
+  .mtf-faq[open] .mtf-faq-icon { transform: rotate(45deg); }
+  .mtf-faq-answer {
+    padding: 0 18px 16px;
+    font-size: .94rem;
+    line-height: 1.6;
+    color: #5d6b60;
+  }
+
+  /* ── Scroll reveal ───────────────────────────────────────── */
+  [data-mtf-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  [data-mtf-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-mtf-reveal][data-delay="90"]  { transition-delay: .09s; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #mtf-grid-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+    #mtf-media-{{ section.id }} {
+      position: static;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    #mtf-section-{{ section.id }} .product-form__submit,
+    #mtf-section-{{ section.id }} .button--primary { max-width: 100%; }
+  }
+{%- endstyle -%}
+
+<section id="mtf-section-{{ section.id }}" class="productView">
+  <div id="mtf-grid-{{ section.id }}">
+
+    {%- comment -%}── LEFT: sticky image ──{%- endcomment -%}
+    <div id="mtf-media-{{ section.id }}" data-mtf-reveal>
+      <div class="mtf-image-wrap">
+        {%- if product_image -%}
+          <img
+            src="{{ product_image | image_url: width: 900 }}"
+            srcset="{{ product_image | image_url: width: 600 }} 600w,
+                    {{ product_image | image_url: width: 900 }} 900w,
+                    {{ product_image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width:900px) 90vw, 50vw"
+            alt="{{ product_image.alt | escape | default: product.title | escape }}"
+            width="900"
+            height="900"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="mtf-image-placeholder">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7e9180" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px; opacity:0.6;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <div style="font-size: 0.95rem; font-family: 'Figtree', sans-serif; font-weight: 500; font-style: normal; color: #7e9180; opacity: 0.85; text-align: center; max-width: 220px; line-height: 1.45;">Drop the Meet The Farmers event poster</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%}── RIGHT: product info ──{%- endcomment -%}
+    <div id="mtf-info-{{ section.id }}" data-mtf-reveal data-delay="90">
+
+      {%- comment -%}Breadcrumb{%- endcomment -%}
+      <nav class="mtf-breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        {%- if collection -%}
+          · <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- endif -%}
+        · <span>{{ product.title }}</span>
+      </nav>
+
+      {%- comment -%}Badge{%- endcomment -%}
+      {%- if section.settings.event_badge != blank -%}
+        <span class="mtf-badge">{{ section.settings.event_badge }}</span>
+      {%- endif -%}
+
+      {%- comment -%}Title{%- endcomment -%}
+      <h1 class="mtf-title">{{ product.title }}</h1>
+
+      {%- comment -%}Price{%- endcomment -%}
+      <div class="mtf-price-row">
+        <div class="productView-price no-js-hidden clearfix" id="product-price-{{ product.id }}" style="display: inline-block;">
+          {%- render 'price',
+              product: product,
+              use_variant: true,
+              show_badges: true,
+              price_class: 'price--large'
+          -%}
+        </div>
+        {%- if section.settings.price_label != blank -%}
+          <span class="mtf-per">{{ section.settings.price_label }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%}Description / excerpt{%- endcomment -%}
+      {%- if product.description != blank -%}
+        <div class="mtf-description">
+          {{ product.description | strip_html | truncate: 320 }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
+        ── PRODUCT FORM (theme's native Web Components) ──
+        Uses <variant-radios> for variant switching and
+        <quantity-input> for qty ± buttons — exactly like the
+        main-product section. No extra JS needed.
+      {%- endcomment -%}
+
+      {%- assign product_form_id = 'product-form-' | append: product.id -%}
+
+      <product-form class="productView-form product-form">
+        {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+
+          {%- comment -%}── Variant picker (pill buttons) ──{%- endcomment -%}
+          {%- unless product.has_only_default_variant -%}
+            <div class="productView-options">
+              <div class="productView-variants halo-productOptions" id="mtf-product-option-{{ product.id }}-{{ section.id }}" data-type="button">
+                <variant-radios
+                  class="no-js-hidden product-option has-default"
+                  data-product="{{ product.id }}"
+                  data-section="{{ section.id }}"
+                  data-url="{{ product.url }}">
+
+                  {%- for option in product.options_with_values -%}
+                    <fieldset class="js product-form__input" data-product-attribute="set-rectangle" data-option-index="{{ forloop.index0 }}">
+                      <legend class="form__label">
+                        {{ option.name | append: ':' }}
+                        <span data-header-option>{{ option.selected_value }}</span>
+                      </legend>
+
+                      {%- assign values = '' -%}
+                      {%- liquid
+                        assign variants_available_arr = product.variants | map: 'available'
+                        assign variants_option1_arr   = product.variants | map: 'option1'
+                        assign variants_option2_arr   = product.variants | map: 'option2'
+                        assign variants_option3_arr   = product.variants | map: 'option3'
+                      -%}
+
+                      {%- for variant in product.variants -%}
+                        {%- assign value = variant.options[forloop.parentloop.index0] -%}
+                        {%- unless values contains value -%}
+                          {%- liquid
+                            assign values      = values | join: ';' | append: ';' | append: value | split: ';'
+                            assign option_stock = 'soldout'
+                            for option1_name in variants_option1_arr
+                              case option.position
+                                when 1
+                                  if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_stock = 'available'
+                                  endif
+                                when 2
+                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_stock = 'available'
+                                  endif
+                                when 3
+                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+                                    assign option_stock = 'available'
+                                  endif
+                              endcase
+                            endfor
+                          -%}
+                          <input class="product-form__radio" type="radio" id="mtf-option-{{ product.id }}-{{ option.name | handle }}-{{ forloop.index0 }}-{{ section.id }}" name="{{ option.name }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-variant-id="{{ variant.id }}"><label class="product-form__label {{ option_stock }}" for="mtf-option-{{ product.id }}-{{ option.name | handle }}-{{ forloop.index0 }}-{{ section.id }}" data-variant-id="{{ variant.id }}"><span class="text">{{ value }}</span></label>
+                        {%- endunless -%}
+                      {%- endfor -%}
+                    </fieldset>
+                  {%- endfor -%}
+
+                  <script type="application/json">{{ product.variants | json }}</script>
+                </variant-radios>
+
+                <noscript>
+                  <select name="id">
+                    {%- for variant in product.variants -%}
+                      <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %} {% if variant.available == false %}disabled{% endif %}>
+                        {{ variant.title }} — {{ variant.price | money }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </noscript>
+              </div>
+            </div>
+          {%- endunless -%}
+
+          {%- comment -%}── Quantity (theme quantity-input Web Component) ──{%- endcomment -%}
+          <quantity-input class="productView-quantity quantity__group quantity__style--1">
+            <label class="quantity__label form-label" for="mtf-qty-{{ product.id }}-{{ section.id }}">
+              {{ 'products.product.quantity.label__2' | t }}
+            </label>
+            <div class="quantity__container">
+              <button type="button" name="minus" class="minus btn-quantity">
+                <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                −
+              </button>
+              <input
+                class="form-input quantity__input"
+                type="number"
+                name="quantity"
+                min="1"
+                value="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                id="mtf-qty-{{ product.id }}-{{ section.id }}"
+                data-product="{{ product.id }}"
+                data-price="{{ current_variant.price }}"
+              >
+              <button type="button" name="plus" class="plus btn-quantity">
+                <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                +
+              </button>
+            </div>
+          </quantity-input>
+
+          {%- comment -%}── Hidden variant id input (updated by variant-radios JS) ──{%- endcomment -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          {%- comment -%}── Add to basket button ──{%- endcomment -%}
+          <div class="productView-buttons">
+            {%- if current_variant.available -%}
+              <button
+                type="submit"
+                name="add"
+                id="product-add-to-cart"
+                class="product-form__submit button button--primary"
+                data-btn-addToCart>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/>
+                  <path d="M9 7V5.5a3 3 0 0 1 6 0V7"/>
+                </svg>
+                {{ 'products.product.add_to_cart' | t }}
+              </button>
+            {%- else -%}
+              <button type="submit" name="add" id="product-add-to-cart" class="product-form__submit button button--primary" disabled>
+                {{ 'products.product.sold_out' | t }}
+              </button>
+            {%- endif -%}
+
+            {%- comment -%}── Dynamic checkout buttons (Buy it now / Shop Pay / etc.) ──{%- endcomment -%}
+            {%- if section.settings.show_dynamic_checkout -%}
+              <div class="productView-payment" style="margin-top:10px;">
+                {{ form | payment_button }}
+              </div>
+            {%- endif -%}
+          </div>
+
+        {%- endform -%}
+      </product-form>
+
+      {%- comment -%}── Availability indicator ──{%- endcomment -%}
+      {%- liquid
+        if current_variant.available
+          assign avail_class = ''
+          assign avail_label = 'In Stock'
+          if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0
+            assign avail_label = 'In Stock · ' | append: current_variant.inventory_quantity | append: ' left in stock'
+          endif
+        else
+          assign avail_class = 'unavailable'
+          assign avail_label = 'Out of Stock'
+        endif
+      -%}
+      <p class="mtf-availability {{ avail_class }}">
+        <span class="mtf-availability-dot"></span>
+        {{ avail_label }}
+      </p>
+
+      {%- comment -%}── Benefits list from section settings ──{%- endcomment -%}
+      {%- if section.settings.benefit_1 != blank or section.settings.benefit_2 != blank or section.settings.benefit_3 != blank -%}
+        <ul class="mtf-benefits">
+          {%- for i in (1..5) -%}
+            {%- assign benefit_key = 'benefit_' | append: i -%}
+            {%- assign benefit_val = section.settings[benefit_key] -%}
+            {%- if benefit_val != blank -%}
+              <li><span class="mtf-check">✓</span>{{ benefit_val }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- comment -%}── FAQ accordion (native <details>) ──{%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="mtf-faqs">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'faq' -%}
+              <details class="mtf-faq" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary>
+                  {{ block.settings.question }}
+                  <span class="mtf-faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="mtf-faq-answer">{{ block.settings.answer }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+    </div><!-- /mtf-info -->
+  </div><!-- /mtf-grid -->
+</section>
+
+<script>
+(function() {
+  var el = document.getElementById('mtf-section-{{ section.id }}');
+  if (!el || typeof IntersectionObserver === 'undefined') return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  el.querySelectorAll('[data-mtf-reveal]').forEach(function(n) { obs.observe(n); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Yild – Meet The Farmers",
+  "tag": "section",
+  "class": "yild-meet-farmers",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Event Info"
+    },
+    {
+      "type": "text",
+      "id": "event_badge",
+      "label": "Badge label",
+      "default": "Event"
+    },
+    {
+      "type": "text",
+      "id": "price_label",
+      "label": "Price sub-label (e.g. \"per ticket\")",
+      "default": "per ticket"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_initial",
+      "label": "Image placeholder letter",
+      "default": "Y"
+    },
+    {
+      "type": "header",
+      "content": "Benefits list"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "Sourced direct from local growers"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Delivered fresh, no commitment"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefit 3",
+      "default": "Skip or cancel any time"
+    },
+    {
+      "type": "text",
+      "id": "benefit_4",
+      "label": "Benefit 4"
+    },
+    {
+      "type": "text",
+      "id": "benefit_5",
+      "label": "Benefit 5"
+    },
+    {
+      "type": "header",
+      "content": "Checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout buttons (Buy it now / Shop Pay / etc.)",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What's in the box this week?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Contents change weekly with the season. You'll always get a balanced mix of fresh veg, picked at its best."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Meet The Farmers",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What's in the box this week?",
+            "answer": "Contents change weekly with the season. You'll always get a balanced mix of fresh veg, picked at its best."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Delivery information",
+            "answer": "Order by Friday and your box is collected straight from the grower and delivered fresh."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I customise my box?",
+            "answer": "Yes — message us on WhatsApp before Friday midnight to swap out anything you're not keen on."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

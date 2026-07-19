@@ -9,12 +9,23 @@
 
 {%- style -%}
   /* ── Meet The Farmers – PDP ────────────────────────────────── */
+  #shopify-section-{{ section.id }} {
+    margin: 0;
+    padding: 0;
+  }
+
   #mtf-section-{{ section.id }}.productView {
-    background: #f7f5ed !important;
-    padding: clamp(36px, 5vw, 64px) clamp(20px, 4vw, 54px) !important;
-    display: block !important;
-    max-width: unset !important;
-    margin: 0 !important;
+    background: #f7f5ed;
+    padding: clamp(36px, 5vw, 64px) clamp(20px, 4vw, 54px);
+    display: block;
+    max-width: unset;
+    margin: 0;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+  }
+
+  #mtf-custom-cart-form-{{ section.id }} {
+    margin: 0;
+    padding: 0;
   }
 
   /* Grid wrapper */
@@ -28,54 +39,59 @@
   }
 
   /* ── Media col ────────────────────────────────────────────── */
-  #mtf-media-{{ section.id }} {
+  #mtf-section-{{ section.id }} #pdpMedia {
     position: sticky;
     top: 130px;
+    width: 100%;
+    display: block;
   }
 
-  .mtf-image-wrap {
+  #mtf-section-{{ section.id }} .mtf-image-wrap {
     border-radius: 26px;
     overflow: hidden;
-    background: #f7f5ed;
+    background: #eaf0e9;
     aspect-ratio: 1;
-    border: 1.5px dashed #c4cfc2;
+    box-shadow: 0 20px 50px rgba(31,61,43,.12);
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
   }
 
-  .mtf-image-wrap img {
+  #mtf-section-{{ section.id }} .mtf-image-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  .mtf-image-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  #mtf-section-{{ section.id }} .placeholder-svg {
     width: 100%;
-    padding: 20px;
+    height: 100%;
+    fill: #7e9180;
+    background-color: #eaf0e9;
+    display: block;
   }
 
   /* ── Info col ─────────────────────────────────────────────── */
-  #mtf-info-{{ section.id }} {}
+
 
   /* Breadcrumb */
-  .mtf-breadcrumb {
-    font-size: .82rem;
+  #mtf-section-{{ section.id }} .mtf-breadcrumb {
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 13.1px;
     color: #5d6b60;
+    margin-top: 0;
     margin-bottom: 16px;
+    padding: 0;
   }
-  .mtf-breadcrumb a { color: #4e7355; }
+  #mtf-section-{{ section.id }} .mtf-breadcrumb a { color: #4e7355; }
 
   /* Event badge */
-  .mtf-badge {
+  #mtf-section-{{ section.id }} .mtf-badge {
     display: inline-block;
-    font-size: .72rem;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 11.5px;
     font-weight: 700;
     letter-spacing: .12em;
     text-transform: uppercase;
@@ -83,66 +99,93 @@
     background: #eef3ec;
     padding: 5px 12px;
     border-radius: 100px;
+    margin-top: 0;
     margin-bottom: 14px;
   }
 
   /* Title */
-  .mtf-title {
-    font-family: 'Newsreader', Georgia, serif;
+  #mtf-section-{{ section.id }} .mtf-title {
+    font-family: var(--title-font), 'Newsreader', Georgia, serif;
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(2rem, 4vw, 3.1rem);
+    font-size: clamp(32px, 4vw, 49.6px);
     line-height: 1.06;
     color: #1f3d2b;
+    margin-top: 0;
     margin-bottom: 14px;
+    padding: 0;
   }
 
   /* Price row */
-  .mtf-price-row {
+  #mtf-section-{{ section.id }} .mtf-price-row {
     display: flex;
     align-items: center;
     gap: 14px;
+    margin-top: 0;
     margin-bottom: 16px;
+    padding: 0;
   }
-  .mtf-price-row .price {
-    font-family: 'Newsreader', Georgia, serif;
+  #mtf-section-{{ section.id }} .mtf-price-row .price {
+    font-family: var(--title-font), 'Newsreader', Georgia, serif;
     font-weight: 500;
-    font-size: 2rem;
+    font-size: 32px;
     color: #1f3d2b;
     margin: 0;
   }
-  .mtf-price-row .price__last,
-  .mtf-price-row .price-item {
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    color: inherit !important;
+  #mtf-section-{{ section.id }} .mtf-price-row .price dl,
+  #mtf-section-{{ section.id }} .mtf-price-row .price dd,
+  #mtf-section-{{ section.id }} .mtf-price-row .price dt {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
   }
-  .mtf-price-row .mtf-per {
-    font-size: .9rem;
+  #mtf-section-{{ section.id }} .mtf-price-row .price__last,
+  #mtf-section-{{ section.id }} .mtf-price-row .price-item,
+  #mtf-section-{{ section.id }} .mtf-price-row .price-item .money {
+    font-family: var(--title-font), 'Newsreader', Georgia, serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: #1f3d2b;
+    letter-spacing: normal;
+    line-height: 1.06;
+  }
+  #mtf-section-{{ section.id }} .mtf-price-row .mtf-per {
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 14.4px;
     color: #5d6b60;
   }
 
   /* Short description */
-  .mtf-description {
-    font-size: 1.05rem;
+  #mtf-section-{{ section.id }} .mtf-description {
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 16.8px;
     line-height: 1.65;
     color: #3a4a3d;
+    margin-top: 0;
     margin-bottom: 22px;
+    padding: 0;
     max-width: 52ch;
   }
 
   /* ── Variant picker override ──────────────────────────────── */
   #mtf-section-{{ section.id }} .productView-options {
-    margin-bottom: 18px;
+    margin: 0 0 18px 0;
+    padding: 0;
   }
 
   #mtf-section-{{ section.id }} .form__label {
-    font-size: .85rem;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 13.6px;
     font-weight: 600;
     color: #3a4a3d;
-    margin-bottom: 8px;
+    margin: 0 0 8px 0;
+    padding: 0;
     display: block;
+    border: none;
+    float: none;
+    width: auto;
+    letter-spacing: normal;
+    text-transform: none;
   }
   #mtf-section-{{ section.id }} [data-header-option] {
     font-weight: 400;
@@ -159,96 +202,122 @@
     gap: 10px;
     border: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 18px 0;
+  }
+  #mtf-section-{{ section.id }} .product-form__input:last-child {
+    margin-bottom: 0;
   }
 
-  #mtf-section-{{ section.id }} .product-form__label {
-    padding: 11px 26px !important;
-    border-radius: 100px !important;
-    border: 1.5px solid #d6ddd2 !important;
-    background: #fff !important;
-    color: #1f3d2b !important;
-    font-family: inherit !important;
-    font-weight: 600 !important;
-    font-size: .9rem !important;
-    cursor: pointer !important;
-    transition: background .2s, color .2s, border-color .2s !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-width: unset !important;
-    height: unset !important;
-    margin: 0 !important;
+  /* Custom variant pill buttons */
+  #mtf-section-{{ section.id }} .mtf-custom-variant-pill {
+    padding: 11px 22px;
+    border-radius: 100px;
+    border: 1.5px solid #d6ddd2;
+    background: #fff;
+    color: #1f3d2b;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 14.4px;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: unset;
+    height: unset;
+    margin: 0;
+    box-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    outline: none;
   }
-  #mtf-section-{{ section.id }} .product-form__radio:checked + .product-form__label {
-    background: #1f3d2b !important;
-    color: #fff !important;
-    border-color: #1f3d2b !important;
+  #mtf-section-{{ section.id }} .mtf-custom-variant-pill:hover {
+    background: #eef3ec;
+    border-color: #4e7355;
+    color: #1f3d2b;
   }
-  #mtf-section-{{ section.id }} .product-form__label.soldout {
-    opacity: .45;
-    cursor: not-allowed;
-    text-decoration: line-through;
+  #mtf-section-{{ section.id }} .mtf-custom-variant-pill[data-selected="true"] {
+    background: #1f3d2b;
+    color: #fff;
+    border-color: #1f3d2b;
   }
-  #mtf-section-{{ section.id }} .product-form__label:hover:not(.soldout) {
-    background: #eef3ec !important;
-    border-color: #4e7355 !important;
+  #mtf-section-{{ section.id }} .mtf-custom-variant-pill[data-selected="true"]:hover {
+    background: #1f3d2b;
+    color: #fff;
+    border-color: #1f3d2b;
   }
 
   /* ── Quantity (theme quantity-input Web Component) ───────── */
   #mtf-section-{{ section.id }} .productView-quantity {
-    display: flex !important;
-    align-items: center !important;
-    gap: 16px !important;
-    margin-bottom: 22px !important;
-    justify-content: flex-start !important;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    justify-content: flex-start;
   }
   #mtf-section-{{ section.id }} .quantity__label {
-    font-size: .85rem !important;
-    font-weight: 600 !important;
-    color: #3a4a3d !important;
-    margin-bottom: 0 !important;
-    width: auto !important;
-    min-width: unset !important;
-    flex: unset !important;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 13.6px;
+    font-weight: 600;
+    color: #3a4a3d;
+    margin-bottom: 0;
+    width: auto;
+    min-width: unset;
+    flex: unset;
   }
   #mtf-section-{{ section.id }} .quantity__container {
-    display: inline-flex !important;
-    align-items: center !important;
-    border: 1.5px solid #d6ddd2 !important;
-    border-radius: 100px !important;
-    overflow: hidden !important;
-    background: #fff !important;
-    margin: 0 !important;
-    width: auto !important;
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #d6ddd2;
+    border-radius: 100px;
+    overflow: hidden;
+    background: #fff;
+    margin: 0;
+    width: auto;
   }
-  #mtf-section-{{ section.id }} .btn-quantity {
+  #mtf-section-{{ section.id }} .btn-quantity,
+  #mtf-section-{{ section.id }} .quantity__container button,
+  #mtf-section-{{ section.id }} .quantity__container .minus,
+  #mtf-section-{{ section.id }} .quantity__container .plus {
     width: 42px;
     height: 42px;
     border: none;
     background: none;
-    font-size: 1.2rem;
+    font-size: 19.2px;
     cursor: pointer;
     color: #1f3d2b;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
     transition: background .2s;
   }
-  #mtf-section-{{ section.id }} .btn-quantity:hover { background: #f0f5f0; }
+  #mtf-section-{{ section.id }} .quantity__container button svg,
+  #mtf-section-{{ section.id }} .quantity__container button span::before,
+  #mtf-section-{{ section.id }} .quantity__container button span::after {
+    display: none;
+  }
+  #mtf-section-{{ section.id }} .btn-quantity:hover,
+  #mtf-section-{{ section.id }} .quantity__container button:hover { background: #f0f5f0; }
   #mtf-section-{{ section.id }} .quantity__input {
-    width: 40px !important;
-    padding: 0 !important;
-    text-align: center !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    border: none !important;
-    outline: none !important;
-    background: transparent !important;
-    color: #1f3d2b !important;
-    -moz-appearance: textfield !important;
-    height: 42px !important;
-    line-height: 42px !important;
-    margin: 0 !important;
-    min-width: unset !important;
-    max-width: unset !important;
+    width: 40px;
+    padding: 0;
+    text-align: center;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 16.8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #1f3d2b;
+    -moz-appearance: textfield;
+    height: 42px;
+    line-height: 42px;
+    margin: 0;
+    min-width: unset;
+    max-width: unset;
   }
   #mtf-section-{{ section.id }} .quantity__input::-webkit-inner-spin-button,
   #mtf-section-{{ section.id }} .quantity__input::-webkit-outer-spin-button { -webkit-appearance: none; }
@@ -258,29 +327,38 @@
 
   #mtf-section-{{ section.id }} .product-form__submit,
   #mtf-section-{{ section.id }} .button--primary {
-    width: 100% !important;
-    max-width: 420px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 9px !important;
-    font-family: inherit !important;
-    font-weight: 600 !important;
-    font-size: 1.02rem !important;
-    padding: 16px !important;
-    border-radius: 100px !important;
-    background: #1f3d2b !important;
-    color: #fff !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: background .25s, color .25s !important;
-    margin-bottom: 12px !important;
-    text-transform: none !important;
-    box-shadow: none !important;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-weight: 600;
+    font-size: 16.3px;
+    padding: 16px;
+    border-radius: 100px;
+    background: #1f3d2b;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background .25s, color .25s;
+    margin-bottom: 12px;
+    text-transform: none;
+    box-shadow: none;
+  }
+  #mtf-section-{{ section.id }} .product-form__submit svg,
+  #mtf-section-{{ section.id }} .button--primary svg {
+    flex: 0 0 auto;
+    margin: 0;
+    display: block;
+    height:20px;
+    width:15px;
+    fill:none;
   }
   #mtf-section-{{ section.id }} .product-form__submit:hover,
   #mtf-section-{{ section.id }} .button--primary:hover {
-    background: #16301f !important;
+    background: #16301f;
   }
   #mtf-section-{{ section.id }} .product-form__submit[disabled] {
     opacity: .5;
@@ -288,49 +366,66 @@
   }
 
   /* ── Availability pill ───────────────────────────────────── */
-  .mtf-availability {
+  #mtf-section-{{ section.id }} .mtf-availability {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: .9rem;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 14.4px;
     font-weight: 600;
     color: #2f7d4f;
     margin-bottom: 22px;
   }
-  .mtf-availability-dot {
+  #mtf-section-{{ section.id }} .mtf-availability-dot {
     width: 9px;
     height: 9px;
     border-radius: 50%;
     background: #2f7d4f;
     flex: 0 0 auto;
   }
-  .mtf-availability.unavailable { color: #b04040; }
-  .mtf-availability.unavailable .mtf-availability-dot { background: #b04040; }
+  #mtf-section-{{ section.id }} .mtf-availability.unavailable { color: #b04040; }
+  #mtf-section-{{ section.id }} .mtf-availability.unavailable .mtf-availability-dot { background: #b04040; }
 
   /* ── Benefits list ───────────────────────────────────────── */
-  .mtf-benefits {
+  #mtf-section-{{ section.id }} .mtf-benefits {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-size: .96rem;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 15.4px;
     color: #3a4a3d;
-    margin-bottom: 26px;
+    margin: 0 0 26px 0;
     padding: 0;
   }
-  .mtf-benefits li { display: flex; gap: 10px; align-items: flex-start; }
-  .mtf-benefits li .mtf-check { color: #4e7355; font-weight: 700; flex: 0 0 auto; }
+  #mtf-section-{{ section.id }} .mtf-benefits li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  #mtf-section-{{ section.id }} .mtf-benefits li .mtf-check { color: #4e7355; font-weight: 700; flex: 0 0 auto; }
 
   /* ── FAQ accordion ───────────────────────────────────────── */
-  .mtf-faqs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  #mtf-section-{{ section.id }} .mtf-faqs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
 
-  .mtf-faq {
+  #mtf-section-{{ section.id }} .mtf-faq {
     background: #fff;
     border: 1px solid #e6ebe2;
     border-radius: 16px;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
   }
-  .mtf-faq summary {
+  #mtf-section-{{ section.id }} .mtf-faq summary {
     width: 100%;
     display: flex;
     align-items: center;
@@ -341,46 +436,96 @@
     border: none;
     cursor: pointer;
     padding: 16px 18px;
+    font-family: var(--body-font), 'Figtree', sans-serif;
     font-weight: 600;
-    font-size: .98rem;
+    font-size: 15.7px;
     color: #1f3d2b;
     list-style: none;
     user-select: none;
+    outline: none;
+    box-shadow: none;
   }
-  .mtf-faq summary::-webkit-details-marker { display: none; }
-  .mtf-faq-icon {
+  #mtf-section-{{ section.id }} .mtf-faq summary::-webkit-details-marker { display: none; }
+  #mtf-section-{{ section.id }} .mtf-faq summary::marker { display: none; content: ""; }
+  #mtf-section-{{ section.id }} .mtf-faq-icon {
     flex: 0 0 auto;
-    font-size: 1.2rem;
+    font-size: 19.2px;
     font-weight: 400;
     color: #4e7355;
     transition: transform .3s ease;
   }
-  .mtf-faq[open] .mtf-faq-icon { transform: rotate(45deg); }
-  .mtf-faq-answer {
+  #mtf-section-{{ section.id }} .mtf-faq[open] .mtf-faq-icon { transform: rotate(45deg); }
+  #mtf-section-{{ section.id }} .mtf-faq-answer {
     padding: 0 18px 16px;
-    font-size: .94rem;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    font-size: 15px;
     line-height: 1.6;
     color: #5d6b60;
+    border: none;
+  }
+  #mtf-section-{{ section.id }} .mtf-faq-answer p {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  #mtf-section-{{ section.id }} .mtf-custom-price {
+    font-family: var(--title-font), 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 32px;
+    color: #1f3d2b;
+  }
+  #mtf-section-{{ section.id }} .mtf-custom-variants-wrapper {
+    margin-bottom: 18px;
+  }
+  #mtf-section-{{ section.id }} .mtf-option-label {
+    font-size: 13.6px;
+    font-weight: 600;
+    color: #3a4a3d;
+    margin-bottom: 8px;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  #mtf-section-{{ section.id }} .mtf-custom-variants-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #mtf-section-{{ section.id }} .mtf-qty-display {
+    min-width: 34px;
+    text-align: center;
+    font-weight: 600;
+    color: #1f3d2b;
+    font-family: var(--body-font), 'Figtree', sans-serif;
+    user-select: none;
+    font-size:16px;
+  }
+  #mtf-section-{{ section.id }} .product-form__submit.success,
+  #mtf-section-{{ section.id }} .button--primary.success {
+    background: #2f7d4f;
+  }
+  #mtf-section-{{ section.id }} .mtf-image-wrap image-slot {
+    width: 100%;
+    height: 100%;
   }
 
   /* ── Scroll reveal ───────────────────────────────────────── */
-  [data-mtf-reveal] {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  [data-mtf-reveal].is-visible {
+  #mtf-section-{{ section.id }} [data-mtf-reveal] {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: none;
   }
-  [data-mtf-reveal][data-delay="90"]  { transition-delay: .09s; }
 
   /* ── Responsive ──────────────────────────────────────────── */
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     #mtf-grid-{{ section.id }} {
       grid-template-columns: 1fr;
     }
-    #mtf-media-{{ section.id }} {
+    #mtf-section-{{ section.id }} #pdpMedia {
       position: static;
       max-width: 520px;
       margin: 0 auto;
@@ -394,10 +539,11 @@
   <div id="mtf-grid-{{ section.id }}">
 
     {%- comment -%}── LEFT: sticky image ──{%- endcomment -%}
-    <div id="mtf-media-{{ section.id }}" data-mtf-reveal>
+    <div id="pdpMedia" data-mtf-reveal>
       <div class="mtf-image-wrap">
         {%- if product_image -%}
           <img
+            id="meet-farmers-poster"
             src="{{ product_image | image_url: width: 900 }}"
             srcset="{{ product_image | image_url: width: 600 }} 600w,
                     {{ product_image | image_url: width: 900 }} 900w,
@@ -409,10 +555,7 @@
             loading="eager"
           >
         {%- else -%}
-          <div class="mtf-image-placeholder">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7e9180" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px; opacity:0.6;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-            <div style="font-size: 0.95rem; font-family: 'Figtree', sans-serif; font-weight: 500; font-style: normal; color: #7e9180; opacity: 0.85; text-align: center; max-width: 220px; line-height: 1.45;">Drop the Meet The Farmers event poster</div>
-          </div>
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
       </div>
     </div>
@@ -437,16 +580,11 @@
       {%- comment -%}Title{%- endcomment -%}
       <h1 class="mtf-title">{{ product.title }}</h1>
 
-      {%- comment -%}Price{%- endcomment -%}
+      {%- comment -%}Price{%- endcomment -% gold_price_conversion -%}
       <div class="mtf-price-row">
-        <div class="productView-price no-js-hidden clearfix" id="product-price-{{ product.id }}" style="display: inline-block;">
-          {%- render 'price',
-              product: product,
-              use_variant: true,
-              show_badges: true,
-              price_class: 'price--large'
-          -%}
-        </div>
+        <span id="mtf-custom-price" class="mtf-custom-price">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
         {%- if section.settings.price_label != blank -%}
           <span class="mtf-per">{{ section.settings.price_label }}</span>
         {%- endif -%}
@@ -460,167 +598,95 @@
       {%- endif -%}
 
       {%- comment -%}
-        ── PRODUCT FORM (theme's native Web Components) ──
-        Uses <variant-radios> for variant switching and
-        <quantity-input> for qty ± buttons — exactly like the
-        main-product section. No extra JS needed.
+        ── CUSTOM PRODUCT FORM ──
+        Completely custom layout that mirrors meet-the-farmers.html exactly.
       {%- endcomment -%}
-
-      {%- assign product_form_id = 'product-form-' | append: product.id -%}
-
-      <product-form class="productView-form product-form">
-        {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-
-          {%- comment -%}── Variant picker (pill buttons) ──{%- endcomment -%}
-          {%- unless product.has_only_default_variant -%}
-            <div class="productView-options">
-              <div class="productView-variants halo-productOptions" id="mtf-product-option-{{ product.id }}-{{ section.id }}" data-type="button">
-                <variant-radios
-                  class="no-js-hidden product-option has-default"
-                  data-product="{{ product.id }}"
-                  data-section="{{ section.id }}"
-                  data-url="{{ product.url }}">
-
-                  {%- for option in product.options_with_values -%}
-                    <fieldset class="js product-form__input" data-product-attribute="set-rectangle" data-option-index="{{ forloop.index0 }}">
-                      <legend class="form__label">
-                        {{ option.name | append: ':' }}
-                        <span data-header-option>{{ option.selected_value }}</span>
-                      </legend>
-
-                      {%- assign values = '' -%}
-                      {%- liquid
-                        assign variants_available_arr = product.variants | map: 'available'
-                        assign variants_option1_arr   = product.variants | map: 'option1'
-                        assign variants_option2_arr   = product.variants | map: 'option2'
-                        assign variants_option3_arr   = product.variants | map: 'option3'
-                      -%}
-
-                      {%- for variant in product.variants -%}
-                        {%- assign value = variant.options[forloop.parentloop.index0] -%}
-                        {%- unless values contains value -%}
-                          {%- liquid
-                            assign values      = values | join: ';' | append: ';' | append: value | split: ';'
-                            assign option_stock = 'soldout'
-                            for option1_name in variants_option1_arr
-                              case option.position
-                                when 1
-                                  if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-                                    assign option_stock = 'available'
-                                  endif
-                                when 2
-                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-                                    assign option_stock = 'available'
-                                  endif
-                                when 3
-                                  if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-                                    assign option_stock = 'available'
-                                  endif
-                              endcase
-                            endfor
-                          -%}
-                          <input class="product-form__radio" type="radio" id="mtf-option-{{ product.id }}-{{ option.name | handle }}-{{ forloop.index0 }}-{{ section.id }}" name="{{ option.name }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-variant-id="{{ variant.id }}"><label class="product-form__label {{ option_stock }}" for="mtf-option-{{ product.id }}-{{ option.name | handle }}-{{ forloop.index0 }}-{{ section.id }}" data-variant-id="{{ variant.id }}"><span class="text">{{ value }}</span></label>
-                        {%- endunless -%}
-                      {%- endfor -%}
-                    </fieldset>
+      <form method="post" action="/cart/add" id="mtf-custom-cart-form-{{ section.id }}" accept-charset="UTF-8" class="form" enctype="multipart/form-data">
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
+        
+        {%- comment -%}── Hidden variant id input (updated dynamically by custom JS) ──{%- endcomment -%}
+        <input type="hidden" name="id" id="mtf-custom-variant-id-{{ section.id }}" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        {%- comment -%}── Custom Variant Picker (Pills) ──{%- endcomment -%}
+        {%- unless product.has_only_default_variant -%}
+          <div class="mtf-custom-variants-wrapper">
+            {%- for option in product.options_with_values -%}
+              <div class="mtf-custom-variants-wrapper">
+                <div class="mtf-option-label">{{ option.name }}</div>
+                <div class="mtf-custom-variants-pills" data-option-index="{{ forloop.index0 }}">
+                  {%- for value in option.values -%}
+                    {%- liquid
+                      assign is_selected = false
+                      if option.selected_value == value
+                        assign is_selected = true
+                      endif
+                    -%}
+                    <button type="button"
+                      class="mtf-custom-variant-pill"
+                      data-option-value="{{ value | escape }}"
+                      {% if is_selected %}data-selected="true"{% endif %}
+                    >
+                      {{ value }}
+                    </button>
                   {%- endfor -%}
-
-                  <script type="application/json">{{ product.variants | json }}</script>
-                </variant-radios>
-
-                <noscript>
-                  <select name="id">
-                    {%- for variant in product.variants -%}
-                      <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %} {% if variant.available == false %}disabled{% endif %}>
-                        {{ variant.title }} — {{ variant.price | money }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                </noscript>
+                </div>
               </div>
-            </div>
-          {%- endunless -%}
-
-          {%- comment -%}── Quantity (theme quantity-input Web Component) ──{%- endcomment -%}
-          <quantity-input class="productView-quantity quantity__group quantity__style--1">
-            <label class="quantity__label form-label" for="mtf-qty-{{ product.id }}-{{ section.id }}">
-              {{ 'products.product.quantity.label__2' | t }}
-            </label>
-            <div class="quantity__container">
-              <button type="button" name="minus" class="minus btn-quantity">
-                <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
-                −
-              </button>
-              <input
-                class="form-input quantity__input"
-                type="number"
-                name="quantity"
-                min="1"
-                value="1"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                id="mtf-qty-{{ product.id }}-{{ section.id }}"
-                data-product="{{ product.id }}"
-                data-price="{{ current_variant.price }}"
-              >
-              <button type="button" name="plus" class="plus btn-quantity">
-                <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
-                +
-              </button>
-            </div>
-          </quantity-input>
-
-          {%- comment -%}── Hidden variant id input (updated by variant-radios JS) ──{%- endcomment -%}
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
-
-          {%- comment -%}── Add to basket button ──{%- endcomment -%}
-          <div class="productView-buttons">
-            {%- if current_variant.available -%}
-              <button
-                type="submit"
-                name="add"
-                id="product-add-to-cart"
-                class="product-form__submit button button--primary"
-                data-btn-addToCart>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/>
-                  <path d="M9 7V5.5a3 3 0 0 1 6 0V7"/>
-                </svg>
-                {{ 'products.product.add_to_cart' | t }}
-              </button>
-            {%- else -%}
-              <button type="submit" name="add" id="product-add-to-cart" class="product-form__submit button button--primary" disabled>
-                {{ 'products.product.sold_out' | t }}
-              </button>
-            {%- endif -%}
-
-            {%- comment -%}── Dynamic checkout buttons (Buy it now / Shop Pay / etc.) ──{%- endcomment -%}
-            {%- if section.settings.show_dynamic_checkout -%}
-              <div class="productView-payment" style="margin-top:10px;">
-                {{ form | payment_button }}
-              </div>
-            {%- endif -%}
+            {%- endfor -%}
           </div>
+        {%- endunless -%}
 
-        {%- endform -%}
-      </product-form>
+        {%- comment -%}── Custom Quantity Selector ──{%- endcomment -%}
+        <div class="productView-quantity">
+          <span class="quantity__label">Quantity</span>
+          <div class="quantity__container">
+            <button type="button" id="qtyMinus-{{ section.id }}" aria-label="Decrease quantity">−</button>
+            <span id="qtyVal-{{ section.id }}" class="mtf-qty-display">1</span>
+            <button type="button" id="qtyPlus-{{ section.id }}" aria-label="Increase quantity">+</button>
+          </div>
+          <input type="hidden" name="quantity" id="mtf-custom-qty-input-{{ section.id }}" value="1">
+        </div>
+
+        {%- comment -%}── Custom Add To Basket Button ──{%- endcomment -%}
+        <div class="productView-buttons">
+          {%- if product.selected_or_first_available_variant.available -%}
+            <button
+              type="button"
+              id="addBtn-{{ section.id }}"
+              class="product-form__submit"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/>
+                <path d="M9 7V5.5a3 3 0 0 1 6 0V7"/>
+              </svg>
+              Add To Basket
+            </button>
+          {%- else -%}
+            <button
+              type="button"
+              id="addBtn-{{ section.id }}"
+              class="product-form__submit"
+              disabled
+            >
+              Sold Out
+            </button>
+          {%- endif -%}
+        </div>
+      </form>
 
       {%- comment -%}── Availability indicator ──{%- endcomment -%}
-      {%- liquid
-        if current_variant.available
-          assign avail_class = ''
-          assign avail_label = 'In Stock'
-          if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0
-            assign avail_label = 'In Stock · ' | append: current_variant.inventory_quantity | append: ' left in stock'
-          endif
-        else
-          assign avail_class = 'unavailable'
-          assign avail_label = 'Out of Stock'
-        endif
-      -%}
-      <p class="mtf-availability {{ avail_class }}">
-        <span class="mtf-availability-dot"></span>
-        {{ avail_label }}
+      <p id="mtf-custom-availability" class="mtf-availability {% unless product.selected_or_first_available_variant.available %}unavailable{% endunless %}">
+        <span id="mtf-custom-availability-dot" class="mtf-availability-dot"></span>
+        <span id="mtf-custom-availability-text">
+          {%- if product.selected_or_first_available_variant.available -%}
+            In Stock
+            {%- if product.selected_or_first_available_variant.inventory_management != blank and product.selected_or_first_available_variant.inventory_quantity > 0 -%}
+              · {{ product.selected_or_first_available_variant.inventory_quantity }} left in stock
+            {%- endif -%}
+          {%- else -%}
+            Out of Stock
+          {%- endif -%}
+        </span>
       </p>
 
       {%- comment -%}── Benefits list from section settings ──{%- endcomment -%}
@@ -657,19 +723,192 @@
   </div><!-- /mtf-grid -->
 </section>
 
+<script id="mtf-variants-json-{{ section.id }}" type="application/json">
+  {{ product.variants | json }}
+</script>
+
 <script>
 (function() {
-  var el = document.getElementById('mtf-section-{{ section.id }}');
-  if (!el || typeof IntersectionObserver === 'undefined') return;
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-visible');
-        obs.unobserve(e.target);
-      }
+  var sectionId = '{{ section.id }}';
+
+  // Parse custom variants JSON array
+  var variantsData = [];
+  try {
+    var jsonEl = document.getElementById('mtf-variants-json-' + sectionId);
+    if (jsonEl) {
+      variantsData = JSON.parse(jsonEl.textContent);
+    }
+  } catch (e) {
+    console.error('Failed to parse variant JSON data', e);
+  }
+
+  // Active custom variant options cache
+  var selectedOptions = [];
+  {%- for option in product.options_with_values -%}
+    selectedOptions.push({
+      name: {{ option.name | json }},
+      value: {{ option.selected_value | json }}
     });
-  }, { threshold: 0.1 });
-  el.querySelectorAll('[data-mtf-reveal]').forEach(function(n) { obs.observe(n); });
+  {%- endfor -%}
+
+  // Helper format money custom action matching Shopify's formats
+  var formatPrice = function(cents) {
+    if (window.Shopify && window.Shopify.formatMoney) {
+      return window.Shopify.formatMoney(cents, "{{ shop.money_format }}");
+    }
+    var num = (cents / 100).toFixed(2);
+    var format = "{{ shop.money_format | strip_html }}";
+    if (format.indexOf('amount') !== -1) {
+      return format.replace(/\{\{\s*amount\s*\}\}/g, num)
+                   .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, Math.round(cents/100).toString())
+                   .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, num.replace('.', ','));
+    }
+    return '£' + num;
+  };
+
+  // Function to execute dynamic content switching
+  var updateVariantSelection = function() {
+    var matchedVariant = variantsData.find(function(v) {
+      return selectedOptions.every(function(opt, idx) {
+        var optProp = 'option' + (idx + 1);
+        return v[optProp] === opt.value;
+      });
+    });
+
+    var varInput = document.getElementById('mtf-custom-variant-id-' + sectionId);
+    var addBtn = document.getElementById('addBtn-' + sectionId);
+    var priceEl = document.getElementById('mtf-custom-price');
+    var availTextEl = document.getElementById('mtf-custom-availability-text');
+    var availDotEl = document.getElementById('mtf-custom-availability-dot');
+    var availContainer = document.getElementById('mtf-custom-availability');
+
+    if (matchedVariant) {
+      if (varInput) varInput.value = matchedVariant.id;
+      if (priceEl) priceEl.textContent = formatPrice(matchedVariant.price);
+
+      // Update availability states
+      if (matchedVariant.available) {
+        if (addBtn) {
+          addBtn.removeAttribute('disabled');
+          addBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 auto;margin:0;display:block;"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7V5.5a3 3 0 0 1 6 0V7"/></svg> Add To Basket';
+        }
+        if (availContainer) {
+          availContainer.classList.remove('unavailable');
+        }
+        if (availTextEl) {
+          var leftText = '';
+          if (matchedVariant.inventory_management && matchedVariant.inventory_quantity > 0) {
+            leftText = ' · ' + matchedVariant.inventory_quantity + ' left in stock';
+          }
+          availTextEl.textContent = 'In Stock' + leftText;
+        }
+      } else {
+        if (addBtn) {
+          addBtn.setAttribute('disabled', 'disabled');
+          addBtn.innerHTML = 'Sold Out';
+        }
+        if (availContainer) {
+          availContainer.classList.add('unavailable');
+        }
+        if (availTextEl) {
+          availTextEl.textContent = 'Out of Stock';
+        }
+      }
+    }
+  };
+
+  // Wire custom variant pill click behavior
+  var pillContainers = document.querySelectorAll('.mtf-custom-variants-pills');
+  pillContainers.forEach(function(container) {
+    var optIdx = parseInt(container.getAttribute('data-option-index'));
+    var pills = container.querySelectorAll('.mtf-custom-variant-pill');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        pills.forEach(function(p) {
+          p.removeAttribute('data-selected');
+        });
+        pill.setAttribute('data-selected', 'true');
+
+        selectedOptions[optIdx].value = pill.getAttribute('data-option-value');
+        updateVariantSelection();
+      });
+    });
+  });
+
+  // Quantity Stepper controls
+  var qty = 1;
+  var qEl = document.getElementById('qtyVal-' + sectionId);
+  var qInput = document.getElementById('mtf-custom-qty-input-' + sectionId);
+  var btnMinus = document.getElementById('qtyMinus-' + sectionId);
+  var btnPlus = document.getElementById('qtyPlus-' + sectionId);
+
+  var setQty = function(n) {
+    qty = Math.max(1, Math.min(99, n));
+    if (qEl) qEl.textContent = String(qty);
+    if (qInput) qInput.value = String(qty);
+  };
+
+  if (btnMinus) {
+    btnMinus.addEventListener('click', function() { setQty(qty - 1); });
+  }
+  if (btnPlus) {
+    btnPlus.addEventListener('click', function() { setQty(qty + 1); });
+  }
+
+  // Custom AJAX Form submission with drawer opening fallback
+  var addBtn = document.getElementById('addBtn-' + sectionId);
+  var form = document.getElementById('mtf-custom-cart-form-' + sectionId);
+
+  if (addBtn && form) {
+    addBtn.addEventListener('click', function() {
+      if (addBtn.hasAttribute('disabled')) return;
+
+      var origText = addBtn.innerHTML;
+      addBtn.innerHTML = '✓ Added to basket';
+      addBtn.classList.add('success');
+
+      var formData = new FormData(form);
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(item) {
+        // Increment quantity in header count
+        var cartCountEl = document.querySelectorAll('[data-cart-count]');
+        cartCountEl.forEach(function(el) {
+          var count = parseInt(el.textContent) || 0;
+          el.textContent = String(count + qty);
+        });
+
+        // Trigger cart drawers
+        if (window.quick_cart && window.quick_cart.show) {
+          if (window.Shopify && window.Shopify.getCart) {
+            window.Shopify.getCart(function(cart) {
+              var body = document.querySelector('body');
+              if (body) {
+                body.classList.add('cart-sidebar-show');
+                if (window.halo && window.halo.updateSidebarCart) {
+                  window.halo.updateSidebarCart(cart);
+                }
+              }
+            });
+          }
+        }
+
+        setTimeout(function() {
+          addBtn.innerHTML = origText;
+          addBtn.classList.remove('success');
+        }, 1300);
+      })
+      .catch(function(err) {
+        console.error('AJAX add to cart failed, falling back to standard redirect', err);
+        form.submit();
+      });
+    });
+  }
 })();
 </script>
 

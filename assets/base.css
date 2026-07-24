@@ -7734,3 +7734,7 @@ form.search.search-modal__form {
   background: var(--yild-green-dark, #16301f) !important;
   color: #ffffff !important;
 }
+.search-modal__form .card-row {
+    flex-direction: column;
+    align-items: flex-start;
+}

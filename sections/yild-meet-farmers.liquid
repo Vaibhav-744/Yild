@@ -864,49 +864,22 @@
       if (addBtn.hasAttribute('disabled')) return;
 
       var origText = addBtn.innerHTML;
-      addBtn.innerHTML = '✓ Added to basket';
-      addBtn.classList.add('success');
-
-      var formData = new FormData(form);
-      fetch(window.Shopify.routes.root + 'cart/add.js', {
-        method: 'POST',
-        body: formData
-      })
-      .then(function(res) {
-        return res.json();
-      })
-      .then(function(item) {
-        // Increment quantity in header count
-        var cartCountEl = document.querySelectorAll('[data-cart-count]');
-        cartCountEl.forEach(function(el) {
-          var count = parseInt(el.textContent) || 0;
-          el.textContent = String(count + qty);
-        });
-
-        // Trigger cart drawers
-        if (window.quick_cart && window.quick_cart.show) {
-          if (window.Shopify && window.Shopify.getCart) {
-            window.Shopify.getCart(function(cart) {
-              var body = document.querySelector('body');
-              if (body) {
-                body.classList.add('cart-sidebar-show');
-                if (window.halo && window.halo.updateSidebarCart) {
-                  window.halo.updateSidebarCart(cart);
-                }
-              }
-            });
+      if (window.YildCart) {
+        window.YildCart.add(form, {
+          button: addBtn,
+          onSuccess: function() {
+            addBtn.innerHTML = '✓ Added to basket';
+            addBtn.classList.add('success');
+            setTimeout(function() {
+              addBtn.innerHTML = origText;
+              addBtn.classList.remove('success');
+            }, 1300);
+          },
+          onError: function() {
+            form.submit();
           }
-        }
-
-        setTimeout(function() {
-          addBtn.innerHTML = origText;
-          addBtn.classList.remove('success');
-        }, 1300);
-      })
-      .catch(function(err) {
-        console.error('AJAX add to cart failed, falling back to standard redirect', err);
-        form.submit();
-      });
+        });
+      }
     });
   }
 })();

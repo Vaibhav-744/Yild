@@ -20,22 +20,22 @@
   }
   #yild-stats-{{ section.id }} .story-subtitle {
     display: inline-block;
-    font-family: var(--font-family-1) !important;
-    font-size: 1.216rem !important; /* Scaled 0.76rem * 1.6 */
-    font-weight: 600 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    color: {{ section.settings.subtitle_color }} !important;
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-size: 1.216rem; /* Scaled 0.76rem * 1.6 */
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
     margin-bottom: 18px;
   }
   #yild-stats-{{ section.id }} .story-title {
-    font-family: var(--title-font) !important;
-    font-style: italic !important;
-    font-weight: 500 !important;
-    font-size: clamp(3.2rem, 3.8vw, 4.96rem) !important;
-    line-height: 1.1 !important;
-    margin: 0 !important;
-    color: {{ section.settings.title_color }} !important;
+    font-family: var(--font-family-2, var(--title-font, 'Newsreader', serif));
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.2rem, 3.8vw, 4.96rem);
+    line-height: 1.1;
+    margin: 0;
+    color: {{ section.settings.title_color }};
   }
   #yild-stats-{{ section.id }} .stats-grid {
     display: grid;
@@ -55,16 +55,16 @@
     transform: translateY(0);
   }
   #yild-stats-{{ section.id }} .stat-number {
-    font-family: var(--title-font) !important;
-    font-weight: 500 !important;
-    font-size: 3.68rem !important;
-    color: #ffffff !important;
+    font-family: var(--font-family-2, var(--title-font, 'Newsreader', serif));
+    font-weight: 500;
+    font-size: 3.68rem;
+    color: #ffffff;
   }
   #yild-stats-{{ section.id }} .stat-desc {
-    font-family: var(--font-family-1) !important;
-    font-size: 1.44rem !important;
-    color: {{ section.settings.text_color_muted }} !important;
-    margin: 4px 0 0 0 !important;
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-size: 1.44rem;
+    color: {{ section.settings.text_color_muted }};
+    margin: 4px 0 0 0;
   }
   #yild-stats-{{ section.id }} .story-text-col {
     opacity: 0;

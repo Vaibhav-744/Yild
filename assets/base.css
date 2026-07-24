@@ -42,6 +42,48 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Unified Yild Button Loader */
+.is-loading,
+button.is-loading,
+.yild-pdp-atc-btn.is-loading,
+.yild-related-atc-btn.is-loading,
+.mtf-custom-add-btn.is-loading {
+  position: relative !important;
+  color: transparent !important;
+  pointer-events: none !important;
+}
+
+.is-loading::after,
+button.is-loading::after,
+.yild-pdp-atc-btn.is-loading::after,
+.yild-related-atc-btn.is-loading::after,
+.mtf-custom-add-btn.is-loading::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-top: -9px !important;
+  margin-left: -9px !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  border-top-color: #ffffff !important;
+  border-radius: 50% !important;
+  animation: yild-spin-loader 0.7s linear infinite !important;
+  display: block !important;
+  z-index: 10 !important;
+}
+
+.is-loading *,
+button.is-loading * {
+  opacity: 0 !important;
+}
+
+@keyframes yild-spin-loader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .no-js:not(html) {
     display: none !important;
 }
@@ -1537,6 +1579,13 @@ h5,
     letter-spacing: var(--heading-letter-spacing);
     line-height: var(--heading-line-height);
     color: var(--color-text);
+}
+
+h1,
+h2,
+.h1,
+.h2 {
+    letter-spacing: normal !important;
 }
 
 .h0 {

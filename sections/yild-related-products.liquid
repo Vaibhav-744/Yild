@@ -1,0 +1,282 @@
+{%- liquid
+  assign section_title = section.settings.title | default: "You may also like"
+  assign products_limit = section.settings.limit | default: 3
+-%}
+
+<style>
+  .yild-related-section {
+    padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 54px) clamp(58px, 7vw, 96px);
+    background: var(--yild-green-light, #eaf0e9);
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+  }
+  .yild-related-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  h2.yild-related-heading {
+    font-family: var(--font-family-2, var(--title-font, 'Newsreader', serif));
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(27px, 3vw, 38px);
+    color: var(--yild-green-dark, #1f3d2b);
+    margin: 0 0 clamp(22px, 3vw, 34px) 0;
+  }
+  .yild-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 991px) {
+    .yild-related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .yild-related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Product Card */
+  .yild-related-card {
+    background: #ffffff;
+    border: 1px solid var(--yild-border-color, #e6ebe2);
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .yild-related-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(31, 61, 43, 0.1);
+  }
+  .yild-related-img-wrap {
+    aspect-ratio: 1.2;
+    overflow: hidden;
+    background: var(--yild-green-light, #eaf0e9);
+    position: relative;
+  }
+  .yild-related-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .yild-related-card:hover .yild-related-img-wrap img {
+    transform: scale(1.05);
+  }
+  .yild-related-card-content {
+    padding: 16px 17px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+  }
+  .yild-related-card-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--yild-green-dark, #1f3d2b);
+    text-decoration: none;
+    line-height: 1.3;
+    display: block;
+  }
+  .yild-related-card-title:hover {
+    color: var(--yild-green-muted, #4e7355);
+  }
+  .yild-related-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+  }
+  .yild-related-price-current {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--yild-green-dark, #1f3d2b);
+  }
+  .yild-related-price-compare {
+    color: var(--yild-text-muted-2, #9aa69b);
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+  .yild-related-atc-btn {
+    margin-top: 8px;
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 100px;
+    background: var(--yild-green-dark, #1f3d2b);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .yild-related-atc-btn:hover {
+    background: var(--yild-green-hover, #16301f);
+  }
+  .yild-related-atc-btn:disabled {
+    background: #a9b5ab;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="yild-related-section" id="yild-related-{{ section.id }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ products_limit }}">
+  <div class="yild-related-container">
+    {%- if recommendations.performed and recommendations.products_count > 0 -%}
+      <h2 class="yild-related-heading">{{ section_title }}</h2>
+      <div class="yild-related-grid">
+        {%- for rec_product in recommendations.products limit: products_limit -%}
+          <article class="yild-related-card">
+            <a href="{{ rec_product.url }}" class="yild-related-img-wrap">
+              {%- if rec_product.featured_media -%}
+                <img src="{{ rec_product.featured_media | img_url: '600x500', crop: 'center' }}" alt="{{ rec_product.title | escape }}" loading="lazy" width="600" height="500" />
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </a>
+            <div class="yild-related-card-content">
+              <a href="{{ rec_product.url }}" class="yild-related-card-title">{{ rec_product.title | escape }}</a>
+              
+              <div class="yild-related-price-row">
+                <span class="yild-related-price-current">{{ rec_product.price | money }}</span>
+                {%- if rec_product.compare_at_price > rec_product.price -%}
+                  <span class="yild-related-price-compare">{{ rec_product.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- assign rec_variant = rec_product.selected_or_first_available_variant -%}
+              <button type="button" class="yild-related-atc-btn" data-variant-id="{{ rec_variant.id }}" {% unless rec_variant.available %}disabled{% endunless %}>
+                {% if rec_variant.available %}Add to basket{% else %}Sold Out{% endif %}
+              </button>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- comment -%} Fallback if loaded directly or collection products fallback {%- endcomment -%}
+      {%- assign fallback_collection = collection | default: product.collections.first -%}
+      {%- if fallback_collection and fallback_collection.products_count > 1 -%}
+        <h2 class="yild-related-heading">{{ section_title }}</h2>
+        <div class="yild-related-grid">
+          {%- assign count = 0 -%}
+          {%- for rec_product in fallback_collection.products -%}
+            {%- unless rec_product.id == product.id or count >= products_limit -%}
+              {%- assign count = count | plus: 1 -%}
+              <article class="yild-related-card">
+                <a href="{{ rec_product.url }}" class="yild-related-img-wrap">
+                  {%- if rec_product.featured_media -%}
+                    <img src="{{ rec_product.featured_media | img_url: '600x500', crop: 'center' }}" alt="{{ rec_product.title | escape }}" loading="lazy" width="600" height="500" />
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </a>
+                <div class="yild-related-card-content">
+                  <a href="{{ rec_product.url }}" class="yild-related-card-title">{{ rec_product.title | escape }}</a>
+                  
+                  <div class="yild-related-price-row">
+                    <span class="yild-related-price-current">{{ rec_product.price | money }}</span>
+                    {%- if rec_product.compare_at_price > rec_product.price -%}
+                      <span class="yild-related-price-compare">{{ rec_product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- assign rec_variant = rec_product.selected_or_first_available_variant -%}
+                  <button type="button" class="yild-related-atc-btn" data-variant-id="{{ rec_variant.id }}" {% unless rec_variant.available %}disabled{% endunless %}>
+                    {% if rec_variant.available %}Add to basket{% else %}Sold Out{% endif %}
+                  </button>
+                </div>
+              </article>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.getElementById('yild-related-{{ section.id }}');
+    if (!section) return;
+
+    // Load recommendations via AJAX if not already rendered
+    const requestUrl = section.getAttribute('data-url');
+    if (requestUrl && !section.querySelector('.yild-related-grid')) {
+      fetch(requestUrl)
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newSection = doc.getElementById('yild-related-{{ section.id }}');
+          if (newSection && newSection.innerHTML.trim() !== '') {
+            section.innerHTML = newSection.innerHTML;
+            bindRelatedAtc(section);
+          }
+        })
+        .catch(e => console.error(e));
+    } else {
+      bindRelatedAtc(section);
+    }
+
+    function bindRelatedAtc(container) {
+      const atcBtns = container.querySelectorAll('.yild-related-atc-btn');
+      atcBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const variantId = this.getAttribute('data-variant-id');
+          if (!variantId) return;
+
+          const origText = this.textContent;
+
+          if (window.YildCart) {
+            window.YildCart.add({ id: variantId, quantity: 1 }, {
+              button: this,
+              onSuccess: () => {
+                this.textContent = 'Added ✓';
+                setTimeout(() => { this.textContent = origText; }, 2000);
+              },
+              onError: () => {
+                this.textContent = origText;
+              }
+            });
+          }
+        });
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Yild Related Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Products to display",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Related Products"
+    }
+  ]
+}
+{% endschema %}

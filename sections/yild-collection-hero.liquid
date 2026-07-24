@@ -1,0 +1,110 @@
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500;1,6..72,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  .yild-collection-hero-section {
+    padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 54px) clamp(30px, 4vw, 48px) !important;
+    background: #f7f5ed !important;
+    margin: 0 !important;
+    font-family: 'Figtree', sans-serif !important;
+  }
+  .yild-collection-hero-section .hero-inner-container {
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+  }
+  .yild-collection-hero-section .hero-breadcrumb-nav {
+    font-size: 13.12px !important;
+    color: #5d6b60 !important;
+    margin-bottom: 16px !important;
+    font-family: 'Figtree', sans-serif !important;
+    line-height: 1.4 !important;
+  }
+  .yild-collection-hero-section .hero-breadcrumb-nav a {
+    color: #4e7355 !important;
+    text-decoration: none !important;
+  }
+  .yild-collection-hero-section h1.hero-main-title,
+  .yild-collection-hero-section #colTitle {
+    font-family: 'Newsreader', serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: clamp(38.4px, 5.4vw, 67.2px) !important;
+    line-height: 1.04 !important;
+    color: #1f3d2b !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+  .yild-collection-hero-section .hero-desc-text {
+    font-size: 17.28px !important;
+    color: #5d6b60 !important;
+    line-height: 1.6 !important;
+    max-width: 58ch !important;
+    margin: 0 !important;
+    font-family: 'Figtree', sans-serif !important;
+  }
+  .yild-collection-hero-section .hero-desc-text p {
+    font-size: 17.28px !important;
+    color: #5d6b60 !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+  .yild-collection-hero-section .hero-count-badge,
+  .yild-collection-hero-section #colCount {
+    font-size: 13.6px !important;
+    font-weight: 600 !important;
+    letter-spacing: .1em !important;
+    text-transform: uppercase !important;
+    color: #4e7355 !important;
+    margin-top: 18px !important;
+    margin-bottom: 0 !important;
+    font-family: 'Figtree', sans-serif !important;
+  }
+</style>
+
+<section class="yild-collection-hero-section" data-screen-label="Collection hero">
+  <div class="hero-inner-container">
+    {%- if section.settings.show_breadcrumb -%}
+      <nav aria-label="Breadcrumb" class="hero-breadcrumb-nav">
+        <a href="{{ routes.root_url }}">Home</a> · <span>Shop</span>
+      </nav>
+    {%- endif -%}
+    
+    <h1 id="colTitle" class="hero-main-title">
+      {{ collection.title | escape }}
+    </h1>
+
+    <div class="hero-desc-text">
+      {%- if collection.description != blank -%}
+        {{ collection.description }}
+      {%- else -%}
+        Everything for your weekly shop, sourced direct from local growers, picked fresh and delivered with care.
+      {%- endif -%}
+    </div>
+
+    <p id="colCount" class="hero-count-badge">
+      {{ collection.all_products_count | default: collection.products_count }} PRODUCTS
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yild Collection Hero",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yild Collection Hero"
+    }
+  ]
+}
+{% endschema %}

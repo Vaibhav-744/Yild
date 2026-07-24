@@ -4,7 +4,7 @@
     background: {{ section.settings.bg_color }};
   }
   #yild-faq-help-{{ section.id }} .help-banner-container {
-    max-width: 840px;
+    max-width: {{ section.settings.container_max_width | default: '1440px' }};
     margin: 0 auto;
     opacity: 0;
     transform: translateY(34px);
@@ -182,6 +182,22 @@
 {
   "name": "Yild FAQ Help Banner",
   "settings": [
+    {
+      "type": "select",
+      "id": "container_max_width",
+      "label": "Container Max Width",
+      "options": [
+        {
+          "value": "840px",
+          "label": "840px (Narrow - FAQ)"
+        },
+        {
+          "value": "1440px",
+          "label": "1440px (Wide - Collection)"
+        }
+      ],
+      "default": "1440px"
+    },
     {
       "type": "color",
       "id": "bg_color",

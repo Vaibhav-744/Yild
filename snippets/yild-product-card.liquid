@@ -1,0 +1,274 @@
+{%- comment -%}
+    Renders the Yild custom product card component (Shop Pick Slider card style).
+
+    Accepts:
+    - product: {Object} Liquid product object (or product_card_product)
+    - collection_ref: {Object} Optional collection object for link context
+    - enable_top_tag: {Boolean} Show top tag metafield badge (optional, default: true)
+{%- endcomment -%}
+
+{%- liquid
+  assign card_product = product | default: product_card_product
+  assign available_qty = card_product.variants.first.inventory_quantity
+  assign tracked = card_product.variants.first.inventory_management
+  if enable_top_tag == nil
+    assign enable_top_tag = true
+  endif
+-%}
+
+<style>
+  .prodCard {
+    background: #ffffff;
+    border: 1px solid var(--yild-border-color, #e6ebe2);
+    border-radius: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(31, 61, 43, 0.05);
+    transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+    width: 100%;
+    height: 100%;
+  }
+  .prodCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 44px rgba(31, 61, 43, 0.12);
+  }
+  .prodCard .card-img-wrapper {
+    position: relative;
+    aspect-ratio: 1.08;
+    background: var(--yild-green-light, #eaf0e9);
+    overflow: hidden;
+    border-radius: 18px 18px 0 0;
+  }
+  .prodCard .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .prodCard:hover .card-img {
+    transform: scale(1.05);
+  }
+  .prodCard .card-top-tag {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    z-index: 2;
+    font-size: 1.088rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--yild-green-dark, #1f3d2b);
+    background: rgba(247, 245, 237, .92);
+    padding: 5px 10px;
+    border-radius: 100px;
+    font-family: var(--font-family-1, Figtree, sans-serif);
+  }
+  .prodCard .card-details {
+    padding: 16px 17px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  .prodCard .card-vendor {
+    font-size: 1.136rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--yild-green-muted, #4e7355);
+    font-weight: 600;
+    font-family: var(--font-family-1, Figtree, sans-serif);
+  }
+  .prodCard .card-title-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .prodCard .card-title {
+    font-family: var(--font-family-1, Figtree, sans-serif);
+    font-size: 1.68rem;
+    line-height: 1.2;
+    color: var(--yild-green-dark, #1f3d2b);
+    margin: 0;
+    text-transform: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .prodCard .card-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .prodCard .card-price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .prodCard .card-price {
+    font-family: var(--font-family-1, Figtree, sans-serif);
+    font-weight: 700;
+    font-size: 1.792rem;
+    color: var(--yild-green-dark, #1f3d2b);
+  }
+  .prodCard .card-compare-price {
+    color: var(--yild-text-muted-2, #9aa69b);
+    text-decoration: line-through;
+    font-size: 1.312rem;
+    font-family: var(--font-family-1, Figtree, sans-serif);
+  }
+  .prodCard .inventory-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 1.312rem;
+    font-family: var(--font-family-1, Figtree, sans-serif);
+  }
+  .prodCard .inventory-pill.in-stock {
+    background: var(--yild-bg-success, #eef3ec);
+    border: 1px solid var(--yild-border-success, #d3e0d3);
+    color: var(--yild-green-success, #2f7d4f);
+  }
+  .prodCard .inventory-pill.in-stock .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--yild-green-success, #2f7d4f);
+  }
+  .prodCard .inventory-pill.out-of-stock {
+    background: var(--yild-bg-error, #f6e7e2);
+    border: 1px solid var(--yild-border-error, #e8c9bf);
+    color: var(--yild-red-error, #9a3b2e);
+  }
+  .prodCard .inventory-pill.out-of-stock .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--yild-red-error, #9a3b2e);
+  }
+  .prodCard .atc-btn {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-family-1, Figtree, sans-serif);
+    font-weight: 600;
+    font-size: 1.44rem;
+    padding: 11px;
+    border-radius: 100px;
+    background: var(--yild-green-dark, #1f3d2b);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.15s;
+    width: 100%;
+  }
+  .prodCard .atc-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    fill: currentColor !important;
+    stroke: none !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+  .prodCard .atc-btn:hover {
+    background: var(--yild-green-hover, #2a523a);
+  }
+  .prodCard .atc-btn:active {
+    transform: scale(0.97);
+  }
+  .prodCard .atc-btn.sold-out {
+    background: #a9b5ab !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+  }
+</style>
+
+{%- if card_product != blank -%}
+  <article class="prodCard product-item" data-product-id="{{ card_product.id }}" data-json-product='{"id": {{card_product.id}},"handle": "{{card_product.handle}}","media": {{card_product.media | json | escape}},"variants": {{ card_product.variants | json | escape}}}'>
+    
+    <div class="card-img-wrapper">
+      {%- if enable_top_tag -%}
+        {%- assign top_tag = card_product.metafields.custom.product_card_top_tag -%}
+        {%- if top_tag != blank -%}
+          <span class="card-top-tag">{{ top_tag }}</span>
+        {%- endif -%}
+      {%- endif -%}
+      <a href="{% if collection_ref %}{{ card_product.url | within: collection_ref }}{% else %}{{ card_product.url }}{% endif %}" class="d-block h-100 w-100" aria-label="{{ card_product.title | escape }}">
+        {%- if card_product.featured_media -%}
+          <img src="{{ card_product.featured_media | img_url: '450x450', crop: 'center' }}" alt="{{ card_product.title | escape }}" loading="lazy" class="card-img" />
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </a>
+    </div>
+
+    <div class="card-details">
+      {%- assign card_vendor = card_product.metafields.custom.product_card_vendor | default: card_product.vendor -%}
+      <span class="card-vendor">{{ card_vendor }}</span>
+      <a class="card-title-link" href="{% if collection_ref %}{{ card_product.url | within: collection_ref }}{% else %}{{ card_product.url }}{% endif %}">
+        <h3 class="card-title">{{ card_product.title }}</h3>
+      </a>
+      
+      <div class="card-row">
+        {%- if card_product.available == false -%}
+          <span class="inventory-pill out-of-stock">
+            <span class="dot"></span>
+            Sold out
+          </span>
+        {%- elsif tracked -%}
+          <span class="inventory-pill in-stock">
+            <span class="dot"></span>
+            {{ available_qty }}
+          </span>
+        {%- else -%}
+          <span class="inventory-pill in-stock">
+            <span class="dot"></span>
+            Available
+          </span>
+        {%- endif -%}
+
+        <div class="card-price-wrapper">
+          <span class="card-price">
+            {{ card_product.price | money }}
+          </span>
+          {%- if card_product.compare_at_price > card_product.price -%}
+            <span class="card-compare-price">
+              {{ card_product.compare_at_price | money }}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if card_product.available == false -%}
+        <button type="button" disabled="disabled" class="atc-btn sold-out">
+          Sold out
+        </button>
+      {%- else -%}
+        {%- if card_product.variants.size > 1 and settings.show_quick_shop -%}
+          <button type="button" data-quickshop-popup data-product-handle="{{ card_product.handle }}" class="atc-btn">
+            {%- render 'icon-cart', class: 'w-h-16' -%}
+            Add to basket
+          </button>
+        {%- else -%}
+          <form action="{{ routes.cart_url }}/add" method="post" class="variants">
+            <input type="hidden" name="id" value="{{ card_product.variants[0].id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" data-btn-addToCart class="atc-btn">
+              {%- render 'icon-cart', class: 'w-h-16' -%}
+              Add to basket
+            </button>
+          </form>
+        {%- endif -%}
+      {%- endif -%}
+
+    </div>
+  </article>
+{%- endif -%}

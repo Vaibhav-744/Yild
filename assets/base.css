@@ -7415,6 +7415,10 @@ h2 {
     width: 17px !important;
 }
 
+.collection-default .container {
+    padding: 0;
+}
+
 @media (prefers-reduced-motion) {
     .motion-reduce {
         transition: none !important;

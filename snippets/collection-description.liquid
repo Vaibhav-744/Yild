@@ -30,6 +30,10 @@
 		</div>
 	</div>
     {%- endif -%}
+
+    <p id="colCount" class="collection-product-count-badge" style="font-size:.85rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4e7355;margin-top:18px;margin-bottom:0;">
+        {{ collection.all_products_count | default: collection.products_count }} PRODUCTS
+    </p>
 	
 	{%- if show_sub_collection -%}
 		{%- if sub_collection_position == 'absolute' -%}

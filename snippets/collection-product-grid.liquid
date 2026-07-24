@@ -72,7 +72,24 @@
         body { background: var(--body-bg)}
     {%- endif -%}
 
-    #CollectionSection-{{ section.id }}{padding-top: {{ padding_top }};padding-bottom: {{ padding_bottom }}}
+    #CollectionSection-{{ section.id }} {
+        background-color: #f7f5ed;
+        padding: 0 clamp(20px, 4vw, 54px) clamp(48px, 6vw, 72px);
+    }
+    #CollectionSection-{{ section.id }} .productGrid {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+        gap: 22px !important;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+    }
+    #CollectionSection-{{ section.id }} .productGrid > li {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 
     {%- if has_sidebar -%}
         #CollectionSection-{{ section.id }} .sidebarBlock-heading, .sidebarBlock .sidebarBlock-slide__content-close{font-family: var(--sidebar-heading-font);font-size: {{ sidebar_heading_font_size | append: 'px' }};font-weight: {{ sidebar_heading_font_weight }};text-transform: {{ sidebar_heading_text_transform }}}
@@ -217,12 +234,9 @@
                             >
                                 {%- for product in collection.products -%}
                                     <li class="product{% if settings.banner_animation == 'effect_fade_up' %} scroll-trigger animate--slide-in{% endif %}"{% if settings.banner_animation == 'effect_fade_up' %} data-cascade style="--animation-order: {{ forloop.index }};"{% endif %}>
-                                        {% render 'product-grid-layout',
-                                            product_card_product: product,
-                                            serial: forloop.index,
-                                            sectionId: section.id,
-                                            show_list: true,
-                                            loading: true
+                                        {% render 'yild-product-card',
+                                            product: product,
+                                            collection_ref: collection
                                         %}
                                     </li>
                                 {%- endfor -%}

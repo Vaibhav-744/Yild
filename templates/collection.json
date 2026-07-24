@@ -10,136 +10,26 @@
 {
   "sections": {
     "banner": {
-      "type": "main-collection-banner",
+      "type": "yild-collection-hero",
       "settings": {
-        "show_breadcrumb": true,
-        "breadcrumb_alignment": "left",
-        "breadcrumb_color": "#999999",
-        "breadcrumb_bg": "rgba(0,0,0,0)",
-        "breadcrumb_gradient": "",
-        "breadcrumb_color_mb": "",
-        "breadcrumb_bg_mb": "#f6f6f6",
-        "breadcrumb_gradient_mb": "",
-        "show_page_title": true,
-        "page_title_alignment": "left",
-        "container": "default",
-        "mg_top_desktop": 0,
-        "mg_top_tablet": 0,
-        "mg_top_mobile": 0,
-        "mg_bottom_desktop": 0,
-        "mg_bottom_tablet": 0,
-        "mg_bottom_mobile": 0,
-        "layout": "1"
+        "show_breadcrumb": true
       }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
-      "blocks": {
-        "8472dad8-3289-4746-8b7f-e6ebe3175dd5": {
-          "type": "lookbook",
-          "settings": {
-            "show_image": true,
-            "link": "",
-            "show_title": true,
-            "page_title_alignment": "left",
-            "page_title_text_transform": "none",
-            "fontsize_title": 24,
-            "margin_top_title": 30,
-            "title_color": "#232323",
-            "show_collection_description": true,
-            "desc_alignment": "left",
-            "desc_pos": "top",
-            "fontsize_des": 12,
-            "margin_top_des": 12,
-            "margin_bottom": 25,
-            "des_color": "#3c3c3c"
-          }
-        },
-        "80b0a11c-fb01-4b89-8a29-1dbb2a1db16a": {
-          "type": "category",
-          "settings": {
-            "show_block": true,
-            "heading": "Categories",
-            "type": "1_level",
-            "link_list": ""
-          }
-        },
-        "ce351101-2c54-4627-b740-b2c592067b4a": {
-          "type": "filter",
-          "disabled": true,
-          "settings": {
-            "heading": "Color",
-            "list_tags": "White,Black,Blue,Invory,Beige,Brown,Silver,Olive,Gainsboro,DimGray,Burlywood,Lightblue,Salmon,LightPink,LightCoral"
-          }
-        },
-        "6684d566-6940-4457-9cf9-f1a8a6e80573": {
-          "type": "filter",
-          "disabled": true,
-          "settings": {
-            "heading": "Size",
-            "list_tags": "S,XS,M,L,XL"
-          }
-        },
-        "3978fd59-b580-49e1-9893-38d762f48f10": {
-          "type": "product_block",
-          "settings": {
-            "show_block": true,
-            "heading": "Featured Products",
-            "product_block_collection": "collection-home-1-2",
-            "product_block_layout": "slider",
-            "product_block_limit": 3,
-            "product_block_dots": false,
-            "product_block_arrows": true
-          }
-        },
-        "dc4f771a-d1ea-42a7-8792-b895132fa9fe": {
-          "type": "image",
-          "settings": {
-            "show_block": true,
-            "heading": "",
-            "image": "shopify://shop_images/blog-sidebar-1.jpg",
-            "link": ""
-          }
-        },
-        "34930b49-8499-46d3-bf41-2cbb334ca73d": {
-          "type": "image",
-          "settings": {
-            "show_block": true,
-            "heading": "",
-            "image": "shopify://shop_images/blog-sidebar-2.jpg",
-            "link": ""
-          }
-        },
-        "2f7f02ac-4072-40ea-844f-59943e256971": {
-          "type": "text",
-          "settings": {
-            "show_block": true,
-            "heading": "Custom Block",
-            "text": "<p>Custom CMS block displayed at the left sidebar on the Catalog Page. Put your own content here: text, html, images, media... or whatever you like.</p>\n\n<p>There are many similar sample content placeholders across the store. All editable from admin panel.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "8472dad8-3289-4746-8b7f-e6ebe3175dd5",
-        "80b0a11c-fb01-4b89-8a29-1dbb2a1db16a",
-        "ce351101-2c54-4627-b740-b2c592067b4a",
-        "6684d566-6940-4457-9cf9-f1a8a6e80573",
-        "3978fd59-b580-49e1-9893-38d762f48f10",
-        "dc4f771a-d1ea-42a7-8792-b895132fa9fe",
-        "34930b49-8499-46d3-bf41-2cbb334ca73d",
-        "2f7f02ac-4072-40ea-844f-59943e256971"
-      ],
       "settings": {
         "colors_bg": "rgba(0,0,0,0)",
         "colors_bg_gradient": "",
         "container": "default",
+        "padding_full_width": 0,
         "mg_top_desktop": 0,
         "mg_top_tablet": 0,
         "mg_top_mobile": 0,
         "mg_bottom_desktop": 0,
         "mg_bottom_tablet": 0,
         "mg_bottom_mobile": 0,
-        "show_sidebar": true,
+        "show_sidebar": false,
+        "sidebar_collapse": "collapse",
         "enable_sticky": false,
         "sidebar_layout": "layout_1",
         "sidebar_collapse_default": "expand",
@@ -149,7 +39,7 @@
         "sidebar_heading_font_size": 14,
         "sidebar_heading_font_weight": "700",
         "sidebar_heading_text_transform": "uppercase",
-        "show_filter": true,
+        "show_filter": false,
         "filter_swatch": "Color",
         "filter_swatch_type": "color",
         "filter_rectangle": "Size",
@@ -157,27 +47,52 @@
         "max_item_per_filter": 10,
         "filter_label_all": "",
         "filter_hidden_tag_list": "",
-        "show_toolbar": true,
-        "show_sorting": true,
-        "show_item_per_page": true,
-        "show_view_as": true,
+        "show_toolbar": false,
+        "show_sorting": false,
+        "show_item_per_page": false,
+        "show_view_as": false,
         "products_per_page": "20",
         "layout": "4",
         "show_infinite_scrolling": "show_more",
         "show_banner": false,
-        "show_banner_1": true,
+        "show_banner_1": false,
         "banner_position_1": "4",
         "link_banner_1": "",
         "show_banner_2": true,
         "banner_position_2": "5",
         "link_banner_2": "",
-        "show_banner_3": true,
+        "show_banner_3": false,
         "banner_position_3": "12",
-        "link_banner_3": ""
+        "link_banner_3": "",
+        "product_space_between_vert_desk": 30,
+        "product_space_between_vert_mb": 16,
+        "product_space_between_horiz_desk": 60,
+        "product_space_between_horiz_mb": 30
+      }
+    },
+    "yild_whatsapp_banner": {
+      "type": "yild-faq-help-banner",
+      "settings": {
+        "container_max_width": "1440px",
+        "bg_color": "#f7f5ed",
+        "card_bg_color": "#1f3d2b",
+        "card_txt_color": "#f1efe3",
+        "card_txt_muted": "#f1efe3d1",
+        "title": "Can't find what you're after?",
+        "desc": "Message us on WhatsApp and we'll add it to your next basket, straight from the grower.",
+        "btn1_lbl": "WhatsApp us →",
+        "btn1_url": "https://wa.me/447494531781",
+        "btn1_bg": "#9fce0f",
+        "btn1_txt": "#16301f",
+        "btn2_lbl": "",
+        "btn2_url": "",
+        "btn2_border_color": "#f1efe3",
+        "btn2_txt_color": "#f1efe3"
       }
     },
     "product-recently-viewed": {
       "type": "product-recently-viewed",
+      "disabled": true,
       "settings": {
         "display_product_recently_viewed": true,
         "product_recently_viewed_container": "container",
@@ -235,6 +150,7 @@
   "order": [
     "banner",
     "product-grid",
+    "yild_whatsapp_banner",
     "product-recently-viewed"
   ]
 }

@@ -637,24 +637,8 @@
       "type": "yild-newsletter",
       "name": "Yild Newsletter Offer",
       "settings": {
-        "section_bg": "#f7f5ed",
         "card_bg": "#1f3d2b",
-        "card_txt_color": "#f1efe3",
-        "card_txt_muted": "#f1efe3d1",
-        "subtitle_color": "#a9c4ac",
-        "input_bg": "#f1efe314",
-        "input_border": "#f1efe347",
-        "btn_bg": "#f1efe3",
-        "btn_txt": "#1f3d2b",
-        "success_txt_color": "#cfe0cf",
-        "disclaimer_color": "#f1efe38c",
-        "subtitle": "Love veg, recipes & news?",
         "title": "40% off your first basket — code YILDFRESH",
-        "desc": "Sign up to our newsletter for fresh-harvest updates, recipes and news — and enjoy 40% off your first basket at checkout.",
-        "placeholder_text": "you@email.com",
-        "button_text": "Send my coupon",
-        "success_msg": "You're in! Check your inbox for code YILDFRESH.",
-        "disclaimer": "*Offer applies to first orders only and cannot be combined with other promotions. Message us to check delivery availability for your postcode.",
         "image": "shopify://shop_images/crate-hands.png"
       }
     }

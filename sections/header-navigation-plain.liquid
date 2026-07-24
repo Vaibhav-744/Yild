@@ -2,7 +2,15 @@
 
 <style>
     @media screen and (min-width: 1025px) {
-        body:not([allow-transparency]) .header-navigation {position: static !important;}
+        .header-navigation { position: static; }
+        .sticky-search-menu-open .header-navigation,
+        .sticky-search-menu-open .header-nav-plain,
+        .header-navigation:has(details[open]),
+        .header-nav-plain:has(details[open]) {
+            backdrop-filter: none;
+            filter: none;
+            transform: none;
+        }
         .header-nav-plain:not(.header-plain--transparent),.scrolled-past-header .header-plain--transparent {
             {%- if section.settings.header_navigation_bg_gradient != 'rgba(0,0,0,0)' and section.settings.header_navigation_bg_gradient != blank -%}
                  background: {{ section.settings.header_navigation_bg_gradient }};
@@ -24,6 +32,65 @@
             .header-nav-plain > .container-full {padding-left: {{ section.settings.padding_full_width | append: 'px' }};padding-right: {{ section.settings.padding_full_width | append: 'px' }}}
         {%- endif -%}
         .header-nav-plain .header-icons:not(.header-icons-border){gap:20px}.header-nav-plain .header-icons .header__icon--wishlist{margin-top:1px}.header-nav-plain .header-icons .header__search .icon-search{margin-top:2px}.header-nav-plain .search-modal__form .search__button svg{width:18px;height:18px}.header-nav-plain .header__icon--cart .cart-count-bubble{top:-10px;right:-15px}.header-nav-plain .header-icons-border .cart-count-bubble{right:0}.header-nav-plain .halo-top-currency .text+svg{top:-2px}.sticky-search-menu-open .header-nav-plain .search-modal__form{max-width:555px;background-color:var(--bg-white)}.sticky-search-menu-open .header-nav-plain .search-modal__content{display:block;max-width:555px;animation:animateMenuOpen .5s ease}.sticky-search-menu-open .header-nav-plain .search__input{padding:7px 10px}.sticky-search-menu-open .header-nav-plain .quickSearchResultsWrap{right:0;left:0;width:555px}.sticky-search-menu-open .header-nav-plain .quickSearchResults .container{padding-left:20px;padding-right:20px}.sticky-search-menu-open .header-nav-plain details>.search-modal{padding:10vh 0;border:1px solid #dadada;background:rgba(35,35,35,.8)}.sticky-search-menu-open .header-nav-plain .header-search-close{display:block;padding:0 0 15px 0}.sticky-search-menu-open .header-nav-plain .header-search-close svg{width:20px;height:20px;fill:var(--bg-white)}.header-nav-plain .header-icons-border .header__icon,.header-nav-plain .header-icons-border .header-language_currency{padding-left:11px;padding-right:11px}.header-nav-plain .header--icon-border:before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:calc(100% - 1px)}.section-header-navigation:not(.scrolled-past-header) .header-nav-plain .header-icons-main-border .header--icon-border:before{background:var(--header_icons_border_color)}.scrolled-past-header .header-nav-plain .header-icons-sticky-border .header--icon-border:before{background:var(--header_icons_border_sticky_color)}.shopify-section:not(.scrolled-past-header) .header-nav-plain .main-menu .container{max-width:inherit;transition:max-width .3s cubic-bezier(.52,0,.61,.99)}.header-nav-plain .header-item--side{min-width:115px}.scrolled-past-header .header-nav-plain .header-item--side{min-width:90px}.header-nav-plain .header-item:first-child{text-align:left;justify-content:flex-start}.header-nav-plain .header-item:nth-child(2){text-align:center;justify-content:center}.header-nav-plain .header-item:nth-child(3){text-align:right;justify-content:flex-end}.scrolled-past-header .header-nav-plain .logo--transparent{display:none}
+
+        /* Full Viewport Search Modal Overlay across all pages */
+        details[open] > .search-modal,
+        .search_details[open] > .search-modal,
+        .sticky-search-menu-open .header-nav-plain details > .search-modal,
+        .sticky-search-menu-open .search-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 999999;
+          background: rgba(35, 35, 35, 0.85);
+          padding: 10vh 20px;
+          box-sizing: border-box;
+          display: block;
+        }
+
+        details[open] > .search-modal .search-modal__content,
+        .search_details[open] > .search-modal .search-modal__content,
+        .sticky-search-menu-open .header-nav-plain .search-modal__content,
+        .sticky-search-menu-open .search-modal__content {
+          display: block;
+          max-width: 555px;
+          margin: 0 auto;
+          animation: animateMenuOpen 0.4s ease;
+        }
+
+        .yild-header-cta-btn,
+        a.yild-header-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--yild-green-dark, #1f3d2b);
+          color: #ffffff;
+          font-family: var(--font-family-1, 'Figtree', sans-serif);
+          font-weight: 600;
+          font-size: 14px;
+          padding: 10px 22px;
+          border-radius: 100px;
+          text-decoration: none;
+          white-space: nowrap;
+          transition: background 0.2s ease, transform 0.15s ease;
+          line-height: 1.2;
+          margin-left: 12px;
+        }
+        .yild-header-cta-btn:hover,
+        a.yild-header-cta-btn:hover {
+          background: var(--yild-green-hover, #16301f);
+          transform: translateY(-1px);
+          color: #ffffff;
+        }
+        @media (max-width: 991px) {
+          .yild-header-cta-btn {
+            display: none;
+          }
+        }
 
         {%- if section.settings.enable_transparent -%}
             .section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .menu-lv-1:not(.menu-sale) .menu-lv-1__action,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .header-logo .header__heading-text,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .top-language-currency .dropdown-label .text,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .halo-top-language+.halo-top-currency:before,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .top-language-currency .dropdown-label .text+svg{color:{{section.settings.transparent_color}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .menu-lv-1:hover .menu-lv-1__action,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .header-logo:hover .header__heading-text,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .top-language-currency:hover .dropdown-label .text,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .top-language-currency:hover .halo-top-language+.halo-top-currency:before,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .top-language-currency:hover .dropdown-label .text+svg{color:{{section.settings.transparent_color_hover}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .header-icons-main-border .header--icon-border:before{background:{{section.settings.transparent_color}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .menu-lv-1>.link-effect>.text:after,.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .menu-lv-1:hover>.link-effect>.text:after{background:{{section.settings.transparent_color_hover}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .header__icon svg{fill:{{section.settings.transparent_color}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .header__icon:hover svg{fill:{{section.settings.transparent_color_hover}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .stroke-icon svg{stroke:{{section.settings.transparent_color}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .stroke-icon:hover svg{stroke:{{section.settings.transparent_color_hover}}}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent{background-color:transparent;position:absolute;width:100%;z-index:3}.section-header-navigation:not(.scrolled-past-header) .header-plain--transparent .logo__main{display:none}
@@ -176,12 +243,20 @@
                     <div class="header--cart header--icon-border d-flex pr-10 h-100 d-flex flex-align-center p-relative{% if block.settings.show_cart_sticky %}{% if block.settings.show_cart %}{% else %} hide-main-menu{% endif %}{% else %}{% if block.settings.show_cart %} show-main-menu{% endif %}{% endif %}">
                         <a href="{{ routes.cart_url }}" class="header__icon link header__icon--cart link--text focus-inset cart-icon-bubble" {% if settings.show_quick_cart %} data-cart-sidebar{% endif %}>
                             {% render 'icon-cart-02', class: 'w-h-24' %}
-                            <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+                            <span class="visually-hidden">{{ 'templates.cart.cart' | t: count: cart.item_count }}</span>
                             <div class="cart-count-bubble">
                                 {%- if cart.item_count < 100 -%} <span class="text" aria-hidden="true" data-cart-count>{{ cart.item_count }}</span>
                                     {%- endif -%}
                                     <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
                             </div>
+                        </a>
+                    </div>
+                {%- endif -%}
+
+                {%- if section.settings.show_header_btn and section.settings.header_btn_text != blank -%}
+                    <div class="header-cta-btn-wrap d-flex flex-align-center">
+                        <a href="{{ section.settings.header_btn_link | default: '/collections/all' }}" class="yild-header-cta-btn">
+                            {{ section.settings.header_btn_text }}
                         </a>
                     </div>
                 {%- endif -%}
@@ -348,8 +423,29 @@ if (sticky != undefined || sticky != null) {
     "class": "section-header-navigation",
     "settings": [
         {
+            "type": "header",
+            "content": "Header Button (Top Right)"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_header_btn",
+            "label": "Show top-right button",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "header_btn_text",
+            "label": "Button text",
+            "default": "Build Your Box"
+        },
+        {
+            "type": "url",
+            "id": "header_btn_link",
+            "label": "Button link"
+        },
+        {
             "type": "paragraph",
-            "content": "*You should only activate \/ use \"Header with Navigation\" you want, don't use the redundant headers which may not optimize for performance."
+            "content": "*You should only activate / use \"Header with Navigation\" you want, don't use the redundant headers which may not optimize for performance."
         },
         {
             "type": "select",
@@ -1657,6 +1753,194 @@ if (sticky != undefined || sticky != null) {
                     "id": "bg_mega_menu_bottom",
                     "label": "t:sections.header.settings.header_bottom.bg_bottom",
                     "default": "#f8f8f8"
+                }
+            ]
+        },
+        {
+            "type": "yild_megamenu",
+            "name": "Yild Custom Mega Menu",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "item",
+                    "label": "Menu Item Title to Match",
+                    "default": "Shop",
+                    "info": "Compares menu title (e.g. Shop) to apply this custom Mega Menu"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 1"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_1_title",
+                    "label": "Title",
+                    "default": "Fruit & Veg"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_1_desc",
+                    "label": "Subtitle",
+                    "default": "Fresh produce & 100% organic juices"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_1_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_1_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 2"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_2_title",
+                    "label": "Title",
+                    "default": "Vegetable Boxes"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_2_desc",
+                    "label": "Subtitle",
+                    "default": "Weekly boxes, packed with love"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_2_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_2_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 3"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_3_title",
+                    "label": "Title",
+                    "default": "Babycare"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_3_desc",
+                    "label": "Subtitle",
+                    "default": "Gentle organic essentials"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_3_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_3_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 4"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_4_title",
+                    "label": "Title",
+                    "default": "Body Care"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_4_desc",
+                    "label": "Subtitle",
+                    "default": "Natural soaps, balms & lotions"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_4_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_4_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 5"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_5_title",
+                    "label": "Title",
+                    "default": "Milk Non Dairy"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_5_desc",
+                    "label": "Subtitle",
+                    "default": "Oat, almond, soya & more"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_5_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_5_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Category 6"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_6_title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "cat_6_desc",
+                    "label": "Subtitle"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "cat_6_image",
+                    "label": "Icon / Image"
+                },
+                {
+                    "type": "url",
+                    "id": "cat_6_link",
+                    "label": "Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Bottom Footer Banner"
+                },
+                {
+                    "type": "text",
+                    "id": "footer_text",
+                    "label": "Footer message",
+                    "default": "Can't find what you're after? We'll add it to your basket."
+                },
+                {
+                    "type": "text",
+                    "id": "footer_link_text",
+                    "label": "Footer link text",
+                    "default": "WhatsApp us →"
+                },
+                {
+                    "type": "url",
+                    "id": "footer_link_url",
+                    "label": "Footer link URL"
                 }
             ]
         }

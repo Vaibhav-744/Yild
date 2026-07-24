@@ -1,0 +1,248 @@
+{%- comment -%}
+  Yild Custom Mega Menu Dropdown Snippet
+  Matches the modern floating card mega menu from user design specification.
+{%- endcomment -%}
+
+{%- liquid
+  assign b_settings = block.settings
+  assign footer_text = b_settings.footer_text | default: "Can't find what you're after? We'll add it to your basket."
+  assign footer_link_text = b_settings.footer_link_text | default: "WhatsApp us →"
+  assign footer_link_url = b_settings.footer_link_url | default: "https://wa.me/447494531781"
+-%}
+
+<li class="menu-lv-item menu-lv-1 dropdown mega-menu yild-mega-menu-item{% if link.active or link.child_active %} active{% endif %}">
+  <a href="{{ link.url }}" class="menu-lv-1__action header__menu-item list-menu__item link focus-inset link-effect">
+    <span class="text">{{ link.title | escape }}</span>
+    <span class="icon-dropdown">{% render 'icon-caret' %}</span>
+  </a>
+
+  <div class="header__submenu mega-menu__content yild-mega-dropdown-panel" tabindex="-1">
+    <div class="yild-mega-card-inner">
+      <div class="yild-mega-grid">
+        {%- for i in (1..6) -%}
+          {%- liquid
+            assign title_key = 'cat_' | append: i | append: '_title'
+            assign desc_key = 'cat_' | append: i | append: '_desc'
+            assign img_key = 'cat_' | append: i | append: '_image'
+            assign link_key = 'cat_' | append: i | append: '_link'
+
+            assign cat_title = b_settings[title_key]
+            assign cat_desc = b_settings[desc_key]
+            assign cat_img = b_settings[img_key]
+            assign cat_url = b_settings[link_key]
+          -%}
+
+          {%- if cat_title != blank -%}
+            <a href="{{ cat_url | default: link.url }}" class="yild-mega-cat-item">
+              <div class="yild-mega-icon-wrap">
+                {%- if cat_img != blank -%}
+                  <img src="{{ cat_img | img_url: '100x100', crop: 'center' }}" alt="{{ cat_title | escape }}" loading="lazy" width="44" height="44" />
+                {%- else -%}
+                  <span class="yild-mega-initial">{{ cat_title | slice: 0, 1 }}</span>
+                {%- endif -%}
+              </div>
+              <div class="yild-mega-cat-info">
+                <span class="yild-mega-cat-title">{{ cat_title }}</span>
+                {%- if cat_desc != blank -%}
+                  <span class="yild-mega-cat-desc">{{ cat_desc }}</span>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Dynamic fallback if no category blocks configured, render link.links sub-items {%- endcomment -%}
+        {%- if b_settings.cat_1_title == blank and link.links != blank -%}
+          {%- for child_link in link.links -%}
+            <a href="{{ child_link.url }}" class="yild-mega-cat-item">
+              <div class="yild-mega-icon-wrap">
+                <span class="yild-mega-initial">{{ child_link.title | slice: 0, 1 }}</span>
+              </div>
+              <div class="yild-mega-cat-info">
+                <span class="yild-mega-cat-title">{{ child_link.title }}</span>
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      {%- if footer_text != blank or footer_link_text != blank -%}
+        <div class="yild-mega-footer-row">
+          <span class="yild-mega-footer-txt">{{ footer_text }}</span>
+          {%- if footer_link_text != blank -%}
+            <a href="{{ footer_link_url }}" target="_blank" rel="noopener" class="yild-mega-footer-link">
+              {{ footer_link_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</li>
+
+<style>
+  /* Yild Floating Card Mega Menu Styles */
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .menu-lv-1__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .menu-lv-1__action .text {
+    position: relative;
+    display: inline-block;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .icon-dropdown {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0;
+    left: auto;
+    right: auto;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+    width:10px;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .icon-dropdown svg {
+    width: 10px;
+    height: 6px;
+    display: block;
+    fill: currentColor;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .icon-dropdown svg path {
+    fill: currentColor;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item:hover .icon-dropdown {
+    transform: rotate(180deg);
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item .yild-mega-dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: none;
+    z-index: 1000;
+    width: 600px;
+    max-width: 92vw;
+    padding-top: 10px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .header__inline-menu .list-menu .menu-lv-item.yild-mega-menu-item:hover .yild-mega-dropdown-panel {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  }
+  .yild-mega-card-inner {
+    background: #ffffff;
+    border: 1px solid var(--yild-border-color, #e6ebe2);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(31, 61, 43, 0.12);
+  }
+  .yild-mega-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  @media (max-width: 640px) {
+    .yild-mega-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .yild-mega-cat-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .yild-mega-cat-item:hover {
+    background: var(--yild-green-light, #eaf0e9);
+    transform: translateY(-1px);
+  }
+  .yild-mega-icon-wrap {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--yild-green-light, #eaf0e9);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .yild-mega-icon-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .yild-mega-initial {
+    font-family: var(--font-family-2, var(--title-font, 'Newsreader', serif));
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--yild-green-dark, #1f3d2b);
+  }
+  .yild-mega-cat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+  }
+  .yild-mega-cat-title {
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--yild-green-dark, #1f3d2b);
+    line-height: 1.3;
+  }
+  .yild-mega-cat-desc {
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-size: 13px;
+    color: var(--yild-text-muted, #5d6b60);
+    line-height: 1.35;
+    text-align: left;
+  }
+  .yild-mega-footer-row {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--yild-border-color, #e6ebe2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .yild-mega-footer-txt {
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-size: 13px;
+    color: var(--yild-text-muted, #5d6b60);
+  }
+  .yild-mega-footer-link {
+    font-family: var(--font-family-1, 'Figtree', sans-serif);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--yild-green-dark, #1f3d2b);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .yild-mega-footer-link:hover {
+    color: var(--yild-green-muted, #4e7355);
+  }
+</style>

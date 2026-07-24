@@ -1,50 +1,247 @@
-<div class="halo-sidebar halo-sidebar-left halo-sidebar_menu {% if settings.mobile_menu == 'custom' %}custom-mobile-menu{% endif %}" id="navigation-mobile">
-    <div class="halo-sidebar-wrapper custom-scrollbar">
-      {%- if settings.mobile_menu == 'default' -%}
-        <div class="site-nav-mobile nav-menu-tab"></div>
-        <div class="site-nav-mobile nav" data-navigation-mobile>
-          <div class="menu-heading-mobile halo-sidebar-header">
-            <span class="title">{{ 'general.common.menu' | t }}</span>
-            <button type="button" class="halo-sidebar-close" data-menu-close-sidebar aria-label="{{ 'general.common.close' | t }}">{% render 'icon-close' %}{{ 'general.common.close' | t }}</button>
-          </div>
-          <ul class="list-menu-loading" role="list">
-            {%- for i in (1..8)-%}
-              <li class="list-menu-loading__item"></li>
-            {%- endfor -%}
-          </ul>
-        </div>
-      {%- else -%}
-        <div class="site-nav-mobile nav-menu-tab nav-mobile-menu-tab" data-navigation-tab-mobile></div>
-        <button type="button" class="halo-sidebar-close halo-sidebar-close-custom" data-menu-close-sidebar aria-label="{{ 'general.common.close' | t }}">{% render 'icon-close' %}{{ 'general.common.close' | t }}</button>
-        <div class="site-nav-mobile nav menu-custom-mobile" data-navigation-mobile></div>
-        <ul class="list-menu-loading" role="list">
-          {%- for i in (1..9)-%}
-            <li class="list-menu-loading__item"></li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
-      
-      {%- if settings.mobile_menu == 'default' -%}
-        <div class="site-nav-mobile nav-account">
-          {%- if shop.customer_accounts_enabled -%}
-              <div class="customer-links {% if customer %}customer-login{% endif %} {%- unless settings.show_wishlist -%}last-link{% endunless %}">
-                {%- if customer -%}
-                  <span class="icon-wrapper">{% render 'icon-account' %}</span>
-                  <a class="header__link--account customer_logount" id="customer_logout_link" href="{{ routes.account_logout_url }}">{{ 'customer.log_out' | t }}</a>
-                  <span>/</span>
-                  <a class="header__link--account customer_acc" href="{{ routes.account_url }}">{{ 'customer.account.my_account' | t }}</a>
-                {%- else -%}  
-                  <a class="header__link--account customer_login_link" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"><span class="icon-wrapper">{% render 'icon-account' %}</span><span class="title">{{ 'customer.sign_in' | t }}</span></a>
-                  <a class="header__link--account{% unless settings.show_wishlist %} last-link{% endunless %} customer_register_link" href="{{ routes.account_register_url }}"><span class="icon-wrapper">{% render 'icon-sign-up' %}</span><span class="title">{{ 'customer.create_account' | t }}</span></a>
-                {%- endif -%}                                   
-            </div>
-          {%- endif -%}
-          {%- if settings.show_wishlist -%}
-              <a href="{% if settings.link_wishlist != blank %}{{ settings.link_wishlist }}{% else %}{{ pages['wish-list'].url }}{% endif %}" class="header__icon header__icon--wishlist link link--text focus-inset last-link"><span class="icon-wrapper">{% render 'icon-wishlist' %}</span><span class="title">{{ 'wishlist.general.title' | t }}</span></a>
-          {%- endif -%}
-          <div class="wrapper-links"></div>
-        </div>
-      {%- endif -%}
-      <div class="site-nav-mobile nav-currency-language p-relative"></div>
+<div class="halo-sidebar halo-sidebar-left halo-sidebar_menu" id="navigation-mobile">
+  <div class="halo-sidebar-wrapper custom-scrollbar">
+    <!-- Header Bar -->
+    <div class="menu-heading-mobile halo-sidebar-header">
+      <span class="title">{{ 'general.common.menu' | t | default: "Menu" }}</span>
+      <button type="button" class="halo-sidebar-close" data-menu-close-sidebar aria-label="{{ 'general.common.close' | t }}">
+        {% render 'icon-close' %}
+      </button>
     </div>
+
+    <!-- Mobile Navigation List Body -->
+    <nav class="yild-mobile-nav-body">
+      <ul class="yild-mobile-menu-list">
+        {%- assign mobile_linklist = linklists['main-menu'] -%}
+
+        {%- if mobile_linklist != blank and mobile_linklist.links.size > 0 -%}
+          {%- for link in mobile_linklist.links -%}
+            {%- assign link_title_clean = link.title | downcase | strip -%}
+            
+            {%- if link.links != blank or link_title_clean == 'shop' or link_title_clean == 'catalog' -%}
+              <li class="yild-mobile-menu-item yild-mobile-section-header">
+                <span class="yild-mobile-section-title">{{ link.title | uppercase }}</span>
+                <ul class="yild-mobile-submenu-list">
+                  {%- if link.links != blank -%}
+                    {%- for child_link in link.links -%}
+                      <li class="yild-mobile-subitem">
+                        <a href="{{ child_link.url }}" class="yild-mobile-sublink">{{ child_link.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  {%- else -%}
+                    <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Fruit & Veg</a></li>
+                    <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Vegetable Boxes</a></li>
+                    <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Babycare</a></li>
+                    <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Body Care</a></li>
+                    <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Milk Non-Dairy</a></li>
+                  {%- endif -%}
+                </ul>
+              </li>
+            {%- else -%}
+              <li class="yild-mobile-menu-item">
+                <a href="{{ link.url }}" class="yild-mobile-mainlink">{{ link.title }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <li class="yild-mobile-menu-item"><a href="/" class="yild-mobile-mainlink">Home</a></li>
+          <li class="yild-mobile-menu-item yild-mobile-section-header">
+            <span class="yild-mobile-section-title">SHOP</span>
+            <ul class="yild-mobile-submenu-list">
+              <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Fruit & Veg</a></li>
+              <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Vegetable Boxes</a></li>
+              <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Babycare</a></li>
+              <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Body Care</a></li>
+              <li class="yild-mobile-subitem"><a href="/collections/all" class="yild-mobile-sublink">Milk Non-Dairy</a></li>
+            </ul>
+          </li>
+          <li class="yild-mobile-menu-item"><a href="/pages/about-us" class="yild-mobile-mainlink">About Us</a></li>
+          <li class="yild-mobile-menu-item"><a href="/pages/our-growers" class="yild-mobile-mainlink">Meet Our Growers</a></li>
+          <li class="yild-mobile-menu-item"><a href="/blogs/news" class="yild-mobile-mainlink">Blog</a></li>
+          <li class="yild-mobile-menu-item"><a href="/pages/meet-the-farmers" class="yild-mobile-mainlink">Meet the Farmers</a></li>
+          <li class="yild-mobile-menu-item"><a href="/pages/become-a-farmer" class="yild-mobile-mainlink">Become a Farmer</a></li>
+          <li class="yild-mobile-menu-item"><a href="/pages/faq" class="yild-mobile-mainlink">FAQ</a></li>
+          <li class="yild-mobile-menu-item"><a href="/pages/contact" class="yild-mobile-mainlink">Contact</a></li>
+        {%- endif -%}
+      </ul>
+    </nav>
+
+    <!-- Bottom CTA Button -->
+    <div class="yild-mobile-menu-footer">
+      <a href="/collections/all" class="yild-mobile-cta-btn">
+        Build Your Box
+      </a>
+    </div>
+  </div>
 </div>
+
+<style>
+  /* Yild Mobile Navigation Drawer Styling (0px - 1024px) */
+  @media screen and (max-width: 1024px) {
+    #navigation-mobile.halo-sidebar_menu {
+      background: var(--yild-cream-bg, #f7f5ed);
+      width: 320px;
+      max-width: 85vw;
+    }
+
+    #navigation-mobile .halo-sidebar-wrapper {
+      background: var(--yild-cream-bg, #f7f5ed);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    #navigation-mobile .menu-heading-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      margin-bottom: 12px;
+      border-bottom: none;
+      background: transparent;
+    }
+
+    #navigation-mobile .menu-heading-mobile .title {
+      font-family: var(--font-family-2, 'Newsreader', serif);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 28px;
+      color: var(--yild-green-dark, #16301f);
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    #navigation-mobile .halo-sidebar-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      color: var(--yild-green-dark, #16301f);
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    #navigation-mobile .halo-sidebar-close:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    #navigation-mobile .halo-sidebar-close svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      stroke: currentColor;
+    }
+
+    .yild-mobile-nav-body {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .yild-mobile-menu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .yild-mobile-menu-item {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .yild-mobile-mainlink {
+      font-family: var(--font-family-1, 'Figtree', sans-serif);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--yild-green-dark, #16301f);
+      padding: 8px 0;
+      display: block;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .yild-mobile-mainlink:hover {
+      color: var(--yild-green-hover, #4e7355);
+    }
+
+    .yild-mobile-section-header {
+      margin-top: 14px;
+      margin-bottom: 8px;
+    }
+
+    .yild-mobile-section-title {
+      font-family: var(--font-family-1, 'Figtree', sans-serif);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--yild-green-dark, #4e7355);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .yild-mobile-submenu-list {
+      list-style: none;
+      padding: 0 0 0 10px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .yild-mobile-subitem {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .yild-mobile-sublink {
+      font-family: var(--font-family-1, 'Figtree', sans-serif);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--yild-green-dark, #16301f);
+      padding: 6px 0;
+      display: block;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .yild-mobile-sublink:hover {
+      color: var(--yild-green-hover, #4e7355);
+    }
+
+    .yild-mobile-menu-footer {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .yild-mobile-cta-btn {
+      display: block;
+      width: 100%;
+      background: var(--yild-green-dark, #1f3d2b);
+      color: #ffffff;
+      font-family: var(--font-family-1, 'Figtree', sans-serif);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 20px;
+      border-radius: 100px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .yild-mobile-cta-btn:hover {
+      background: var(--yild-green-hover, #16301f);
+      color: #ffffff;
+    }
+  }
+</style>

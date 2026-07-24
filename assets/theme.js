@@ -536,7 +536,7 @@
 
         headerStickySearchForm: function() {
             var iconSearchSlt = '[data-search-sticky-form]';
-            var iconSearchMenu = '[data-search-menu-sticky-form] .icon-search';
+            var iconSearchMenu = '[data-search-menu-sticky-form], [data-search-menu], .header__icon--search';
             var iconSearchMenuCustom = '[data-search-menu-sticky-form] .icon-search-custom';
 
             if ($(window).width() > 1025) {
@@ -561,9 +561,20 @@
                 $(document).off('click.toggleSearch', iconSearchMenu).on('click.toggleSearch', iconSearchMenu, function(event) {
                     event.preventDefault();
                     event.stopPropagation();
-                    $(event.target).closest('[class*="section-header-"]').addClass('sticky-search-menu-open');
-                    $(event.target).closest('.section-header-navigation').css('z-index', '101');
-                    $('.search_details').attr('open','true');
+                    var $parentHeader = $(this).closest('[class*="section-header-"]');
+                    if (!$parentHeader.length) {
+                      $parentHeader = $('.section-header-navigation, .shopify-section-header');
+                    }
+                    $parentHeader.addClass('sticky-search-menu-open');
+                    $('.section-header-navigation').css('z-index', '101');
+                    var $details = $(this).closest('details');
+                    if (!$details.length) {
+                      $details = $('.search_details');
+                    }
+                    $details.attr('open','true');
+                    setTimeout(function() {
+                      $details.find('input[type="search"]').focus();
+                    }, 100);
                 });
 
                 // Click Search Icon On Header Hamburger - Search Dropdown Style Layout Custom

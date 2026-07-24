@@ -48,9 +48,9 @@ button.is-loading,
 .yild-pdp-atc-btn.is-loading,
 .yild-related-atc-btn.is-loading,
 .mtf-custom-add-btn.is-loading {
-  position: relative !important;
-  color: transparent !important;
-  pointer-events: none !important;
+  position: relative;
+  color: transparent;
+  pointer-events: none;
 }
 
 .is-loading::after,
@@ -58,25 +58,25 @@ button.is-loading::after,
 .yild-pdp-atc-btn.is-loading::after,
 .yild-related-atc-btn.is-loading::after,
 .mtf-custom-add-btn.is-loading::after {
-  content: '' !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  width: 18px !important;
-  height: 18px !important;
-  margin-top: -9px !important;
-  margin-left: -9px !important;
-  border: 2px solid rgba(255, 255, 255, 0.35) !important;
-  border-top-color: #ffffff !important;
-  border-radius: 50% !important;
-  animation: yild-spin-loader 0.7s linear infinite !important;
-  display: block !important;
-  z-index: 10 !important;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  margin-left: -9px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: yild-spin-loader 0.7s linear infinite;
+  display: block;
+  z-index: 10;
 }
 
 .is-loading *,
 button.is-loading * {
-  opacity: 0 !important;
+  opacity: 0;
 }
 
 @keyframes yild-spin-loader {
@@ -7472,4 +7472,265 @@ h2 {
     .motion-reduce {
         transition: none !important;
     }
+}
+
+/* ==========================================================================
+   YILD DESIGN SYSTEM - PREMIUM SEARCH MODAL & PREDICTIVE SEARCH
+   ========================================================================== */
+
+.sticky-search-menu-open .header-navigation,
+.sticky-search-menu-open .header-nav-plain,
+.header-navigation:has(details[open]),
+.header-nav-plain:has(details[open]),
+body.sticky-search-open .header-nav-plain {
+  backdrop-filter: none;
+  filter: none;
+  transform: none;
+}
+
+/* Full-screen translucent dark green backdrop overlay (Desktop / Header popup search only) */
+body:not(.open_search_mobile) details[open] > .search-modal:not(.halo-sidebar_search *),
+body:not(.open_search_mobile) .search_details[open] > .search-modal:not(.halo-sidebar_search *),
+.sticky-search-menu-open .header-nav-plain .search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background: rgba(22, 48, 31, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 12vh 20px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Mobile Search Sidebar Drawer Reset */
+.halo-sidebar_search .search-modal,
+.halo-sidebar_search details > .search-modal,
+.halo-sidebar_search .search_details > .search-modal {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  display: block !important;
+  transform: none !important;
+}
+
+/* Container inside Modal */
+details[open] > .search-modal .search-modal__content,
+.search_details[open] > .search-modal .search-modal__content,
+.sticky-search-menu-open .search-modal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  animation: yildSearchFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes yildSearchFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close Button in Modal */
+.search-modal .header-search-close,
+.search-modal .search-modal__close-button {
+  position: absolute;
+  top: -55px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-modal .header-search-close:hover,
+.search-modal .search-modal__close-button:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+.search-modal .header-search-close svg,
+.search-modal .search-modal__close-button svg {
+  width: 16px;
+  height: 16px;
+  fill: #ffffff;
+  stroke: #ffffff;
+}
+
+/* Search Form & Field */
+.sticky-search-menu-open .header-nav-plain .search-modal__form,
+.search-modal__form,
+.search-modal__content,
+.search-modal__content-bottom,
+form.search.search-modal__form {
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 640px !important;
+  margin: 0 auto !important;
+}
+
+.search-modal .field,
+.search-modal__form .field {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border-radius: 100px !important;
+  padding: 6px 8px 6px 24px !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-sizing: border-box !important;
+}
+
+.search-modal .field:focus-within,
+.search-modal__form .field:focus-within {
+  border-color: var(--yild-green-accent, #9fce0f) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), 0 0 0 3px rgba(159, 206, 15, 0.25) !important;
+}
+
+/* Search Input */
+.search-modal .search__input,
+.search-modal input[type="search"] {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-family: var(--font-family-1, 'Figtree', sans-serif) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: var(--yild-green-dark, #16301f) !important;
+  padding: 12px 10px !important;
+}
+
+.search-modal .search__input::placeholder {
+  color: #8fa093 !important;
+  font-weight: 400 !important;
+}
+
+/* Search Submit Button inside Input */
+.search-modal .field .search__button,
+.search-modal__form .field .search__button,
+.search-modal button.search__button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  border-radius: 50% !important;
+  background: var(--yild-green-dark, #1f3d2b) !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #ffffff !important;
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  padding: 0 !important;
+  transition: background 0.2s ease, transform 0.15s ease !important;
+}
+
+.search-modal .search__button:hover {
+  background: var(--yild-green-hover, #16301f) !important;
+  transform: scale(1.04) !important;
+}
+
+.search-modal .field .search__button svg,
+.search-modal__form .field .search__button svg,
+.search-modal button.search__button svg {
+  width: 18px !important;
+  height: 18px !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  display: block !important;
+}
+
+/* Predictive Search Results Card Dropdown */
+.search-modal .quickSearchResultsWrap,
+.search-modal predictive-search .quickSearchResultsWrap {
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  margin-top: 14px !important;
+  padding: 24px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22) !important;
+  max-height: 65vh !important;
+  overflow-y: auto !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.search-modal .quickSearchTrending .title,
+.search-modal .predictive-search__heading {
+  font-family: var(--font-family-1, 'Figtree', sans-serif) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: #4e7355 !important;
+  margin-bottom: 12px !important;
+}
+
+.search-modal .quickSearchTrending .list-item a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: #f4f7f4 !important;
+  color: var(--yild-green-dark, #16301f) !important;
+  font-family: var(--font-family-1, 'Figtree', sans-serif) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: 100px !important;
+  margin: 3px !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.search-modal .quickSearchTrending .list-item a:hover {
+  background: var(--yild-green-dark, #16301f) !important;
+  color: #ffffff !important;
 }

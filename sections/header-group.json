@@ -18,7 +18,7 @@
         "bg_color": "#16301f",
         "text_color": "#f1efe3",
         "accent_color": "#9fce0f",
-        "message": "Enjoy <strong>40% off<\/strong> your first basket with code <strong>YILDFRESH<\/strong> at checkout."
+        "message": "Enjoy <strong>40% off</strong> your first basket with code <strong>YILDFRESH</strong> at checkout."
       }
     },
     "9c03747e-b054-4db8-8194-5a35c71f82ca": {
@@ -103,14 +103,47 @@
             "cart_count_bubble_bg": "#16301f",
             "cart_count_bubble_bg_gradient": ""
           }
+        },
+        "yild_shop_mega_menu": {
+          "type": "yild_megamenu",
+          "settings": {
+            "item": "Shop",
+            "cat_1_title": "Fruit & Veg",
+            "cat_1_desc": "Fresh produce & 100% organic juices",
+            "cat_1_image": "shopify://shop_images/oranges.webp",
+            "cat_1_link": "/collections/all",
+            "cat_2_title": "Vegetable Boxes",
+            "cat_2_desc": "Weekly boxes, packed with love",
+            "cat_2_image": "shopify://shop_images/yild-box.webp",
+            "cat_2_link": "/collections/all",
+            "cat_3_title": "Babycare",
+            "cat_3_desc": "Gentle organic essentials",
+            "cat_3_link": "/collections/all",
+            "cat_4_title": "Body Care",
+            "cat_4_desc": "Natural soaps, balms & lotions",
+            "cat_4_link": "/collections/all",
+            "cat_5_title": "Milk Non Dairy",
+            "cat_5_desc": "Oat, almond, soya & more",
+            "cat_5_link": "/collections/all",
+            "cat_6_title": "",
+            "cat_6_desc": "",
+            "cat_6_link": "",
+            "footer_text": "Can't find what you're after? We'll add it to your basket.",
+            "footer_link_text": "WhatsApp us →",
+            "footer_link_url": "https://wa.me/447494531781"
+          }
         }
       },
       "block_order": [
         "sections--14682829619277__9c03747e-b054-4db8-8194-5a35c71f82ca-1680876693acfad79f-0",
         "54786c97-e881-45f5-a30a-6fdb552a963e",
-        "sections--14682829619277__9c03747e-b054-4db8-8194-5a35c71f82ca-1680876693acfad79f-2"
+        "sections--14682829619277__9c03747e-b054-4db8-8194-5a35c71f82ca-1680876693acfad79f-2",
+        "yild_shop_mega_menu"
       ],
       "settings": {
+        "show_header_btn": true,
+        "header_btn_text": "Build Your Box",
+        "header_btn_link": "/collections/all",
         "container": "1470",
         "padding_full_width": 0,
         "header_navigation_bg": "rgba(0,0,0,0)",
@@ -162,8 +195,8 @@
           "type": "cart",
           "settings": {
             "icon": "2",
-            "color": "#16301F",
-            "color_bubble": "#FFFFFF",
+            "color": "#16301f",
+            "color_bubble": "#ffffff",
             "bg_bubble": "#16301f"
           }
         }
